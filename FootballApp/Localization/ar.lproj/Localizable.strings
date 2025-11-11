@@ -1,0 +1,1535 @@
+/* Localizable.strings for Arabic localization */
+
+// Language Picker Keys
+"language.system" = "النظام";
+"language.french" = "الفرنسية";
+"language.english" = "الإنجليزية";
+"language.arabic" = "العربية";
+
+// Login Screen
+"login.email_placeholder" = "البريد الإلكتروني";
+"login.password_placeholder" = "كلمة المرور";
+"login.signin_button" = "تسجيل الدخول";
+"login.error.invalid_credentials" = "بيانات الاعتماد غير صالحة";
+"login.or_signin_with" = "أو سجل الدخول باستخدام";
+"login.continue_as_guest" = "المتابعة كزائر";
+"login.no_account" = "ليس لديك حساب؟";
+"login.signup_button" = "اشتراك";
+"login.sign_up" = "اشتراك";
+
+// Register Screen
+"register.title" = "أنشئ حساب جديد";
+"register.subtitle" = "أدخل التفاصيل الخاصة بك لإنشاء حساب";
+"register.full_name_placeholder" = "الاسم الكامل";
+"register.email_placeholder" = "البريد الإلكتروني";
+"register.password_placeholder" = "كلمة المرور";
+"register.signup_button" = "اشتراك";
+"register.already_have_account" = "هل لديك حساب؟";
+"register.signin_button" = "تسجيل الدخول";
+
+// Common
+"common.next" = "التالي";
+"common.back" = "رجوع";
+
+// Onboarding
+"onboarding.intro.title" = "مرحبًا بك في ديبودي";
+"onboarding.intro.subtitle" = "لإنشاء أفضل خطة تمرين وتغذية ممكنة لك، نحتاج إلى طرح بعض الأسئلة. ستساعدنا إجاباتك على تصميم كل شيء ليناسب احتياجاتك وأهدافك المحددة.";
+"onboarding.gender.title" = "الجنس";
+"onboarding.gender.subtitle" = "ساعدنا في إنشاء خطتك المخصصة";
+"onboarding.gender.male" = "ذكر";
+"onboarding.gender.female" = "أنثى";
+"onboarding.age.title" = "كم عمرك؟";
+"onboarding.height_weight.title" = "ما هي قياساتك؟";
+"onboarding.height_weight.height" = "الطول (سم)";
+"onboarding.height_weight.weight" = "الوزن (كجم)";
+"onboarding.fitness_level.title" = "ما هو مستوى لياقتك الحالي؟";
+"onboarding.training_location.title" = "أين تفضل أن تتدرب؟";
+"onboarding.training_preferences.title" = "على ماذا تريد أن تركز؟";
+"onboarding.goal.title" = "ما هو هدفك؟";
+"onboarding.goal.subtitle" = "يمكنك دائمًا تغيير هذا لاحقًا.";
+"onboarding.finish" = "إنهاء";
+
+// Main Tabs
+"tab.workouts" = "التدريبات";
+"tab.kine" = "علاج طبيعي";
+"tab.nutrition" = "التغذية";
+"tab.profile" = "الملف الشخصي";
+
+// Workouts Screen
+"workouts.title" = "خطة التمرين الخاصة بك";
+"workouts.generating_plan" = "جاري إنشاء خطة التمرين المخصصة لك...";
+"workouts.no_plan.title" = "لم يتم العثور على خطة تمرين";
+"workouts.no_plan.subtitle" = "أكمل ملفك الشخصي من خلال عملية الإعداد للحصول على خطة تمرين مخصصة.";
+"workouts.no_plan.button" = "إنشاء خطتي";
+"workout.exercises" = "تمارين";
+"workout.calories" = "سعرات";
+"workout.time" = "الوقت";
+"workout.calories_value" = "%d";
+"workout.time_value" = "~%d دقيقة";
+"workout.exercise_list" = "قائمة التمارين";
+"workout.warmup" = "إحماء";
+"workout.cooldown" = "تهدئة";
+"workout.start_button" = "ابدأ التمرين";
+"workout.time_clock" = "%@";
+"workout.rest" = "راحة";
+"workout.finished" = "اكتمل التمرين!";
+"workout.finish_set" = "إنهاء المجموعة";
+"workout.skip_rest" = "تخطي الراحة";
+
+
+// Schedule Screen
+"schedule.title" = "جدول";
+"schedule.search" = "بحث";
+"schedule.all" = "الكل";
+
+// Profile Screen
+"profile.daily_calories" = "السعرات الحرارية اليومية";
+"profile.planned_sessions" = "الجلسات المخطط لها";
+"language.picker" = "لغة";
+"profile.kg" = "كجم";
+"profile.cm" = "سم";
+"profile.yrs" = "سنوات";
+"profile.account_settings" = "إعدادات الحساب";
+"profile.notifications" = "إشعارات";
+"profile.support" = "الدعم";
+"profile.sign_out" = "تسجيل الخروج";
+"profile.welcome_guest" = "أهلاً بك أيها الزائر";
+"profile.guest_cta" = "سجل أو سجل الدخول للحصول على تجربة شخصية.";
+"profile.sign_up_or_login" = "التسجيل أو تسجيل الدخول";
+
+// Nutrition Screen
+"nutrition.my_goals" = "أهدافي";
+"nutrition.tab.activity" = "نشاط";
+"nutrition.tab.diet" = "النظام الغذائي";
+"nutrition.health_advice" = "نصائح صحية لك";
+"nutrition.to_avoid" = "لتجنب";
+"nutrition.to_favor" = "لتفضيل";
+"nutrition.tips" = "نصائح";
+"nutrition.generating_plan" = "جاري إنشاء خطتك الغذائية المخصصة...";
+
+// Kiné Screen
+"kine.title" = "علاج طبيعي";
+"kine.category" = "فئة";
+
+// ... (add these to your existing Arabic file)
+"goal.lose_weight" = "فقدان الوزن";
+"goal.gain_muscle" = "زيادة الكتلة العضلية";
+"goal.maintain_shape" = "الحفاظ على الشكل";
+
+/* Ajouts restants de la traduction */
+"menu.quickActions" = "إجراءات سريعة";
+"menu.quickActions.openNutrition" = "افتح التغذية";
+"menu.quickActions.openWorkout" = "افتح التمرين";
+"menu.quickActions.openDashboard" = "افتح لوحة المعلومات";
+"menu.quickActions.rescheduleDefaults" = "إعادة جدولة الإعدادات الافتراضية";
+"menu.quickActions.cancelAll" = "إلغاء الكل";
+"menu.quickActions.notificationSettings" = "إعدادات الإشعارات";
+"reminder.settings.title" = "إعدادات التذكير";
+"menu.language.settings" = "إعدادات اللغة";
+"menu.language.change" = "تغيير اللغة";
+"menu.theme" = "المظهر";
+"menu.theme.system" = "النظام";
+"menu.theme.light" = "فاتح";
+"menu.theme.dark" = "داكن";
+"menu.highContrast" = "تباين عالي";
+"menu.accentColor" = "لون مميز";
+"color.blue" = "أزرق";
+"color.purple" = "أرجواني";
+"color.green" = "أخضر";
+"color.orange" = "برتقالي";
+"color.red" = "أحمر";
+"color.pink" = "وردي";
+"color.teal" = "فيروزي";
+"color.indigo" = "نيلي";
+"color.yellow" = "أصفر";
+"menu.accentColor.custom" = "لون مخصص";
+"menu.backgroundMaterial" = "خلفية المادة";
+"material.systemBackground" = "خلفية النظام";
+"material.ultraThin" = "فائق النحافة";
+"material.thin" = "نحيف";
+"material.regular" = "عادي";
+"material.thick" = "سميك";
+"menu.resetDefaults" = "إعادة تعيين الإعدادات الافتراضية";
+"menu.themeAccessibility" = "تخصيص المظهر وإمكانية الوصول";
+"common.cancel" = "إلغاء";
+"common.save" = "حفظ";
+"common.ok" = "حسنًا";
+"common.finish" = "إنهاء";
+"tab.blog" = "المدونة";
+"tab.progress" = "التقدم";
+"onboarding.summary.title" = "خطتك الشخصية";
+"onboarding.summary.generating" = "جارٍ إنشاء المعاينات الخاصة بالتغذية والتمرين...";
+"onboarding.summary.nutrition" = "التغذية";
+"onboarding.summary.calories" = "%d سعرة حرارية / يوم";
+"onboarding.summary.meal_items.none" = "لا توجد عناصر";
+"onboarding.summary.workout" = "التمرين";
+"onboarding.summary.exercises_count" = "%d تمارين";
+"onboarding.summary.finish" = "إنهاء";
+"onboarding.summary.regenerate" = "إعادة الإنشاء";
+"blog.title" = "المدونة";
+"blog.detail.title" = "تفاصيل المقال";
+"blog.read_more" = "اقرأ المزيد";
+"blog.empty.title" = "لا توجد مقالات";
+"blog.empty.subtitle" = "لم نجد أية مقالات لك الآن";
+"blog.title.training_tips" = "نصائح التدريب";
+"blog.summary.training_tips" = "أحدث النصائح للرياضيين %@";
+"blog.title.nutrition_basics" = "أساسيات التغذية";
+"blog.summary.nutrition_basics" = "كيف تنسق وجباتك مع هدفك: %@";
+"blog.title.recovery" = "التعافي";
+"blog.summary.recovery" = "طرق ذكية للتعافي بسرعة أكبر والتدريب بشكل أفضل.";
+"progress.title" = "التقدم";
+"progress.section.overview" = "نظرة عامة";
+"progress.weight_value" = "%d كجم";
+"progress.calories_value" = "%d سعرة حرارية";
+"progress.workouts_value" = "%d تمارين";
+"profile.weight" = "الوزن";
+"profile.height" = "الطول";
+"profile.age" = "العمر";
+"profile.my_goals" = "أهدافي";
+"profile.edit" = "تعديل الملف الشخصي";
+"profile.logout" = "تسجيل الخروج";
+"profile.guest_title" = "حساب زائر";
+"profile.guest_message" = "قم بتسجيل الدخول أو إنشاء حساب لحفظ تقدمك.";
+"profile.login_register" = "تسجيل الدخول / إنشاء حساب";
+"login.sign_in" = "تسجيل الدخول";
+"login.invalid_credentials" = "بيانات الاعتماد غير صالحة";
+"login.or_sign_in_with" = "أو سجّل الدخول باستخدام";
+"onboarding.weekly_rate.title" = "كم عدد أيام التدريب في الأسبوع؟";
+"onboarding.weekly_rate.subtitle" = "اختر عدد الأيام التي تخطط للتدريب فيها كل أسبوع.";
+"onboarding.days.title" = "أيام تدريبك";
+"onboarding.days.subtitle" = "اختر الأيام التي تفضلها للتدريب.";
+"onboarding.days.per_week" = "أيام في الأسبوع";
+"onboarding.days.choose_days" = "اختر أيام التدريب";
+"onboarding.days.matchday" = "يوم المباراة";
+"onboarding.days.ready" = "أنت جاهز!";
+"onboarding.days.select_one_more" = "اختر يومًا آخر";
+"onboarding.days.select_n_more" = "اختر %d أيام أخرى";
+"onboarding.days.select_at_least_one" = "اختر يومًا واحدًا على الأقل";
+"nutrition.tips_items" = "نصائح: %@";
+"nutrition.to_avoid_items" = "لتجنب: %@";
+"nutrition.to_favor_items" = "لتفضيل: %@";
+
+/* شائع */
+"common.next" = "التالي";
+"common.ok" = "حسنًا";
+
+/* التطبيق */
+"app.title" = "ديبودي";
+
+/* اللغات */
+"language.english" = "الإنجليزية";
+"language.french" = "الفرنسية";
+"language.arabic" = "العربية";
+"language.system" = "النظام";
+
+/* الإعداد الأولي - المقدمة */
+"onboarding.intro.title" = "مرحبًا بك في ديبودي";
+"onboarding.intro.subtitle" = "لنخصص تدريبك وتغذيتك.";
+"onboarding.intro.start" = "ابدأ";
+
+/* الإعداد الأولي - التخصص */
+"onboarding.discipline.title" = "اختر تخصصك";
+"onboarding.discipline.subtitle" = "سنخصص خطتك وفقًا لرياضتك.";
+
+/* الإعداد الأولي - الوزن */
+"onboarding.weight.title" = "ما هو وزنك الحالي؟";
+"onboarding.common.subtitle" = "يمكنك تعديل ذلك لاحقًا من ملفك الشخصي.";
+"onboarding.weight.value" = "%0.1f كغ";
+
+/* الإعداد الأولي - الطول */
+"onboarding.height.title" = "ما هو طولك؟";
+"onboarding.height.picker" = "الطول";
+"onboarding.height.value" = "%d سم";
+
+/* الإعداد الأولي - العمر */
+"onboarding.age.title" = "كم عمرك؟";
+"onboarding.age.subtitle" = "اختر عمرك.";
+"onboarding.age.picker" = "العمر";
+
+/* الإعداد الأولي - مستوى اللياقة */
+"onboarding.fitness_level.title" = "ما هو مستواك؟";
+"onboarding.fitness_level.subtitle" = "اختر الخيار الذي يصفك بشكل أفضل.";
+
+/* الإعداد الأولي - ملف اللاعب */
+"onboarding.profile.title" = "اختر ملفك";
+"onboarding.profile.subtitle" = "اختر الأسلوب الذي يناسبك.";
+"onboarding.profile.goalkeepers" = "حراس المرمى";
+"onboarding.profile.defenders" = "المدافعون";
+"onboarding.profile.midfielders" = "لاعبو الوسط";
+"onboarding.profile.attackers" = "المهاجمون";
+
+/* الإعداد الأولي - أيام التدريب */
+"onboarding.days.title" = "اختر أيام تدريبك";
+"onboarding.days.subtitle" = "سنبني خطة تناسب أسبوعك.";
+"onboarding.days.per_week" = "أيام في الأسبوع";
+"onboarding.days.choose_days" = "اختر الأيام";
+"onboarding.days.matchday" = "يوم المباراة (اختياري)";
+"onboarding.days.ready" = "رائع! أنت جاهز.";
+"onboarding.days.select_one_more" = "اختر يومًا إضافيًا.";
+"onboarding.days.select_n_more" = "اختر %d أيام إضافية.";
+"onboarding.days.select_at_least_one" = "اختر يومًا واحدًا على الأقل.";
+
+/* الإعداد الأولي - الملخص */
+"onboarding.summary.title" = "خطتك المخصصة";
+"onboarding.summary.generating" = "جارٍ إنشاء المعاينة...";
+"onboarding.summary.nutrition" = "التغذية";
+"onboarding.summary.calories" = "حوالي %d سعرة حرارية يوميًا";
+"onboarding.summary.meal_items.none" = "لا عناصر";
+"onboarding.summary.workout" = "التمرين";
+"onboarding.summary.exercises_count" = "%d تمارين";
+"onboarding.summary.regenerate" = "إعادة إنشاء المعاينة";
+"onboarding.summary.finish" = "إنهاء";
+
+/* مفاتيح مضافة لتغطية التطبيق بالكامل */
+/* تسجيل الدخول - مفاتيح إضافية و Apple */
+"login.error.empty_fields" = "يرجى إدخال البريد الإلكتروني وكلمة المرور.";
+"login.error.invalid_email" = "يرجى إدخال بريد إلكتروني صالح.";
+"login.error_generic" = "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+"login.dont_have_account" = "ليس لديك حساب؟";
+"login.quick_biometrics" = "تسجيل سريع";
+"login.apple.error_title" = "تسجيل الدخول باستخدام Apple";
+"login.apple.unknown_error" = "حدث خطأ غير معروف. تأكد من تسجيل الدخول إلى iCloud ثم أعد المحاولة.";
+"login.apple.failed" = "فشل تسجيل الدخول باستخدام Apple. يرجى المحاولة مرة أخرى.";
+"login.apple.invalid_response" = "استجابة غير صالحة من Apple. يرجى المحاولة مرة أخرى.";
+"login.apple.not_handled" = "لم تتم معالجة الطلب. يرجى المحاولة مرة أخرى.";
+"login.apple.not_interactive" = "يتعذر المتابعة بطريقة تفاعلية. يرجى المحاولة مرة أخرى.";
+"login.apple.matched_excluded_credential" = "لا يمكن استخدام بيانات الاعتماد المحددة هنا.";
+"login.apple.credential_import" = "فشل استيراد بيانات الاعتماد.";
+"login.apple.credential_export" = "فشل تصدير بيانات الاعتماد.";
+"login.apple.prefer_sign_in_with_apple" = "يرجى تسجيل الدخول باستخدام Apple لهذا الحساب.";
+"login.apple.device_not_configured_for_passkey_creation" = "الجهاز غير مُعد لإنشاء مفتاح مرور.";
+"login.apple.generic_error" = "%@";
+
+/* الرئيسية/لوحة المعلومات/المزيد */
+"home.title" = "الرئيسية";
+"dashboard.title" = "لوحة المعلومات";
+"common.more" = "المزيد";
+
+/* كينيه والصحة */
+"kine.unavailable" = "بيانات الصحة غير متاحة على هذا الجهاز.";
+
+/* أداء الواجهة */
+"menu.performance" = "الأداء";
+"menu.reduceEffects" = "تقليل التأثيرات البصرية";
+
+/* التغذية */
+"nutrition.title" = "التغذية";
+
+/* الوجبات */
+"meal.breakfast" = "إفطار";
+"meal.lunch" = "غداء";
+"meal.dinner" = "عشاء";
+
+/* التصحيح */
+"debug.title" = "تصحيح";
+"debug.versionPrefix" = "الإصدار";
+"debug.languagePrefix" = "اللغة";
+"debug.appStatePrefix" = "حالة التطبيق";
+"debug.openNutritionDemo" = "فتح عرض التغذية";
+
+/* الإعداد الأولي - موقع التدريب */
+"onboarding.location.title" = "أين تفضل أن تتدرب؟";
+"onboarding.location.subtitle" = "اختر الموقع الرئيسي لتمارينك.";
+
+"reminder.settings.title" = "التذكيرات";
+"reminder.schedule.button" = "جدولة";
+"reminder.section.times" = "الأوقات";
+"reminder.label.breakfast" = "الفطور";
+"reminder.picker.breakfastTime" = "وقت الفطور";
+"reminder.label.lunch" = "الغداء";
+"reminder.picker.lunchTime" = "وقت الغداء";
+"reminder.label.dinner" = "العشاء";
+"reminder.picker.dinnerTime" = "وقت العشاء";
+"reminder.label.workout" = "التمرين";
+"reminder.picker.workoutTime" = "وقت التمرين";
+"reminder.section.weekend" = "عطلة نهاية الأسبوع";
+"reminder.toggle.useWeekendTimes" = "استخدام أوقات مختلفة في عطلة نهاية الأسبوع";
+"reminder.picker.weekendBreakfast" = "وقت الفطور (عطلة نهاية الأسبوع)";
+"reminder.picker.weekendLunch" = "وقت الغداء (عطلة نهاية الأسبوع)";
+"reminder.picker.weekendDinner" = "وقت العشاء (عطلة نهاية الأسبوع)";
+"reminder.picker.weekendWorkout" = "وقت التمرين (عطلة نهاية الأسبوع)";
+"reminder.section.weekdays" = "أيام الأسبوع";
+
+"reminder.notification.breakfast.title" = "الفطور";
+"reminder.notification.breakfast.body" = "حان وقت فطور صحي.";
+"reminder.notification.lunch.title" = "الغداء";
+"reminder.notification.lunch.body" = "زوّد جسمك بطاقة مع غداء متوازن.";
+"reminder.notification.dinner.title" = "العشاء";
+"reminder.notification.dinner.body" = "اختم يومك بعشاء مغذٍ.";
+"reminder.notification.workout.title" = "التمرين";
+"reminder.notification.workout.body" = "حان وقت الحركة!";
+
+"menu.quickActions" = "إجراءات سريعة";
+"menu.quickActions.openNutrition" = "فتح التغذية";
+"menu.quickActions.openWorkout" = "فتح التمرين";
+"menu.quickActions.openDashboard" = "فتح لوحة المعلومات";
+"menu.quickActions.rescheduleDefaults" = "إعادة جدولة التذكيرات الافتراضية";
+"menu.quickActions.cancelAll" = "إلغاء كل التذكيرات";
+"menu.quickActions.notificationSettings" = "إعدادات الإشعارات";
+
+"meal.breakfast" = "الفطور";
+"meal.lunch" = "الغداء";
+"meal.dinner" = "العشاء";
+
+// Tabs
+"tab.workouts" = "التمارين";
+"tab.kine" = "العلاج الحركي";
+"tab.nutrition" = "التغذية";
+"tab.goals" = "الأهداف";
+"tab.blog" = "مدونة";
+"tab.profile" = "الملف الشخصي";
+"tab.progress" = "التقدم";
+
+// Profile
+"profile.anonymous" = "مستخدم مجهول";
+"profile.weight" = "الوزن";
+"profile.height" = "الطول";
+"profile.age" = "العمر";
+"profile.my_goals" = "أهدافي";
+"profile.edit" = "تعديل الملف";
+"profile.logout" = "تسجيل الخروج";
+"profile.guest_title" = "أنت تتصفح كضيف";
+"profile.guest_message" = "سجّل الدخول لحفظ بياناتك ومزامنتها عبر الأجهزة.";
+"profile.login_register" = "تسجيل الدخول / إنشاء حساب";
+
+// Kine
+"kine.title" = "العلاج الحركي";
+"kine.category" = "الفئة";
+"kine.category.mobility" = "المرونة";
+"kine.category.strengthening" = "التقوية";
+"kine.category.upperBody" = "الجزء العلوي";
+"kine.category.lowerBody" = "الجزء السفلي";
+"kine.no_results" = "لا توجد نتائج";
+"kine.open_reels" = "فتح Reels";
+"kine.video" = "فيديو";
+"video.available" = "فيديو";
+"search.placeholder" = "بحث";
+"swipe.favorite" = "مفضلة";
+"swipe.unfavorite" = "إزالة من المفضلة";
+"swipe.done" = "تم";
+
+// Nutrition
+"nutrition.my_goals" = "أهدافي";
+"nutrition.tab.activity" = "النشاط";
+"nutrition.tab.diet" = "النظام الغذائي";
+"unit.kcal" = "سعرة";
+"nutrition.summary.meal_items.none" = "لا توجد عناصر";
+"nutrition.generating_plan" = "جارٍ إنشاء الخطة…";
+"workout.todays_session" = "جلسة اليوم";
+"common.estimated" = "تقديري";
+"common.duration" = "المدة";
+"unit.minutes_value" = "%d دقيقة";
+"workout.exercises" = "تمارين";
+"workout.items_count" = "%d عناصر";
+"nutrition.health_advice" = "نصائح صحية";
+"nutrition.to_avoid_items" = "يُفضل تجنب: %@";
+"nutrition.to_favor_items" = "يُفضل: %@";
+"nutrition.tips_items" = "نصائح: %@";
+"nutrition.tuner.vegetarian" = "نباتي";
+"nutrition.tuner.breakfast" = "الفطور";
+"nutrition.tuner.breakfast_placeholder" = "ماذا تفضّل على الفطور؟";
+"nutrition.quick_tuner" = "ضبط سريع للتغذية";
+
+// Common
+"common.cancel" = "إلغاء";
+"common.save" = "حفظ";
+
+/* Added Arabic translations for Dashboard, Workouts Themes & Plan, Workouts Exercises, Warmup/Finishers/Bonus */
+
+"dashboard.overview" = "نظرة عامة";
+"dashboard.steps" = "الخطوات";
+"dashboard.heartRate" = "معدل ضربات القلب";
+"dashboard.calories" = "السعرات الحرارية";
+"dashboard.progress" = "التقدم";
+"dashboard.progress.subtitle" = "تابع قياساتك مع مرور الوقت";
+"dashboard.progress.weight" = "الوزن";
+"dashboard.progress.waist" = "الخصر";
+"dashboard.progress.chest" = "الصدر";
+
+"workouts.plan.title" = "خطة التمرين";
+"workouts.theme.strength_endurance" = "تحمل القوة";
+"workouts.theme.max_strength" = "القوة القصوى";
+"workouts.theme.hypertrophy" = "زيادة الكتلة العضلية";
+"workouts.theme.weight_loss" = "فقدان الوزن";
+"workouts.theme.general_fitness" = "اللياقة العامة";
+"workouts.theme.repeat_efforts" = "تكرار الجهود";
+"workouts.theme.explosive_strength" = "القوة الانفجارية";
+"workouts.theme.power" = "القدرة";
+"workouts.theme.endurance" = "التحمل";
+"workouts.theme.resistance" = "المقاومة";
+"workouts.theme.sprint" = "السرعة";
+"workouts.theme.reinforcement" = "التقوية";
+"workouts.theme.burn_calories" = "حرق السعرات";
+"workouts.theme.cardio" = "كارديو";
+"workouts.theme.box_to_box" = "بوكس تو بوكس";
+
+"workouts.ex.warmup_walk" = "مشية إحماء";
+"workouts.ex.cooldown_walk" = "مشية تهدئة";
+"workouts.ex.warmup_brisk_walk" = "مشية سريعة إحماء";
+"workouts.ex.steady_cycling" = "دراجة ثابتة";
+"workouts.ex.elliptical_trainer" = "إليبتكال";
+"workouts.ex.cooldown_slow_walk" = "مشية بطيئة تهدئة";
+"workouts.ex.warmup" = "إحماء";
+"workouts.ex.continuous_effort" = "جهد مستمر";
+"workouts.ex.cooldown" = "تهدئة";
+"workouts.ex.set_45_90s" = "سلسلة 45–90 ثانية";
+"workouts.ex.set_2_4min" = "سلسلة 2–4 دقائق";
+"workouts.ex.jogging" = "هرولة";
+"workouts.ex.short_intervals" = "فواصل قصيرة";
+"workouts.ex.effort_20s" = "جهد 20ث";
+"workouts.ex.recovery_20s" = "استشفاء 20ث";
+"workouts.ex.wall_sit" = "جلوس الحائط";
+"workouts.ex.step_up" = "صعود منصة";
+"workouts.ex.clamshells" = "كلامشِل";
+"workouts.ex.banded_side_walk" = "مشية جانبية بحزام";
+"workouts.ex.calf_raises" = "رفع الساقين (سمانة)";
+"workouts.ex.seated_calf_raises" = "رفع السمانة جلوس";
+"workouts.ex.romanian_deadlift" = "رفعة رومانية";
+"workouts.ex.good_mornings" = "غود مورنينغز";
+"workouts.ex.glute_bridge" = "جسر الألوية";
+"workouts.ex.donkey_kicks" = "ركلات الحمار";
+"workouts.ex.ankle_circles" = "دوائر الكاحل";
+"workouts.ex.banded_ankle_dorsiflexion" = "ثني ظهري للكاحل بحزام";
+"workouts.ex.copenhagen_plank" = "بلانك كوبنهاغن";
+"workouts.ex.side_lunge" = "اندفاع جانبي";
+"workouts.ex.plantar_fascia_stretch" = "تمطيط اللفافة الأخمصية";
+"workouts.ex.heel_slides" = "انزلاقات الكعب";
+"workouts.ex.burpees" = "برْبيز";
+"workouts.ex.box_jumps" = "قفزات صندوق";
+"workouts.ex.push_press" = "بُش برس";
+"workouts.ex.clean_and_jerk" = "كلين آند جيرك";
+"workouts.ex.snatch" = "سناتش";
+"workouts.ex.power_bike" = "دراجة قدرة";
+"workouts.ex.power_treadmill" = "جري قدرة";
+"workouts.ex.elliptical_intense" = "إليبتكال مكثف";
+"workouts.ex.uphill_walk" = "مشية صعود";
+"workouts.ex.endurance_bike" = "دراجة تحمل";
+"workouts.ex.endurance_treadmill" = "جري تحمل";
+"workouts.ex.walk" = "مشية";
+"workouts.ex.elliptical_normal" = "إليبتكال (عادي)";
+"workouts.ex.resistance_treadmill" = "جري مقاومة";
+"workouts.ex.rower" = "آلة التجديف";
+"workouts.ex.uphill_sprint" = "عدو صعود";
+"workouts.ex.bench_press_barbell" = "بنش برس بار";
+"workouts.ex.full_squat" = "سكوات كامل";
+"workouts.ex.larry_scott_curl" = "لف بايسبس لاري سكوت";
+"workouts.ex.incline_db_press" = "ضغط دمبل مائل";
+
+"workouts.warmup.6_10min" = "إحماء 6–10 دقائق";
+"workouts.warmup.dynamic_stretching" = "تمارين تمدد ديناميكية";
+"workouts.finisher.cardio_3_5_abs" = "3–5 دقائق كارديو + تمارين بطن";
+"workouts.finisher.cardio_12_15_abs" = "12–15 دقيقة كارديو + تمارين بطن";
+"workouts.finisher.cooldown_5min" = "تهدئة 5 دقائق";
+"workouts.bonus.abs" = "بطن";
+"workouts.bonus.pushups" = "ضغط";
+"workouts.bonus.plank" = "بلانك";
+
+"onboarding.skipAsGuest" = "تخطي كضيف";
+
+"workouts.search.placeholder" = "ابحث عن التمارين";
+"workouts.filter.completed" = "المكتملة فقط";
+
+"workouts.location.gym" = "صالات الأثقال";
+"workouts.location.outdoor" = "في الهواء الطلق";
+"workouts.location.home" = "المنزل";
+"workouts.location.cardio_gym" = "كارديو (صالات)";
+
+"workouts.level.beginner" = "مبتدئ";
+"workouts.level.intermediate" = "متوسط";
+"workouts.level.advanced" = "متقدم";
+
+"video.unavailable" = "الفيديو غير متاح";
+
+"kine.favorites_only" = "المفضلة فقط";
+"kine.sort" = "فرز";
+"kine.sort.recommended" = "موصى به";
+"kine.sort.name" = "الاسم";
+"kine.exercises" = "تمارين";
+
+"workout.mark_complete" = "وضع علامة مكتمل";
+"workout.watch_video" = "مشاهدة الفيديو";
+
+
+/*
+  Localizable.strings (Arabic)
+  FootballApp
+  
+  Created for Arabic localization
+*/
+
+// MARK: - Common
+"common.ok" = "حسناً";
+"common.cancel" = "إلغاء";
+"common.save" = "حفظ";
+"common.delete" = "حذف";
+"common.edit" = "تعديل";
+"common.done" = "تم";
+"common.next" = "التالي";
+"common.back" = "رجوع";
+"common.skip" = "تخطي";
+"common.loading" = "جارٍ التحميل...";
+"common.error" = "خطأ";
+"common.success" = "نجح";
+"common.yes" = "نعم";
+"common.no" = "لا";
+"common.confirm" = "تأكيد";
+"common.search" = "بحث";
+
+// MARK: - Authentication
+"login.email_placeholder" = "البريد الإلكتروني";
+"login.password_placeholder" = "كلمة المرور";
+"login.signin_button" = "تسجيل الدخول";
+"login.signup_button" = "إنشاء حساب";
+"login.no_account" = "ليس لديك حساب؟";
+"login.or_signin_with" = "أو سجل الدخول باستخدام";
+"login.forgot_password" = "نسيت كلمة المرور؟";
+"login.remember_me" = "تذكرني";
+
+"register.title" = "إنشاء حساب";
+"register.name_placeholder" = "الاسم الكامل";
+"register.email_placeholder" = "البريد الإلكتروني";
+"register.password_placeholder" = "كلمة المرور";
+"register.confirm_password_placeholder" = "تأكيد كلمة المرور";
+"register.signup_button" = "إنشاء حساب";
+"register.have_account" = "لديك حساب بالفعل؟";
+"register.signin_button" = "تسجيل الدخول";
+"register.terms" = "بالتسجيل، أنت توافق على شروطنا وسياسة الخصوصية";
+
+// MARK: - Language Picker
+"language.picker" = "اللغة";
+"language.english" = "English";
+"language.french" = "Français";
+"language.arabic" = "العربية";
+
+// MARK: - Tabs
+"tab.dashboard" = "لوحة التحكم";
+"tab.workout" = "التمارين";
+"tab.nutrition" = "التغذية";
+"tab.kine" = "التمارين البدنية";
+"tab.profile" = "الملف الشخصي";
+
+// MARK: - Dashboard
+"dashboard.title" = "لوحة التحكم";
+"dashboard.welcome" = "مرحباً بعودتك";
+"dashboard.progress.weight" = "الوزن";
+"dashboard.progress.waist" = "محيط الخصر";
+"dashboard.progress.chest" = "محيط الصدر";
+"dashboard.progress.hips" = "محيط الوركين";
+"dashboard.recent_activity" = "النشاط الأخير";
+"dashboard.no_data" = "لا توجد بيانات متاحة";
+"dashboard.refresh" = "تحديث";
+
+// MARK: - Workout
+"workout.title" = "التمارين";
+"workout.generate_plan" = "إنشاء خطة جديدة";
+"workout.log_progress" = "تسجيل التقدم";
+"workout.start_workout" = "بدء التمرين التالي";
+"workout.show_stats" = "عرض الإحصائيات";
+"workout.hide_stats" = "إخفاء الإحصائيات";
+"workout.no_workouts" = "لا توجد تمارين متاحة";
+"workout.warmup" = "الإحماء";
+"workout.finisher" = "التمرين الختامي";
+"workout.exercises" = "التمارين";
+"workout.sets" = "المجموعات";
+"workout.reps" = "التكرارات";
+"workout.recovery" = "الراحة";
+"workout.rest_day" = "يوم راحة";
+"workout.completed" = "مكتمل";
+"workout.mark_complete" = "وضع علامة مكتمل";
+
+// MARK: - Nutrition
+"nutrition.title" = "التغذية";
+"nutrition.overview" = "نظرة عامة";
+"nutrition.meals" = "الوجبات";
+"nutrition.advice" = "النصائح";
+"nutrition.daily_calories" = "السعرات اليومية";
+"nutrition.macros" = "العناصر الغذائية الكبرى";
+"nutrition.protein" = "البروتين";
+"nutrition.carbs" = "الكربوهيدرات";
+"nutrition.fats" = "الدهون";
+"nutrition.breakfast" = "الإفطار";
+"nutrition.lunch" = "الغداء";
+"nutrition.dinner" = "العشاء";
+"nutrition.snacks" = "الوجبات الخفيفة";
+"nutrition.refresh_plan" = "تحديث الخطة";
+"nutrition.update_preferences" = "تحديث التفضيلات";
+"nutrition.no_plan" = "لا توجد خطة تغذية متاحة";
+"nutrition.water_intake" = "استهلاك الماء";
+"nutrition.meal_timing" = "مواعيد الوجبات";
+
+// MARK: - Kine (Exercises)
+"kine.title" = "التمارين";
+"kine.all_exercises" = "جميع التمارين";
+"kine.favorites" = "المفضلة";
+"kine.search_placeholder" = "البحث عن تمارين...";
+"kine.category" = "الفئة";
+"kine.sub_category" = "الفئة الفرعية";
+"kine.met_value" = "قيمة MET";
+"kine.instructions" = "التعليمات";
+"kine.video_unavailable" = "لا يوجد فيديو متاح";
+"kine.add_favorite" = "إضافة إلى المفضلة";
+"kine.remove_favorite" = "إزالة من المفضلة";
+"kine.filter" = "تصفية";
+"kine.sort" = "ترتيب";
+
+// MARK: - Profile
+"profile.title" = "الملف الشخصي";
+"profile.edit" = "تعديل الملف الشخصي";
+"profile.personal_info" = "المعلومات الشخصية";
+"profile.name" = "الاسم";
+"profile.email" = "البريد الإلكتروني";
+"profile.age" = "العمر";
+"profile.height" = "الطول";
+"profile.weight" = "الوزن";
+"profile.gender" = "الجنس";
+"profile.settings" = "الإعدادات";
+"profile.notifications" = "الإشعارات";
+"profile.theme" = "المظهر";
+"profile.language" = "اللغة";
+"profile.logout" = "تسجيل الخروج";
+"profile.account" = "الحساب";
+"profile.preferences" = "التفضيلات";
+"profile.about" = "حول";
+"profile.help" = "المساعدة والدعم";
+"profile.privacy" = "سياسة الخصوصية";
+"profile.terms" = "شروط الخدمة";
+
+// MARK: - Onboarding
+"onboarding.welcome" = "مرحباً بك في ديبودي";
+"onboarding.skip" = "تخطي";
+"onboarding.continue" = "متابعة";
+"onboarding.finish" = "إنهاء";
+"onboarding.discipline" = "ما هي رياضتك؟";
+"onboarding.position" = "ما هو مركزك؟";
+"onboarding.level" = "ما هو مستواك؟";
+"onboarding.goal" = "ما هو هدفك؟";
+"onboarding.in_club" = "هل أنت في نادٍ؟";
+"onboarding.injury" = "هل لديك أي إصابات؟";
+"onboarding.training_days" = "كم يوم تتدرب في الأسبوع؟";
+"onboarding.training_location" = "أين تفضل التدريب؟";
+"onboarding.gym" = "صالة رياضية";
+"onboarding.home" = "المنزل";
+"onboarding.outdoor" = "في الهواء الطلق";
+
+// MARK: - Settings
+"settings.title" = "الإعدادات";
+"settings.general" = "عام";
+"settings.account" = "الحساب";
+"settings.notifications" = "الإشعارات";
+"settings.appearance" = "المظهر";
+"settings.theme" = "السمة";
+"settings.theme.light" = "فاتح";
+"settings.theme.dark" = "داكن";
+"settings.theme.system" = "النظام";
+"settings.language" = "اللغة";
+"settings.units" = "الوحدات";
+"settings.units.metric" = "متري";
+"settings.units.imperial" = "إمبراطوري";
+"settings.reminders" = "التذكيرات";
+"settings.workout_reminders" = "تذكيرات التمارين";
+"settings.meal_reminders" = "تذكيرات الوجبات";
+"settings.privacy" = "الخصوصية";
+"settings.data" = "البيانات والتخزين";
+"settings.clear_cache" = "مسح ذاكرة التخزين المؤقت";
+"settings.version" = "الإصدار";
+
+// MARK: - Errors
+"error.network" = "خطأ في الشبكة. يرجى التحقق من اتصالك.";
+"error.auth" = "فشل المصادقة. يرجى المحاولة مرة أخرى.";
+"error.invalid_credentials" = "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+"error.email_taken" = "هذا البريد الإلكتروني مسجل بالفعل.";
+"error.weak_password" = "كلمة المرور ضعيفة جداً.";
+"error.unknown" = "حدث خطأ غير معروف.";
+"error.try_again" = "يرجى المحاولة مرة أخرى.";
+"error.loading_failed" = "فشل تحميل البيانات.";
+
+// MARK: - Success Messages
+"success.login" = "مرحباً بعودتك!";
+"success.register" = "تم إنشاء الحساب بنجاح!";
+"success.saved" = "تم حفظ التغييرات بنجاح!";
+"success.workout_completed" = "عمل رائع! اكتمل التمرين!";
+"success.progress_logged" = "تم تسجيل التقدم بنجاح!";
+
+// MARK: - Empty States
+"empty.workouts" = "لا توجد تمارين متاحة بعد";
+"empty.workouts.description" = "أنشئ خطة التمرين الأولى للبدء!";
+"empty.nutrition" = "لا توجد خطة تغذية متاحة بعد";
+"empty.nutrition.description" = "أكمل ملفك الشخصي للحصول على خطة تغذية مخصصة!";
+"empty.exercises" = "لم يتم العثور على تمارين";
+"empty.exercises.description" = "حاول تعديل البحث أو الفلاتر.";
+"empty.favorites" = "لا توجد مفضلات بعد";
+"empty.favorites.description" = "ابدأ بإضافة تمارين إلى المفضلة!";
+
+// MARK: - Placeholders
+"placeholder.search" = "بحث...";
+"placeholder.name" = "أدخل اسمك";
+"placeholder.email" = "أدخل بريدك الإلكتروني";
+"placeholder.password" = "أدخل كلمة المرور";
+"placeholder.notes" = "أضف ملاحظات...";
+
+// MARK: - Units
+"unit.kg" = "كجم";
+"unit.lbs" = "رطل";
+"unit.cm" = "سم";
+"unit.ft" = "قدم";
+"unit.in" = "بوصة";
+"unit.calories" = "سعرة";
+"unit.grams" = "جم";
+"unit.ml" = "مل";
+"unit.liters" = "لتر";
+
+// MARK: - Days of Week
+"day.monday" = "الإثنين";
+"day.tuesday" = "الثلاثاء";
+"day.wednesday" = "الأربعاء";
+"day.thursday" = "الخميس";
+"day.friday" = "الجمعة";
+"day.saturday" = "السبت";
+"day.sunday" = "الأحد";
+
+// MARK: - Misc
+"train_smarter" = "تدرب بذكاء أكبر، العب بشكل أفضل";
+"app_name" = "ديبودي";
+"loading_message" = "جارٍ تحميل بياناتك...";
+"no_video_available" = "لا يوجد فيديو متاح";
+
+/*
+  Localizable.strings (Arabic)
+  FootballApp
+  
+  Arabic localization strings
+*/
+
+// MARK: - Common
+"common.ok" = "حسناً";
+"common.cancel" = "إلغاء";
+"common.done" = "تم";
+"common.save" = "حفظ";
+"common.delete" = "حذف";
+"common.edit" = "تعديل";
+"common.add" = "إضافة";
+"common.refresh" = "تحديث";
+"common.retry" = "إعادة المحاولة";
+"common.skip" = "تخطي";
+"common.next" = "التالي";
+"common.back" = "رجوع";
+"common.close" = "إغلاق";
+"common.continue" = "متابعة";
+"common.today" = "اليوم";
+"common.loading" = "جاري التحميل...";
+"common.error" = "خطأ";
+
+// MARK: - Alert
+"alert.error.title" = "خطأ";
+"alert.button.ok" = "حسناً";
+
+// MARK: - Splash Screen
+"splash.title" = "داينا ترين";
+"splash.subtitle" = "مدربك الشخصي";
+
+// MARK: - App Introduction
+"intro.skip" = "تخطي";
+"intro.swipe" = "اسحب للمتابعة";
+
+// Welcome Page
+"intro.welcome.title" = "داينا ترين";
+"intro.welcome.subtitle" = "رحلة تدريبك الشخصية";
+
+// Features Page
+"intro.features.header" = "كل ما تحتاجه";
+"intro.features.subheader" = "حل شامل لأهدافك الرياضية";
+"intro.features.training.title" = "تدريب ذكي";
+"intro.features.training.description" = "خطط تدريب مخصصة حسب أهدافك";
+"intro.features.nutrition.title" = "دليل التغذية";
+"intro.features.nutrition.description" = "خطط وجبات مخصصة ونصائح غذائية";
+"intro.features.recovery.title" = "تتبع التعافي";
+"intro.features.recovery.description" = "راقب صحتك وتقدم تعافيك";
+"intro.features.progress.title" = "تحليل التقدم";
+"intro.features.progress.description" = "تتبع إنجازاتك وتحسيناتك";
+
+// Language Selection Page
+"intro.language.title" = "اختر لغتك";
+"intro.language.subtitle" = "حدد لغتك المفضلة";
+
+// Ready Page
+"intro.ready.title" = "هل أنت مستعد للبدء؟";
+"intro.ready.subtitle" = "ابدأ تحولك اليوم";
+"intro.ready.button" = "ابدأ الآن";
+
+// MARK: - Onboarding
+"onboarding.loading.title" = "جاري تحضير رحلتك";
+"onboarding.loading.subtitle" = "إعداد تجربتك الشخصية";
+"onboarding.error.title" = "خطأ في الاتصال";
+"onboarding.error.retry" = "إعادة المحاولة";
+"onboarding.skip" = "تخطي";
+
+// Intro
+"onboarding.intro.title" = "مرحباً بك في داينا ترين";
+"onboarding.intro.subtitle" = "لنخصص تجربة تدريبك";
+"onboarding.intro.button" = "ابدأ";
+
+// Gender Selection
+"onboarding.gender.title" = "ما هو جنسك؟";
+"onboarding.gender.subtitle" = "يساعدنا هذا في تخصيص خطتك";
+"onboarding.gender.male" = "ذكر";
+"onboarding.gender.female" = "أنثى";
+
+// Age Selection
+"onboarding.age.title" = "كم عمرك؟";
+"onboarding.age.subtitle" = "عمرك يساعدنا في تحسين تدريبك";
+"onboarding.age.years" = "سنة";
+
+// Height & Weight
+"onboarding.height_weight.title" = "قياساتك";
+"onboarding.height_weight.subtitle" = "ساعدنا في حساب مؤشر كتلة جسمك واحتياجاتك من السعرات";
+"onboarding.height_weight.height" = "الطول";
+"onboarding.height_weight.weight" = "الوزن";
+"onboarding.height_weight.cm" = "سم";
+"onboarding.height_weight.kg" = "كجم";
+
+// Discipline Selection
+"onboarding.discipline.title" = "اختر رياضتك";
+"onboarding.discipline.subtitle" = "ما هي الرياضة التي تمارسها؟";
+
+// Player Profile
+"onboarding.player_profile.title" = "مركزك";
+"onboarding.player_profile.subtitle" = "حدد مركز لعبك";
+
+// Fitness Level
+"onboarding.fitness_level.title" = "مستوى اللياقة";
+"onboarding.fitness_level.subtitle" = "كيف تقيم لياقتك الحالية؟";
+"onboarding.fitness_level.beginner" = "مبتدئ";
+"onboarding.fitness_level.intermediate" = "متوسط";
+"onboarding.fitness_level.advanced" = "متقدم";
+
+// Training Location
+"onboarding.training_location.title" = "أين تتدرب؟";
+"onboarding.training_location.subtitle" = "حدد بيئة التدريب المفضلة لديك";
+"onboarding.training_location.gym" = "صالة رياضية";
+"onboarding.training_location.home" = "المنزل";
+"onboarding.training_location.outdoor" = "في الهواء الطلق";
+
+// Training Days
+"onboarding.training_days.title" = "جدول التدريب";
+"onboarding.training_days.subtitle" = "كم يوماً في الأسبوع؟";
+"onboarding.training_days.days" = "أيام في الأسبوع";
+
+// Training Preferences
+"onboarding.training_preferences.title" = "تفضيلات التدريب";
+"onboarding.training_preferences.subtitle" = "ما نوع التدريب الذي تفضله؟";
+
+// Goal Selection
+"onboarding.goal.title" = "ما هو هدفك؟";
+"onboarding.goal.subtitle" = "اختر هدفك الرياضي الرئيسي";
+"onboarding.goal.lose_weight" = "إنقاص الوزن";
+"onboarding.goal.build_muscle" = "بناء العضلات";
+"onboarding.goal.maintain" = "الحفاظ على الوزن";
+"onboarding.goal.improve_endurance" = "تحسين التحمل";
+
+// Ideal Weight
+"onboarding.ideal_weight.title" = "الوزن المستهدف";
+"onboarding.ideal_weight.subtitle" = "ما هو وزنك المستهدف؟";
+"onboarding.ideal_weight.kg" = "كجم";
+
+// Birth Date
+"onboarding.birth_date.title" = "تاريخ الميلاد";
+"onboarding.birth_date.subtitle" = "متى ولدت؟";
+
+// Activity Level
+"onboarding.activity_level.title" = "النشاط اليومي";
+"onboarding.activity_level.subtitle" = "ما مدى نشاطك خارج التدريب؟";
+"onboarding.activity_level.sedentary" = "قليل الحركة";
+"onboarding.activity_level.light" = "نشيط قليلاً";
+"onboarding.activity_level.moderate" = "نشيط بشكل معتدل";
+"onboarding.activity_level.very" = "نشيط جداً";
+
+// Morphology
+"onboarding.morphology.title" = "نوع الجسم";
+"onboarding.morphology.subtitle" = "حدد نوع جسمك";
+"onboarding.morphology.ectomorph" = "إكتومورف";
+"onboarding.morphology.mesomorph" = "ميزومورف";
+"onboarding.morphology.endomorph" = "إندومورف";
+
+// Hormonal Issues
+"onboarding.hormonal.title" = "الحالة الصحية";
+"onboarding.hormonal.subtitle" = "هل لديك أي مشاكل هرمونية؟";
+"onboarding.hormonal.yes" = "نعم";
+"onboarding.hormonal.no" = "لا";
+
+// Vegetarian
+"onboarding.vegetarian.title" = "التفضيلات الغذائية";
+"onboarding.vegetarian.subtitle" = "هل أنت نباتي؟";
+"onboarding.vegetarian.yes" = "نعم";
+"onboarding.vegetarian.no" = "لا";
+
+// Goal Achievement
+"onboarding.goal_achievement.title" = "الجدول الزمني";
+"onboarding.goal_achievement.subtitle" = "متى تريد تحقيق هدفك؟";
+"onboarding.goal_achievement.months" = "شهر";
+
+"onboarding.completion.title" = "كل شيء جاهز!";
+"onboarding.completion.subtitle" = "خطتك الشخصية جاهزة";
+"onboarding.completion.button" = "ابدأ التدريب";
+
+// MARK: - Authentication
+"auth.login.title" = "مرحباً بعودتك";
+"auth.login.subtitle" = "سجل الدخول للمتابعة";
+"auth.login.email" = "البريد الإلكتروني";
+"auth.login.password" = "كلمة المرور";
+"auth.login.button" = "تسجيل الدخول";
+"auth.login.forgot_password" = "نسيت كلمة المرور؟";
+"auth.login.no_account" = "ليس لديك حساب؟";
+"auth.login.sign_up" = "إنشاء حساب";
+
+"auth.register.title" = "إنشاء حساب";
+"auth.register.subtitle" = "انضم إلى داينا ترين اليوم";
+"auth.register.name" = "الاسم الكامل";
+"auth.register.email" = "البريد الإلكتروني";
+"auth.register.password" = "كلمة المرور";
+"auth.register.confirm_password" = "تأكيد كلمة المرور";
+"auth.register.button" = "إنشاء حساب";
+"auth.register.have_account" = "لديك حساب بالفعل؟";
+"auth.register.sign_in" = "تسجيل الدخول";
+
+"auth.error.invalid_email" = "يرجى إدخال عنوان بريد إلكتروني صالح";
+"auth.error.password_too_short" = "يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل";
+"auth.error.passwords_dont_match" = "كلمات المرور غير متطابقة";
+"auth.error.fields_empty" = "يرجى ملء جميع الحقول";
+
+// MARK: - Main Tabs
+"tab.workout" = "التدريب";
+"tab.nutrition" = "التغذية";
+"tab.kine" = "التعافي";
+"tab.profile" = "الملف الشخصي";
+
+// MARK: - Workout
+"workout.title" = "التدريبات";
+"workout.today" = "تدريب اليوم";
+"workout.upcoming" = "القادم";
+"workout.completed" = "مكتمل";
+"workout.rest_day" = "يوم راحة";
+"workout.start" = "بدء التدريب";
+"workout.continue" = "متابعة";
+"workout.complete" = "إنهاء التدريب";
+"workout.exercises" = "تمارين";
+"workout.duration" = "المدة";
+"workout.calories" = "السعرات";
+"workout.sets" = "مجموعات";
+"workout.reps" = "تكرارات";
+"workout.kg" = "كجم";
+"workout.no_workouts" = "لا توجد تدريبات مجدولة";
+"workout.rest_and_recover" = "استرح وتعافى";
+
+// MARK: - Nutrition
+"nutrition.title" = "التغذية";
+"nutrition.overview" = "نظرة عامة";
+"nutrition.meals" = "الوجبات";
+"nutrition.advice" = "نصائح";
+"nutrition.loading" = "جاري تحميل خطة التغذية...";
+"nutrition.loading.subtitle" = "جاري تحضير خطتك الشخصية...";
+
+"nutrition.overview.daily_calorie_target" = "هدف السعرات اليومي";
+"nutrition.macronutrients" = "المغذيات الكبرى";
+"nutrition.protein" = "البروتين";
+"nutrition.carbs" = "الكربوهيدرات";
+"nutrition.fats" = "الدهون";
+
+"nutrition.hydration.title" = "الترطيب";
+"nutrition.hydration.subtitle" = "تتبع استهلاكك اليومي من الماء";
+"nutrition.hydration.glasses" = "أكواب";
+"nutrition.hydration.target" = "الهدف";
+"nutrition.hydration.clear" = "مسح";
+
+"nutrition.meal.items_count" = "%d عنصر";
+"nutrition.meal.breakfast" = "الإفطار";
+"nutrition.meal.lunch" = "الغداء";
+"nutrition.meal.dinner" = "العشاء";
+"nutrition.meal.snack" = "وجبة خفيفة";
+
+"nutrition.empty.title" = "لا توجد خطة تغذية";
+"nutrition.empty.description" = "احصل على خطة التغذية الشخصية للبدء.";
+"nutrition.empty.button" = "الحصول على خطة التغذية";
+"nutrition.fetching" = "جاري الحصول...";
+
+"nutrition.date_picker.today" = "اليوم";
+"nutrition.date_picker.done" = "تم";
+"nutrition.date_picker.cancel" = "إلغاء";
+
+"nutrition.advice.title" = "نصائح غذائية";
+"nutrition.advice.empty" = "لا توجد نصائح غذائية متاحة";
+"nutrition.advice.foods_to_avoid" = "أطعمة يجب تجنبها";
+"nutrition.advice.foods_to_eat" = "أطعمة يجب تناولها";
+"nutrition.advice.natural_remedies" = "علاجات طبيعية";
+
+"nutrition.today_target" = "هدف اليوم";
+"nutrition.water" = "الماء";
+"nutrition.viewing_plan" = "عرض خطة التغذية لـ %@";
+
+// MARK: - Recovery (Kine)
+"kine.title" = "التعافي";
+"kine.measurements" = "القياسات";
+"kine.health" = "الصحة";
+"kine.sleep" = "النوم";
+"kine.weight" = "الوزن";
+"kine.body_fat" = "دهون الجسم";
+"kine.muscle_mass" = "الكتلة العضلية";
+"kine.heart_rate" = "معدل نبضات القلب";
+"kine.blood_pressure" = "ضغط الدم";
+"kine.hours" = "ساعات";
+"kine.kg" = "كجم";
+"kine.bpm" = "نبضة/دقيقة";
+"kine.add_measurement" = "إضافة قياس";
+"kine.no_data" = "لا توجد بيانات متاحة";
+"kine.track_progress" = "تتبع تقدم تعافيك";
+
+// MARK: - Profile
+"profile.title" = "الملف الشخصي";
+"profile.settings" = "الإعدادات";
+"profile.account" = "الحساب";
+"profile.edit_profile" = "تعديل الملف الشخصي";
+"profile.preferences" = "التفضيلات";
+"profile.language" = "اللغة";
+"profile.theme" = "السمة";
+"profile.notifications" = "الإشعارات";
+"profile.privacy" = "الخصوصية";
+"profile.terms" = "الشروط والأحكام";
+"profile.support" = "الدعم";
+"profile.about" = "حول";
+"profile.version" = "الإصدار";
+"profile.logout" = "تسجيل الخروج";
+"profile.delete_account" = "حذف الحساب";
+
+"profile.stats.workouts_completed" = "تدريبات مكتملة";
+"profile.stats.calories_burned" = "سعرات محروقة";
+"profile.stats.active_days" = "أيام نشطة";
+"profile.stats.current_streak" = "السلسلة الحالية";
+
+"profile.theme.light" = "فاتح";
+"profile.theme.dark" = "داكن";
+"profile.theme.system" = "النظام";
+
+// MARK: - Settings
+"settings.title" = "الإعدادات";
+"settings.general" = "عام";
+"settings.appearance" = "المظهر";
+"settings.notifications.title" = "الإشعارات";
+"settings.notifications.workouts" = "تذكيرات التدريب";
+"settings.notifications.meals" = "تذكيرات الوجبات";
+"settings.notifications.water" = "تذكيرات الماء";
+"settings.units" = "الوحدات";
+"settings.units.metric" = "متري";
+"settings.units.imperial" = "إمبراطوري";
+
+// MARK: - Errors
+"error.network" = "خطأ في اتصال الشبكة";
+"error.server" = "خطأ في الخادم. يرجى المحاولة لاحقاً";
+"error.unknown" = "حدث خطأ غير معروف";
+"error.no_data" = "لا توجد بيانات متاحة";
+"error.load_failed" = "فشل تحميل البيانات";
+"error.save_failed" = "فشل الحفظ";
+"error.delete_failed" = "فشل الحذف";
+
+// MARK: - Date & Time
+"date.yesterday" = "أمس";
+"date.tomorrow" = "غداً";
+"date.days_ago" = "منذ %d أيام";
+"date.in_days" = "خلال %d أيام";
+"date.week" = "أسبوع";
+"date.month" = "شهر";
+"date.year" = "سنة";
+
+// MARK: - Units
+"units.kg" = "كجم";
+"units.lbs" = "رطل";
+"units.cm" = "سم";
+"units.ft" = "قدم";
+"units.kcal" = "سعرة";
+"units.g" = "جم";
+"units.ml" = "مل";
+"units.oz" = "أونصة";
+"units.min" = "دقيقة";
+"units.sec" = "ثانية";
+"units.hours" = "ساعات";
+
+// MARK: - Language Names
+"language.system" = "النظام";
+"language.english" = "English";
+"language.french" = "Français";
+"language.arabic" = "العربية";
+
+/*
+  Localizable.strings (Arabic)
+  FootballApp
+  
+  Arabic localization strings
+*/
+
+// MARK: - Common
+"common.ok" = "حسناً";
+"common.cancel" = "إلغاء";
+"common.done" = "تم";
+"common.save" = "حفظ";
+"common.delete" = "حذف";
+"common.edit" = "تعديل";
+"common.add" = "إضافة";
+"common.refresh" = "تحديث";
+"common.retry" = "إعادة المحاولة";
+"common.skip" = "تخطي";
+"common.next" = "التالي";
+"common.back" = "رجوع";
+"common.close" = "إغلاق";
+"common.continue" = "متابعة";
+"common.today" = "اليوم";
+"common.loading" = "جاري التحميل...";
+"common.error" = "خطأ";
+
+// MARK: - Alert
+"alert.error.title" = "خطأ";
+"alert.button.ok" = "حسناً";
+
+// MARK: - Splash Screen
+"splash.title" = "داينا ترين";
+"splash.subtitle" = "مدربك الشخصي";
+
+// MARK: - App Introduction
+"intro.skip" = "تخطي";
+"intro.swipe" = "اسحب للمتابعة";
+
+// Welcome Page
+"intro.welcome.title" = "داينا ترين";
+"intro.welcome.subtitle" = "رحلة تدريبك الشخصية";
+
+// Features Page
+"intro.features.header" = "كل ما تحتاجه";
+"intro.features.subheader" = "حل شامل لأهدافك الرياضية";
+"intro.features.training.title" = "تدريب ذكي";
+"intro.features.training.description" = "خطط تدريب مخصصة حسب أهدافك";
+"intro.features.nutrition.title" = "دليل التغذية";
+"intro.features.nutrition.description" = "خطط وجبات مخصصة ونصائح غذائية";
+"intro.features.recovery.title" = "تتبع التعافي";
+"intro.features.recovery.description" = "راقب صحتك وتقدم تعافيك";
+"intro.features.progress.title" = "تحليل التقدم";
+"intro.features.progress.description" = "تتبع إنجازاتك وتحسيناتك";
+
+// Language Selection Page
+"intro.language.title" = "اختر لغتك";
+"intro.language.subtitle" = "حدد لغتك المفضلة";
+
+// Ready Page
+"intro.ready.title" = "هل أنت مستعد للبدء؟";
+"intro.ready.subtitle" = "ابدأ تحولك اليوم";
+"intro.ready.button" = "ابدأ الآن";
+
+// MARK: - Onboarding
+"onboarding.loading.title" = "جاري تحضير رحلتك";
+"onboarding.loading.subtitle" = "إعداد تجربتك الشخصية";
+"onboarding.error.title" = "خطأ في الاتصال";
+"onboarding.error.retry" = "إعادة المحاولة";
+"onboarding.skip" = "تخطي";
+
+// Intro
+"onboarding.intro.title" = "مرحباً بك في داينا ترين";
+"onboarding.intro.subtitle" = "لنخصص تجربة تدريبك";
+"onboarding.intro.button" = "ابدأ";
+
+// Gender Selection
+"onboarding.gender.title" = "ما هو جنسك؟";
+"onboarding.gender.subtitle" = "يساعدنا هذا في تخصيص خطتك";
+"onboarding.gender.male" = "ذكر";
+"onboarding.gender.female" = "أنثى";
+
+// Age Selection
+"onboarding.age.title" = "كم عمرك؟";
+"onboarding.age.subtitle" = "عمرك يساعدنا في تحسين تدريبك";
+"onboarding.age.years" = "سنة";
+
+// Height & Weight
+"onboarding.height_weight.title" = "قياساتك";
+"onboarding.height_weight.subtitle" = "ساعدنا في حساب مؤشر كتلة جسمك واحتياجاتك من السعرات";
+"onboarding.height_weight.height" = "الطول";
+"onboarding.height_weight.weight" = "الوزن";
+"onboarding.height_weight.cm" = "سم";
+"onboarding.height_weight.kg" = "كجم";
+
+// Discipline Selection
+"onboarding.discipline.title" = "اختر رياضتك";
+"onboarding.discipline.subtitle" = "ما هي الرياضة التي تمارسها؟";
+
+// Player Profile
+"onboarding.player_profile.title" = "مركزك";
+"onboarding.player_profile.subtitle" = "حدد مركز لعبك";
+
+// Fitness Level
+"onboarding.fitness_level.title" = "مستوى اللياقة";
+"onboarding.fitness_level.subtitle" = "كيف تقيم لياقتك الحالية؟";
+"onboarding.fitness_level.beginner" = "مبتدئ";
+"onboarding.fitness_level.intermediate" = "متوسط";
+"onboarding.fitness_level.advanced" = "متقدم";
+
+// Training Location
+"onboarding.training_location.title" = "أين تتدرب؟";
+"onboarding.training_location.subtitle" = "حدد بيئة التدريب المفضلة لديك";
+"onboarding.training_location.gym" = "صالة رياضية";
+"onboarding.training_location.home" = "المنزل";
+"onboarding.training_location.outdoor" = "في الهواء الطلق";
+
+// Training Days
+"onboarding.training_days.title" = "جدول التدريب";
+"onboarding.training_days.subtitle" = "كم يوماً في الأسبوع؟";
+"onboarding.training_days.days" = "أيام في الأسبوع";
+
+// Training Preferences
+"onboarding.training_preferences.title" = "تفضيلات التدريب";
+"onboarding.training_preferences.subtitle" = "ما نوع التدريب الذي تفضله؟";
+
+// Goal Selection
+"onboarding.goal.title" = "ما هو هدفك؟";
+"onboarding.goal.subtitle" = "اختر هدفك الرياضي الرئيسي";
+"onboarding.goal.lose_weight" = "إنقاص الوزن";
+"onboarding.goal.build_muscle" = "بناء العضلات";
+"onboarding.goal.maintain" = "الحفاظ على الوزن";
+"onboarding.goal.improve_endurance" = "تحسين التحمل";
+
+// Ideal Weight
+"onboarding.ideal_weight.title" = "الوزن المستهدف";
+"onboarding.ideal_weight.subtitle" = "ما هو وزنك المستهدف؟";
+"onboarding.ideal_weight.kg" = "كجم";
+
+// Birth Date
+"onboarding.birth_date.title" = "تاريخ الميلاد";
+"onboarding.birth_date.subtitle" = "متى ولدت؟";
+
+// Activity Level
+"onboarding.activity_level.title" = "النشاط اليومي";
+"onboarding.activity_level.subtitle" = "ما مدى نشاطك خارج التدريب؟";
+"onboarding.activity_level.sedentary" = "قليل الحركة";
+"onboarding.activity_level.light" = "نشيط قليلاً";
+"onboarding.activity_level.moderate" = "نشيط بشكل معتدل";
+"onboarding.activity_level.very" = "نشيط جداً";
+
+// Morphology
+"onboarding.morphology.title" = "نوع الجسم";
+"onboarding.morphology.subtitle" = "حدد نوع جسمك";
+"onboarding.morphology.ectomorph" = "إكتومورف";
+"onboarding.morphology.mesomorph" = "ميزومورف";
+"onboarding.morphology.endomorph" = "إندومورف";
+
+// Hormonal Issues
+"onboarding.hormonal.title" = "الحالة الصحية";
+"onboarding.hormonal.subtitle" = "هل لديك أي مشاكل هرمونية؟";
+"onboarding.hormonal.yes" = "نعم";
+"onboarding.hormonal.no" = "لا";
+
+// Vegetarian
+"onboarding.vegetarian.title" = "التفضيلات الغذائية";
+"onboarding.vegetarian.subtitle" = "هل أنت نباتي؟";
+"onboarding.vegetarian.yes" = "نعم";
+"onboarding.vegetarian.no" = "لا";
+
+// Goal Achievement
+"onboarding.goal_achievement.title" = "الجدول الزمني";
+"onboarding.goal_achievement.subtitle" = "متى تريد تحقيق هدفك؟";
+"onboarding.goal_achievement.months" = "شهر";
+
+"onboarding.completion.title" = "كل شيء جاهز!";
+"onboarding.completion.subtitle" = "خطتك الشخصية جاهزة";
+"onboarding.completion.button" = "ابدأ التدريب";
+
+// MARK: - Authentication
+"auth.login.title" = "مرحباً بعودتك";
+"auth.login.subtitle" = "سجل الدخول للمتابعة";
+"auth.login.email" = "البريد الإلكتروني";
+"auth.login.password" = "كلمة المرور";
+"auth.login.button" = "تسجيل الدخول";
+"auth.login.forgot_password" = "نسيت كلمة المرور؟";
+"auth.login.no_account" = "ليس لديك حساب؟";
+"auth.login.sign_up" = "إنشاء حساب";
+
+"auth.register.title" = "إنشاء حساب";
+"auth.register.subtitle" = "انضم إلى داينا ترين اليوم";
+"auth.register.name" = "الاسم الكامل";
+"auth.register.email" = "البريد الإلكتروني";
+"auth.register.password" = "كلمة المرور";
+"auth.register.confirm_password" = "تأكيد كلمة المرور";
+"auth.register.button" = "إنشاء حساب";
+"auth.register.have_account" = "لديك حساب بالفعل؟";
+"auth.register.sign_in" = "تسجيل الدخول";
+
+"auth.error.invalid_email" = "يرجى إدخال عنوان بريد إلكتروني صالح";
+"auth.error.password_too_short" = "يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل";
+"auth.error.passwords_dont_match" = "كلمات المرور غير متطابقة";
+"auth.error.fields_empty" = "يرجى ملء جميع الحقول";
+
+// MARK: - Main Tabs
+"tab.workout" = "التدريب";
+"tab.nutrition" = "التغذية";
+"tab.kine" = "التعافي";
+"tab.profile" = "الملف الشخصي";
+
+// MARK: - Workout
+"workout.title" = "التدريبات";
+"workout.today" = "تدريب اليوم";
+"workout.upcoming" = "القادم";
+"workout.completed" = "مكتمل";
+"workout.rest_day" = "يوم راحة";
+"workout.start" = "بدء التدريب";
+"workout.continue" = "متابعة";
+"workout.complete" = "إنهاء التدريب";
+"workout.exercises" = "تمارين";
+"workout.duration" = "المدة";
+"workout.calories" = "السعرات";
+"workout.sets" = "مجموعات";
+"workout.reps" = "تكرارات";
+"workout.kg" = "كجم";
+"workout.no_workouts" = "لا توجد تدريبات مجدولة";
+"workout.rest_and_recover" = "استرح وتعافى";
+
+// MARK: - Nutrition
+"nutrition.title" = "التغذية";
+"nutrition.overview" = "نظرة عامة";
+"nutrition.meals" = "الوجبات";
+"nutrition.advice" = "نصائح";
+"nutrition.loading" = "جاري تحميل خطة التغذية...";
+"nutrition.loading.subtitle" = "جاري تحضير خطتك الشخصية...";
+
+"nutrition.overview.daily_calorie_target" = "هدف السعرات اليومي";
+"nutrition.macronutrients" = "المغذيات الكبرى";
+"nutrition.protein" = "البروتين";
+"nutrition.carbs" = "الكربوهيدرات";
+"nutrition.fats" = "الدهون";
+
+"nutrition.hydration.title" = "الترطيب";
+"nutrition.hydration.subtitle" = "تتبع استهلاكك اليومي من الماء";
+"nutrition.hydration.glasses" = "أكواب";
+"nutrition.hydration.target" = "الهدف";
+"nutrition.hydration.clear" = "مسح";
+
+"nutrition.meal.items_count" = "%d عنصر";
+"nutrition.meal.breakfast" = "الإفطار";
+"nutrition.meal.lunch" = "الغداء";
+"nutrition.meal.dinner" = "العشاء";
+"nutrition.meal.snack" = "وجبة خفيفة";
+
+"nutrition.empty.title" = "لا توجد خطة تغذية";
+"nutrition.empty.description" = "احصل على خطة التغذية الشخصية للبدء.";
+"nutrition.empty.button" = "الحصول على خطة التغذية";
+"nutrition.fetching" = "جاري الحصول...";
+
+"nutrition.date_picker.today" = "اليوم";
+"nutrition.date_picker.done" = "تم";
+"nutrition.date_picker.cancel" = "إلغاء";
+
+"nutrition.advice.title" = "نصائح غذائية";
+"nutrition.advice.empty" = "لا توجد نصائح غذائية متاحة";
+"nutrition.advice.foods_to_avoid" = "أطعمة يجب تجنبها";
+"nutrition.advice.foods_to_eat" = "أطعمة يجب تناولها";
+"nutrition.advice.natural_remedies" = "علاجات طبيعية";
+
+"nutrition.today_target" = "هدف اليوم";
+"nutrition.water" = "الماء";
+"nutrition.viewing_plan" = "عرض خطة التغذية لـ %@";
+
+// MARK: - Recovery (Kine)
+"kine.title" = "التعافي";
+"kine.measurements" = "القياسات";
+"kine.health" = "الصحة";
+"kine.sleep" = "النوم";
+"kine.weight" = "الوزن";
+"kine.body_fat" = "دهون الجسم";
+"kine.muscle_mass" = "الكتلة العضلية";
+"kine.heart_rate" = "معدل نبضات القلب";
+"kine.blood_pressure" = "ضغط الدم";
+"kine.hours" = "ساعات";
+"kine.kg" = "كجم";
+"kine.bpm" = "نبضة/دقيقة";
+"kine.add_measurement" = "إضافة قياس";
+"kine.no_data" = "لا توجد بيانات متاحة";
+"kine.track_progress" = "تتبع تقدم تعافيك";
+
+// MARK: - Profile
+"profile.title" = "الملف الشخصي";
+"profile.settings" = "الإعدادات";
+"profile.account" = "الحساب";
+"profile.edit_profile" = "تعديل الملف الشخصي";
+"profile.preferences" = "التفضيلات";
+"profile.language" = "اللغة";
+"profile.theme" = "السمة";
+"profile.notifications" = "الإشعارات";
+"profile.privacy" = "الخصوصية";
+"profile.terms" = "الشروط والأحكام";
+"profile.support" = "الدعم";
+"profile.about" = "حول";
+"profile.version" = "الإصدار";
+"profile.logout" = "تسجيل الخروج";
+"profile.delete_account" = "حذف الحساب";
+
+"profile.stats.workouts_completed" = "تدريبات مكتملة";
+"profile.stats.calories_burned" = "سعرات محروقة";
+"profile.stats.active_days" = "أيام نشطة";
+"profile.stats.current_streak" = "السلسلة الحالية";
+
+"profile.theme.light" = "فاتح";
+"profile.theme.dark" = "داكن";
+"profile.theme.system" = "النظام";
+
+// MARK: - Settings
+"settings.title" = "الإعدادات";
+"settings.general" = "عام";
+"settings.appearance" = "المظهر";
+"settings.notifications.title" = "الإشعارات";
+"settings.notifications.workouts" = "تذكيرات التدريب";
+"settings.notifications.meals" = "تذكيرات الوجبات";
+"settings.notifications.water" = "تذكيرات الماء";
+"settings.units" = "الوحدات";
+"settings.units.metric" = "متري";
+"settings.units.imperial" = "إمبراطوري";
+
+// MARK: - Errors
+"error.network" = "خطأ في اتصال الشبكة";
+"error.server" = "خطأ في الخادم. يرجى المحاولة لاحقاً";
+"error.unknown" = "حدث خطأ غير معروف";
+"error.no_data" = "لا توجد بيانات متاحة";
+"error.load_failed" = "فشل تحميل البيانات";
+"error.save_failed" = "فشل الحفظ";
+"error.delete_failed" = "فشل الحذف";
+
+// MARK: - Date & Time
+"date.yesterday" = "أمس";
+"date.tomorrow" = "غداً";
+"date.days_ago" = "منذ %d أيام";
+"date.in_days" = "خلال %d أيام";
+"date.week" = "أسبوع";
+"date.month" = "شهر";
+"date.year" = "سنة";
+
+// MARK: - Units
+"units.kg" = "كجم";
+"units.lbs" = "رطل";
+"units.cm" = "سم";
+"units.ft" = "قدم";
+"units.kcal" = "سعرة";
+"units.g" = "جم";
+"units.ml" = "مل";
+"units.oz" = "أونصة";
+"units.min" = "دقيقة";
+"units.sec" = "ثانية";
+"units.hours" = "ساعات";
+
+// MARK: - Language Names
+"language.system" = "النظام";
+"language.english" = "English";
+"language.french" = "Français";
+"language.arabic" = "العربية";
+
+// MARK: - Additional Keys
+"nutrition.meals.empty" = "لا توجد وجبات مخططة";
+"nutrition.meals_for_date" = "وجبات لـ %@";
+"common.yesterday" = "أمس";
+"common.tomorrow" = "غداً";
+"common.submit" = "إرسال";
+"common.confirm" = "تأكيد";
+"common.in_days" = "خلال %d أيام";
+"common.days_ago" = "منذ %d أيام";
+"button.submit" = "إرسال";
+"button.confirm" = "تأكيد";
+

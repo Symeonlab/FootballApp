@@ -1,0 +1,1394 @@
+/*
+  Localizable.strings (English)
+  FootballApp
+  
+  Created by Symeon Lampadarios
+*/
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.save" = "Save";
+"common.delete" = "Delete";
+"common.edit" = "Edit";
+"common.done" = "Done";
+"common.next" = "Next";
+"common.back" = "Back";
+"common.skip" = "Skip";
+"common.finish" = "Finish";
+"common.loading" = "Loading...";
+"common.error" = "Error";
+"common.success" = "Success";
+"common.yes" = "Yes";
+"common.no" = "No";
+"common.confirm" = "Confirm";
+"common.search" = "Search";
+"common.estimated" = "Estimated";
+"common.duration" = "Duration";
+
+// MARK: - App
+"app.title" = "Dipodi";
+"app_name" = "Dipodi";
+"train_smarter" = "Train smarter, play better";
+
+// MARK: - Authentication
+"login.email_placeholder" = "Email";
+"login.password_placeholder" = "Password";
+"login.signin_button" = "Sign In";
+"login.sign_in" = "Sign In";
+"login.signup_button" = "Sign Up";
+"login.sign_up" = "Sign Up";
+"login.no_account" = "Don't have an account?";
+"login.or_signin_with" = "Or sign in with";
+"login.or_sign_in_with" = "Or sign in with";
+"login.forgot_password" = "Forgot Password?";
+"login.remember_me" = "Remember me";
+"login.continue_as_guest" = "Continue as Guest";
+"login.error.invalid_credentials" = "Invalid Credentials";
+"login.invalid_credentials" = "Invalid email or password.";
+
+"register.title" = "Create New Account";
+"register.subtitle" = "Enter your details to create an account";
+"register.name_placeholder" = "Full Name";
+"register.full_name_placeholder" = "Full Name";
+"register.email_placeholder" = "Email Address";
+"register.password_placeholder" = "Password";
+"register.confirm_password_placeholder" = "Confirm Password";
+"register.signup_button" = "Sign Up";
+"register.have_account" = "Already have an account?";
+"register.already_have_account" = "Already have an account?";
+"register.signin_button" = "Sign In";
+"register.terms" = "By signing up, you agree to our Terms & Privacy Policy";
+
+// MARK: - Language
+"language.picker" = "Language";
+"language.english" = "English";
+"language.french" = "Français";
+"language.arabic" = "العربية";
+"language.system" = "System Default";
+
+// MARK: - Tabs
+"tab.dashboard" = "Dashboard";
+"tab.workouts" = "Workouts";
+"tab.workout" = "Workout";
+"tab.kine" = "Recovery";
+"tab.nutrition" = "Nutrition";
+"tab.goals" = "Goals";
+"tab.blog" = "Blog";
+"tab.profile" = "Profile";
+"tab.progress" = "Progress";
+
+// MARK: - Onboarding
+"onboarding.welcome" = "Welcome to Dipodi";
+"onboarding.intro.title" = "Welcome to Dipodi";
+"onboarding.intro.subtitle" = "To create the best possible workout and nutrition plan for you, we need to ask a few questions. Your answers will help us tailor everything to your specific needs and goals.";
+"onboarding.intro.start" = "Get Started";
+"onboarding.get_started" = "Get Started";
+"onboarding.skip" = "Skip";
+"onboarding.skipAsGuest" = "Skip as Guest";
+"onboarding.continue" = "Continue";
+"onboarding.finish" = "Finish";
+
+"onboarding.discipline" = "What's your discipline?";
+"onboarding.discipline.title" = "Choose your discipline";
+"onboarding.discipline.subtitle" = "We'll tailor your plan based on your sport.";
+
+"onboarding.position" = "What position do you play?";
+"onboarding.profile.title" = "Choose your player profile";
+"onboarding.profile.subtitle" = "Select the style that fits you best.";
+"onboarding.profile.goalkeepers" = "Goalkeepers";
+"onboarding.profile.defenders" = "Defenders";
+"onboarding.profile.midfielders" = "Midfielders";
+"onboarding.profile.attackers" = "Attackers";
+
+"onboarding.level" = "What's your level?";
+"onboarding.fitness_level.title" = "What is your current fitness level?";
+"onboarding.fitness_level.subtitle" = "Choose the option that best describes you.";
+
+"onboarding.goal" = "What's your goal?";
+"onboarding.goal.title" = "What is your primary goal?";
+"onboarding.goal.subtitle" = "This helps us tailor your plan.";
+
+"onboarding.gender.title" = "Gender";
+"onboarding.gender.subtitle" = "Help us to create your personalized plan";
+"onboarding.gender.male" = "Male";
+"onboarding.gender.female" = "Female";
+
+"onboarding.age.title" = "How old are you?";
+"onboarding.age.subtitle" = "Select your age.";
+"onboarding.age.picker" = "Age";
+
+// Birth Date Onboarding
+"onboarding.birthdate.title" = "When's Your Birthday?";
+"onboarding.birthdate.subtitle" = "We need your age to personalize your plan";
+"onboarding.birthdate.select" = "Select your birth date";
+"onboarding.birthdate.age_display" = "Age: %d years";
+"onboarding.birthdate.info_title" = "Why We Need This";
+"onboarding.birthdate.info_description" = "Your age helps us calculate your metabolic rate and customize your nutrition plan for optimal results.";
+
+"onboarding.height_weight.title" = "What are your measurements?";
+"onboarding.height_weight.height" = "Height (cm)";
+"onboarding.height_weight.weight" = "Weight (kg)";
+
+"onboarding.weight.title" = "What is your current weight?";
+"onboarding.common.subtitle" = "You can adjust this later in your profile.";
+"onboarding.weight.value" = "%0.1f kg";
+
+"onboarding.height.title" = "What is your height?";
+"onboarding.height.picker" = "Height";
+"onboarding.height.value" = "%d cm";
+
+"onboarding.in_club" = "Are you in a club?";
+"onboarding.injury" = "Do you have any injuries?";
+
+"onboarding.training_days" = "How many days do you train?";
+"onboarding.training_location.title" = "Where do you prefer to train?";
+"onboarding.training_location" = "Where do you prefer to train?";
+"onboarding.training_preferences.title" = "What do you want to focus on?";
+
+"onboarding.weekly_rate.title" = "How many training days per week?";
+"onboarding.weekly_rate.subtitle" = "Choose how many days you plan to train each week.";
+
+"onboarding.days.title" = "Pick your training days";
+"onboarding.days.subtitle" = "We'll build a plan around your week.";
+"onboarding.days.per_week" = "Days per week";
+"onboarding.days.choose_days" = "Choose training days";
+"onboarding.days.matchday" = "Match day (optional)";
+"onboarding.days.ready" = "Great! You're all set.";
+"onboarding.days.select_one_more" = "Select one more day.";
+"onboarding.days.select_n_more" = "Select %d more days.";
+"onboarding.days.select_at_least_one" = "Select at least one day.";
+
+"onboarding.gym" = "Gym";
+"onboarding.home" = "Home";
+"onboarding.outdoor" = "Outdoor";
+
+"onboarding.summary.title" = "Your Personalized Plan";
+"onboarding.summary.generating" = "Generating your nutrition and workout previews...";
+"onboarding.summary.nutrition" = "Nutrition";
+"onboarding.summary.calories" = "%d kcal / day";
+"onboarding.summary.meal_items.none" = "No items";
+"onboarding.summary.workout" = "Workout";
+"onboarding.summary.exercises_count" = "%d exercises";
+"onboarding.summary.finish" = "Finish";
+"onboarding.summary.regenerate" = "Regenerate";
+
+// MARK: - Dashboard
+"dashboard.title" = "Dashboard";
+"dashboard.welcome" = "Welcome back";
+"dashboard.progress.weight" = "Weight";
+"dashboard.progress.waist" = "Waist";
+"dashboard.progress.chest" = "Chest";
+"dashboard.progress.hips" = "Hips";
+"dashboard.recent_activity" = "Recent Activity";
+"dashboard.no_data" = "No data available";
+"dashboard.refresh" = "Refresh";
+
+// MARK: - Workouts
+"workouts.title" = "Your Workout Plan";
+"workouts.generating_plan" = "Generating your personalized workout plan...";
+"workouts.no_plan.title" = "No Workout Plan Found";
+"workouts.no_plan.subtitle" = "Complete your profile through the onboarding process to get a personalized workout plan.";
+"workouts.no_plan.button" = "Create My Plan";
+"workouts.search.placeholder" = "Search workouts";
+"workouts.filter.completed" = "Completed only";
+
+"workouts.location.gym" = "Gym (Weights)";
+"workouts.location.outdoor" = "Outdoor";
+"workouts.location.home" = "Home";
+"workouts.location.cardio_gym" = "Cardio (Gym)";
+
+"workouts.level.beginner" = "Beginner";
+"workouts.level.intermediate" = "Intermediate";
+"workouts.level.advanced" = "Advanced";
+
+"workout.title" = "Workouts";
+"workout.exercises" = "Exercises";
+"workout.calories" = "Calories";
+"workout.time" = "Time";
+"workout.calories_value" = "%d";
+"workout.time_value" = "~%d min";
+"workout.exercise_list" = "Exercise List";
+"workout.warmup" = "Warmup";
+"workout.cooldown" = "Cooldown";
+"workout.finisher" = "Finisher";
+"workout.start_button" = "Start Workout";
+"workout.start_workout" = "Start Next Workout";
+"workout.time_clock" = "%@";
+"workout.rest" = "Rest";
+"workout.finished" = "Workout Finished!";
+"workout.finish_set" = "Finish Set";
+"workout.skip_rest" = "Skip Rest";
+"workout.generate_plan" = "Generate New Plan";
+"workout.log_progress" = "Log Progress";
+"workout.show_stats" = "Show Stats";
+"workout.hide_stats" = "Hide Stats";
+"workout.no_workouts" = "No workouts available";
+"workout.sets" = "Sets";
+"workout.reps" = "Reps";
+"workout.recovery" = "Recovery";
+"workout.rest_day" = "Rest Day";
+"workout.completed" = "Completed";
+"workout.mark_complete" = "Mark as complete";
+"workout.watch_video" = "Watch video";
+"workout.todays_session" = "Today's session";
+"workout.items_count" = "%d items";
+
+// MARK: - Schedule
+"schedule.title" = "Schedule";
+"schedule.search" = "Search";
+"schedule.all" = "All";
+
+// MARK: - Nutrition
+"nutrition.title" = "Nutrition";
+"nutrition.my_goals" = "My Goals";
+"nutrition.tab.activity" = "Activity";
+"nutrition.tab.diet" = "Diet";
+"nutrition.health_advice" = "Health Advice For You";
+"nutrition.to_avoid" = "To Avoid";
+"nutrition.to_favor" = "To Favor";
+"nutrition.tips" = "Tips";
+"nutrition.generating_plan" = "Generating your personalized nutrition plan...";
+"nutrition.overview" = "Overview";
+"nutrition.meals" = "Meals";
+"nutrition.advice" = "Advice";
+"nutrition.daily_calories" = "Daily Calories";
+"nutrition.macros" = "Macros";
+"nutrition.protein" = "Protein";
+"nutrition.carbs" = "Carbs";
+"nutrition.fats" = "Fats";
+"nutrition.breakfast" = "Breakfast";
+"nutrition.lunch" = "Lunch";
+"nutrition.dinner" = "Dinner";
+"nutrition.snacks" = "Snacks";
+"nutrition.refresh_plan" = "Refresh Plan";
+"nutrition.update_preferences" = "Update Preferences";
+"nutrition.no_plan" = "No nutrition plan available";
+"nutrition.water_intake" = "Water Intake";
+"nutrition.meal_timing" = "Meal Timing";
+"nutrition.summary.meal_items.none" = "No items";
+"nutrition.to_avoid_items" = "To avoid: %@";
+"nutrition.to_favor_items" = "To favor: %@";
+"nutrition.tips_items" = "Tips: %@";
+"nutrition.tuner.vegetarian" = "Vegetarian";
+"nutrition.tuner.breakfast" = "Breakfast";
+"nutrition.tuner.breakfast_placeholder" = "What do you like for breakfast?";
+"nutrition.quick_tuner" = "Quick Nutrition Tuner";
+
+"meal.breakfast" = "Breakfast";
+"meal.lunch" = "Lunch";
+"meal.dinner" = "Dinner";
+
+"unit.kcal" = "kcal";
+
+// MARK: - Kine (Physiotherapy)
+"kine.title" = "Physiotherapy";
+"kine.recovery" = "Recovery";
+"kine.recovery_hub" = "Your Recovery Hub";
+"kine.exercises_available" = "%d exercises available";
+"kine.category" = "Category";
+"kine.all_exercises" = "All Exercises";
+"kine.favorites" = "Favorites";
+"kine.favorites_only" = "Favorites only";
+"kine.search_placeholder" = "Search exercises...";
+"kine.sub_category" = "Sub-category";
+"kine.met_value" = "MET Value";
+"kine.instructions" = "Instructions";
+"kine.video_unavailable" = "No video available";
+"kine.add_favorite" = "Add to Favorites";
+"kine.remove_favorite" = "Remove from Favorites";
+"kine.filter" = "Filter";
+"kine.sort" = "Sort";
+"kine.sort.recommended" = "Recommended";
+"kine.sort.name" = "Name";
+"kine.exercises" = "exercises";
+"kine.category.mobility" = "Mobility";
+"kine.category.strengthening" = "Strengthening";
+"kine.category.upperBody" = "Upper body";
+"kine.category.lowerBody" = "Lower body";
+"kine.no_results" = "No results";
+"kine.no_matching_exercises" = "No matching exercises";
+"kine.no_exercises_found" = "No exercises found";
+"kine.adjust_filters" = "Try adjusting your filters";
+"kine.check_back_later" = "Check back later for new exercises";
+"kine.open_reels" = "Open Reels";
+"kine.reels" = "Reels";
+"kine.video" = "Video";
+"kine.guided_video" = "Guided video • 2–5 min";
+"kine.quick_tips" = "Quick Tips";
+"kine.done" = "Done";
+"kine.favorite" = "Favorite";
+"kine.unfavorite" = "Unfavorite";
+"kine.recovery_tips" = "Recovery Tips";
+
+"video.available" = "VIDEO";
+"video.unavailable" = "Video unavailable";
+
+"search.placeholder" = "Search";
+"swipe.favorite" = "Favorite";
+"swipe.unfavorite" = "Unfavorite";
+"swipe.done" = "Done";
+
+// MARK: - Blog
+"blog.title" = "Blog";
+"blog.detail.title" = "Article";
+"blog.read_more" = "Read more";
+"blog.empty.title" = "No articles yet";
+"blog.empty.subtitle" = "We couldn't find any articles for you right now.";
+"blog.title.training_tips" = "Training tips";
+"blog.summary.training_tips" = "Latest tips for %@ athletes";
+"blog.title.nutrition_basics" = "Nutrition basics";
+"blog.summary.nutrition_basics" = "How to align your meals with your goal: %@";
+"blog.title.recovery" = "Recovery";
+"blog.summary.recovery" = "Smart ways to recover faster and train better.";
+
+// MARK: - Progress
+"progress.title" = "Progress";
+"progress.section.overview" = "Overview";
+"progress.weight_value" = "%d kg";
+"progress.calories_value" = "%d kcal";
+"progress.workouts_value" = "%d workouts";
+
+// MARK: - Profile
+"profile.title" = "Profile";
+"profile.edit" = "Edit Profile";
+"profile.personal_info" = "Personal Information";
+"profile.name" = "Name";
+"profile.email" = "Email";
+"profile.age" = "Age";
+"profile.height" = "Height";
+"profile.weight" = "Weight";
+"profile.gender" = "Gender";
+"profile.settings" = "Settings";
+"profile.notifications" = "Notifications";
+"profile.theme" = "Theme";
+"profile.language" = "Language";
+"profile.logout" = "Log Out";
+"profile.sign_out" = "Sign Out";
+"profile.account" = "Account";
+"profile.preferences" = "Preferences";
+"profile.about" = "About";
+"profile.help" = "Help & Support";
+"profile.privacy" = "Privacy Policy";
+"profile.terms" = "Terms of Service";
+"profile.anonymous" = "Anonymous";
+"profile.my_goals" = "My Goals";
+"profile.guest_title" = "You are browsing as a guest";
+"profile.guest_message" = "Sign in to save your data and sync across devices.";
+"profile.login_register" = "Sign In / Register";
+"profile.welcome_guest" = "Welcome, Guest";
+"profile.guest_cta" = "Sign up or log in to get a personalized experience.";
+"profile.sign_up_or_login" = "Sign Up or Log In";
+"profile.daily_calories" = "Daily Calories";
+"profile.planned_sessions" = "Planned Sessions";
+"profile.kg" = "kg";
+"profile.cm" = "cm";
+"profile.yrs" = "yrs";
+"profile.account_settings" = "Account Settings";
+"profile.support" = "Support";
+"profile.guest" = "Guest";
+"profile.no_email" = "No email";
+"profile.todays_activity" = "Today's Activity";
+"profile.steps" = "Steps";
+"profile.quick_actions" = "Quick Actions";
+"profile.log" = "Log";
+"profile.reminders" = "Reminders";
+"profile.blog" = "Blog";
+"profile.weight_progress_7days" = "Weight Progress (7 days)";
+"profile.no_progress_data" = "No progress data yet";
+"profile.recent_measurements" = "Recent Measurements";
+"profile.no_measurements" = "No measurements logged yet";
+"profile.appearance" = "Appearance";
+"profile.system" = "System";
+
+// MARK: - Goals
+"goal.lose_weight" = "Lose Weight";
+"goal.gain_muscle" = "Gain Muscle Mass";
+"goal.maintain_shape" = "Maintain Shape";
+
+// MARK: - Settings
+"settings.title" = "Settings";
+"settings.general" = "General";
+"settings.account" = "Account";
+"settings.notifications" = "Notifications";
+"settings.appearance" = "Appearance";
+"settings.theme" = "Theme";
+"settings.theme.light" = "Light";
+"settings.theme.dark" = "Dark";
+"settings.theme.system" = "System";
+"settings.language" = "Language";
+"settings.units" = "Units";
+"settings.units.metric" = "Metric";
+"settings.units.imperial" = "Imperial";
+"settings.reminders" = "Reminders";
+"settings.workout_reminders" = "Workout Reminders";
+"settings.meal_reminders" = "Meal Reminders";
+"settings.privacy" = "Privacy";
+"settings.data" = "Data & Storage";
+"settings.clear_cache" = "Clear Cache";
+"settings.version" = "Version";
+
+// MARK: - Reminders
+"reminder.settings.title" = "Reminder Settings";
+"reminder.schedule.button" = "Schedule";
+"reminder.section.times" = "Times";
+"reminder.section.weekdays" = "Weekdays";
+"reminder.section.weekend" = "Weekend";
+"reminder.label.breakfast" = "Breakfast";
+"reminder.picker.breakfastTime" = "Breakfast time";
+"reminder.label.lunch" = "Lunch";
+"reminder.picker.lunchTime" = "Lunch time";
+"reminder.label.dinner" = "Dinner";
+"reminder.picker.dinnerTime" = "Dinner time";
+"reminder.label.workout" = "Workout";
+"reminder.picker.workoutTime" = "Workout time";
+"reminder.toggle.useWeekendTimes" = "Use different times on weekends";
+"reminder.picker.weekendBreakfast" = "Weekend breakfast time";
+"reminder.picker.weekendLunch" = "Weekend lunch time";
+"reminder.picker.weekendDinner" = "Weekend dinner time";
+"reminder.picker.weekendWorkout" = "Weekend workout time";
+
+"reminder.notification.breakfast.title" = "Breakfast";
+"reminder.notification.breakfast.body" = "Time for a healthy breakfast.";
+"reminder.notification.lunch.title" = "Lunch";
+"reminder.notification.lunch.body" = "Refuel with a balanced lunch.";
+"reminder.notification.dinner.title" = "Dinner";
+"reminder.notification.dinner.body" = "Wrap up your day with a nourishing dinner.";
+"reminder.notification.workout.title" = "Workout";
+"reminder.notification.workout.body" = "It's time to move!";
+
+// MARK: - Menu & Quick Actions
+"menu.quickActions" = "Quick Actions";
+"menu.quickActions.openNutrition" = "Open Nutrition";
+"menu.quickActions.openWorkout" = "Open Workout";
+"menu.quickActions.openDashboard" = "Open Dashboard";
+"menu.quickActions.rescheduleDefaults" = "Reschedule default reminders";
+"menu.quickActions.cancelAll" = "Cancel all reminders";
+"menu.quickActions.notificationSettings" = "Notification Settings";
+"menu.language.settings" = "Language Settings";
+"menu.language.change" = "Change Language";
+"menu.theme" = "Theme";
+"menu.theme.system" = "System";
+"menu.theme.light" = "Light";
+"menu.theme.dark" = "Dark";
+"menu.highContrast" = "High Contrast";
+"menu.accentColor" = "Accent Color";
+"menu.accentColor.custom" = "Custom";
+"menu.backgroundMaterial" = "Background Material";
+"menu.resetDefaults" = "Reset Defaults";
+"menu.themeAccessibility" = "Theme & Accessibility";
+
+// MARK: - Colors
+"color.blue" = "Blue";
+"color.purple" = "Purple";
+"color.green" = "Green";
+"color.orange" = "Orange";
+"color.red" = "Red";
+"color.pink" = "Pink";
+"color.teal" = "Teal";
+"color.indigo" = "Indigo";
+"color.yellow" = "Yellow";
+
+// MARK: - Materials
+"material.systemBackground" = "System Background";
+"material.ultraThin" = "Ultra Thin";
+"material.thin" = "Thin";
+"material.regular" = "Regular";
+"material.thick" = "Thick";
+
+// MARK: - Units
+"unit.kg" = "kg";
+"unit.lbs" = "lbs";
+"unit.cm" = "cm";
+"unit.ft" = "ft";
+"unit.in" = "in";
+"unit.calories" = "cal";
+"unit.grams" = "g";
+"unit.ml" = "ml";
+"unit.liters" = "L";
+"unit.minutes_value" = "%d min";
+
+// MARK: - Days of Week
+"day.monday" = "Monday";
+"day.tuesday" = "Tuesday";
+"day.wednesday" = "Wednesday";
+"day.thursday" = "Thursday";
+"day.friday" = "Friday";
+"day.saturday" = "Saturday";
+"day.sunday" = "Sunday";
+
+// MARK: - Errors
+"error.network" = "Network error. Please check your connection.";
+"error.auth" = "Authentication failed. Please try again.";
+"error.invalid_credentials" = "Invalid email or password.";
+"error.email_taken" = "This email is already registered.";
+"error.weak_password" = "Password is too weak.";
+"error.unknown" = "An unknown error occurred.";
+"error.try_again" = "Please try again.";
+"error.loading_failed" = "Failed to load data.";
+
+// MARK: - Success Messages
+"success.login" = "Welcome back!";
+"success.register" = "Account created successfully!";
+"success.saved" = "Changes saved successfully!";
+"success.workout_completed" = "Great job! Workout completed!";
+"success.progress_logged" = "Progress logged successfully!";
+
+// MARK: - Empty States
+"empty.workouts" = "No workouts available yet";
+"empty.workouts.description" = "Generate your first workout plan to get started!";
+"empty.nutrition" = "No nutrition plan available yet";
+"empty.nutrition.description" = "Complete your profile to get a personalized nutrition plan!";
+"empty.exercises" = "No exercises found";
+"empty.exercises.description" = "Try adjusting your search or filters.";
+"empty.favorites" = "No favorites yet";
+"empty.favorites.description" = "Start adding exercises to your favorites!";
+
+// MARK: - Placeholders
+"placeholder.search" = "Search...";
+"placeholder.name" = "Enter your name";
+"placeholder.email" = "Enter your email";
+"placeholder.password" = "Enter your password";
+"placeholder.notes" = "Add notes...";
+
+// MARK: - Misc
+"loading_message" = "Loading your data...";
+"no_video_available" = "No video available";
+
+// MARK: - Recovery Tips
+"recovery.tips.sleep.title" = "Sleep Well";
+"recovery.tips.sleep.description" = "Aim for 7-9 hours of quality sleep each night for optimal recovery.";
+"recovery.tips.hydration.title" = "Stay Hydrated";
+"recovery.tips.hydration.description" = "Drink at least 2-3 liters of water daily to support muscle recovery.";
+"recovery.tips.active.title" = "Active Recovery";
+"recovery.tips.active.description" = "Light movement on rest days promotes blood flow and reduces soreness.";
+"recovery.tips.nutrition.title" = "Proper Nutrition";
+"recovery.tips.nutrition.description" = "Consume protein within 30 minutes post-workout for muscle repair.";
+"recovery.tips.breathing.title" = "Breathing Exercises";
+"recovery.tips.breathing.description" = "Practice deep breathing to reduce stress and improve recovery.";
+"recovery.tips.iceheat.title" = "Ice & Heat";
+"recovery.tips.iceheat.description" = "Alternate between ice baths and heat therapy for inflammation.";
+
+
+* ================================== */
+/* Info Sheets (ExplanationView)      */
+/* ================================== */
+
+"info.about_this_feature" = "About This Feature";
+"info.tips" = "Tips & Best Practices";
+"common.got_it" = "Got it!";
+"common.learn_more" = "Learn More";
+
+/* Training Days Info */
+"info.training_days.title" = "Training Schedule";
+"info.training_days.description" = "Choose the days you plan to train during the week. We'll create a personalized workout plan that fits your schedule. Select at least 3 days for optimal results.";
+"info.training_days.tip1" = "Spread your training days throughout the week for better recovery";
+"info.training_days.tip2" = "Include rest days to prevent overtraining and injuries";
+"info.training_days.tip3" = "Be realistic - choose days you can consistently commit to";
+"info.training_days.tip4" = "You can always adjust your schedule later in settings";
+
+/* Nutrition Plan Info */
+"info.nutrition_plan.title" = "Nutrition Plan";
+"info.nutrition_plan.description" = "Your personalized nutrition plan is based on your goals, activity level, and dietary preferences. It includes daily calorie targets, macro distribution, and meal suggestions.";
+"info.nutrition_plan.tip1" = "Stay within ±10% of your daily calorie target";
+"info.nutrition_plan.tip2" = "Prioritize protein intake for muscle recovery";
+"info.nutrition_plan.tip3" = "Drink at least 2-3 liters of water daily";
+"info.nutrition_plan.tip4" = "Track your meals for better results";
+"info.nutrition_plan.tip5" = "Adjust your plan as your goals change";
+
+/* MET Value Info */
+"info.met.title" = "MET Value";
+"info.met.description" = "MET (Metabolic Equivalent of Task) measures the energy cost of physical activities. One MET is the energy used at rest. Higher MET values mean more intense activities.";
+"info.met.tip1" = "1-3 METs: Light activities (walking, stretching)";
+"info.met.tip2" = "3-6 METs: Moderate activities (brisk walking, cycling)";
+"info.met.tip3" = "6-9 METs: Vigorous activities (running, swimming)";
+"info.met.tip4" = "9+ METs: Very vigorous activities (sprinting, HIIT)";
+"info.met.tip5" = "Use this to gauge workout intensity";
+
+/* Player Profile Info */
+"info.player_profile.title" = "Player Profile";
+"info.player_profile.description" = "Your position and playing style help us customize your training program. We'll focus on the specific physical attributes and skills needed for your role on the field.";
+"info.player_profile.tip1" = "Choose the position you play most often";
+"info.player_profile.tip2" = "Training will focus on position-specific needs";
+"info.player_profile.tip3" = "Includes agility, strength, and endurance work";
+"info.player_profile.tip4" = "You'll get drills relevant to your position";
+
+
+"nutrition.title" = "Nutrition";
+
+"nutrition.info.title" = "Nutrition Plan";
+"nutrition.info.description" = "Your personalized nutrition plan is based on your goals, activity level, and dietary preferences. It includes daily calorie targets, macro distribution, and meal suggestions.";
+"nutrition.info.tip.calorie_target" = "Stay within ±10% of your daily calorie target";
+"nutrition.info.tip.protein_priority" = "Prioritize protein intake for muscle recovery";
+"nutrition.info.tip.hydration" = "Drink at least 2-3 liters of water daily";
+"nutrition.info.tip.track_meals" = "Track your meals for better results";
+
+"nutrition.menu.refresh" = "Refresh Plan";
+"nutrition.menu.update_preferences" = "Update Preferences";
+
+"nutrition.tab.overview" = "Overview";
+"nutrition.tab.meals" = "Meals";
+"nutrition.tab.advice" = "Advice";
+
+"nutrition.overview.daily_calorie_target" = "Daily Calorie Target";
+
+"nutrition.macros.protein.title" = "Protein";
+"nutrition.macros.protein.subtitle" = "Muscle repair";
+"nutrition.macros.carbs.title" = "Carbs";
+"nutrition.macros.carbs.subtitle" = "Energy source";
+"nutrition.macros.fats.title" = "Fats";
+"nutrition.macros.fats.subtitle" = "Hormones";
+
+"nutrition.hydration.title" = "Stay Hydrated";
+"nutrition.hydration.subtitle" = "Aim for 2-3 liters of water daily";
+
+"nutrition.advice.empty.title" = "No Advice Available";
+"nutrition.advice.empty.description" = "Complete your profile to receive personalized nutrition advice";
+
+"nutrition.meal.items_count" = "%lld items";
+
+"nutrition.empty.title" = "No Nutrition Plan Yet";
+"nutrition.empty.description" = "Complete your profile to generate a personalized nutrition plan tailored to your goals.";
+
+"common.refresh" = "Refresh";
+
+/*
+  Localizable.strings (English)
+  FootballApp
+  
+  English localization strings
+*/
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.done" = "Done";
+"common.save" = "Save";
+"common.delete" = "Delete";
+"common.edit" = "Edit";
+"common.add" = "Add";
+"common.refresh" = "Refresh";
+"common.retry" = "Retry";
+"common.skip" = "Skip";
+"common.next" = "Next";
+"common.back" = "Back";
+"common.close" = "Close";
+"common.continue" = "Continue";
+"common.today" = "Today";
+"common.loading" = "Loading...";
+"common.error" = "Error";
+
+// MARK: - Alert
+"alert.error.title" = "Error";
+"alert.button.ok" = "OK";
+
+// MARK: - Splash Screen
+"splash.title" = "DynaTrain";
+"splash.subtitle" = "Your Personal Trainer";
+
+// MARK: - App Introduction
+"intro.skip" = "Skip";
+"intro.swipe" = "Swipe to continue";
+
+// Welcome Page
+"intro.welcome.title" = "DynaTrain";
+"intro.welcome.subtitle" = "Your Personal Training Journey";
+
+// Features Page
+"intro.features.header" = "Everything You Need";
+"intro.features.subheader" = "All-in-one solution for your fitness goals";
+"intro.features.training.title" = "Smart Training";
+"intro.features.training.description" = "Personalized workout plans tailored to your goals";
+"intro.features.nutrition.title" = "Nutrition Guide";
+"intro.features.nutrition.description" = "Customized meal plans and dietary advice";
+"intro.features.recovery.title" = "Recovery Tracking";
+"intro.features.recovery.description" = "Monitor your health and recovery progress";
+"intro.features.progress.title" = "Progress Analytics";
+"intro.features.progress.description" = "Track your achievements and improvements";
+
+// Language Selection Page
+"intro.language.title" = "Choose Your Language";
+"intro.language.subtitle" = "Select your preferred language";
+
+// Ready Page
+"intro.ready.title" = "Ready to Begin?";
+"intro.ready.subtitle" = "Start your transformation today";
+"intro.ready.button" = "Get Started";
+
+// MARK: - Onboarding
+"onboarding.loading.title" = "Preparing Your Journey";
+"onboarding.loading.subtitle" = "Setting up your personalized experience";
+"onboarding.error.title" = "Connection Error";
+"onboarding.error.retry" = "Try Again";
+"onboarding.skip" = "Skip";
+
+// Intro
+"onboarding.intro.title" = "Welcome to DynaTrain";
+"onboarding.intro.subtitle" = "Let's personalize your training experience";
+"onboarding.intro.button" = "Start";
+
+// Gender Selection
+"onboarding.gender.title" = "What's your gender?";
+"onboarding.gender.subtitle" = "This helps us personalize your plan";
+"onboarding.gender.male" = "Male";
+"onboarding.gender.female" = "Female";
+
+// Age Selection
+"onboarding.age.title" = "How old are you?";
+"onboarding.age.subtitle" = "Your age helps us optimize your training";
+"onboarding.age.years" = "years old";
+
+// Height & Weight
+"onboarding.height_weight.title" = "Your Measurements";
+"onboarding.height_weight.subtitle" = "Help us calculate your BMI and caloric needs";
+"onboarding.height_weight.height" = "Height";
+"onboarding.height_weight.weight" = "Weight";
+"onboarding.height_weight.cm" = "cm";
+"onboarding.height_weight.kg" = "kg";
+
+// Discipline Selection
+"onboarding.discipline.title" = "Choose Your Sport";
+"onboarding.discipline.subtitle" = "What sport do you practice?";
+
+// Player Profile
+"onboarding.player_profile.title" = "Your Position";
+"onboarding.player_profile.subtitle" = "Select your playing position";
+
+// Fitness Level
+"onboarding.fitness_level.title" = "Fitness Level";
+"onboarding.fitness_level.subtitle" = "How would you rate your current fitness?";
+"onboarding.fitness_level.beginner" = "Beginner";
+"onboarding.fitness_level.intermediate" = "Intermediate";
+"onboarding.fitness_level.advanced" = "Advanced";
+
+// Training Location
+"onboarding.training_location.title" = "Where do you train?";
+"onboarding.training_location.subtitle" = "Select your preferred training environment";
+"onboarding.training_location.gym" = "Gym";
+"onboarding.training_location.home" = "Home";
+"onboarding.training_location.outdoor" = "Outdoor";
+
+// Training Days
+"onboarding.training_days.title" = "Training Schedule";
+"onboarding.training_days.subtitle" = "How many days per week?";
+"onboarding.training_days.days" = "days per week";
+
+// Training Preferences
+"onboarding.training_preferences.title" = "Training Preferences";
+"onboarding.training_preferences.subtitle" = "What type of training do you prefer?";
+
+// Goal Selection
+"onboarding.goal.title" = "What's Your Goal?";
+"onboarding.goal.subtitle" = "Choose your primary fitness objective";
+"onboarding.goal.lose_weight" = "Lose Weight";
+"onboarding.goal.build_muscle" = "Build Muscle";
+"onboarding.goal.maintain" = "Maintain";
+"onboarding.goal.improve_endurance" = "Improve Endurance";
+
+// Ideal Weight
+"onboarding.ideal_weight.title" = "Target Weight";
+"onboarding.ideal_weight.subtitle" = "What's your goal weight?";
+"onboarding.ideal_weight.kg" = "kg";
+
+// Birth Date
+"onboarding.birth_date.title" = "Date of Birth";
+"onboarding.birth_date.subtitle" = "When were you born?";
+
+// Activity Level
+"onboarding.activity_level.title" = "Daily Activity";
+"onboarding.activity_level.subtitle" = "How active are you outside training?";
+"onboarding.activity_level.sedentary" = "Sedentary";
+"onboarding.activity_level.light" = "Lightly Active";
+"onboarding.activity_level.moderate" = "Moderately Active";
+"onboarding.activity_level.very" = "Very Active";
+
+// Morphology
+"onboarding.morphology.title" = "Body Type";
+"onboarding.morphology.subtitle" = "Select your body type";
+"onboarding.morphology.ectomorph" = "Ectomorph";
+"onboarding.morphology.mesomorph" = "Mesomorph";
+"onboarding.morphology.endomorph" = "Endomorph";
+
+// Hormonal Issues
+"onboarding.hormonal.title" = "Health Conditions";
+"onboarding.hormonal.subtitle" = "Do you have any hormonal issues?";
+"onboarding.hormonal.yes" = "Yes";
+"onboarding.hormonal.no" = "No";
+
+// Vegetarian
+"onboarding.vegetarian.title" = "Dietary Preference";
+"onboarding.vegetarian.subtitle" = "Are you vegetarian or vegan?";
+"onboarding.vegetarian.yes" = "Yes";
+"onboarding.vegetarian.no" = "No";
+
+// Goal Achievement
+"onboarding.goal_achievement.title" = "Timeline";
+"onboarding.goal_achievement.subtitle" = "When do you want to achieve your goal?";
+"onboarding.goal_achievement.months" = "months";
+
+"onboarding.completion.title" = "All Set!";
+"onboarding.completion.subtitle" = "Your personalized plan is ready";
+"onboarding.completion.button" = "Start Training";
+
+// MARK: - Authentication
+"auth.login.title" = "Welcome Back";
+"auth.login.subtitle" = "Sign in to continue";
+"auth.login.email" = "Email";
+"auth.login.password" = "Password";
+"auth.login.button" = "Sign In";
+"auth.login.forgot_password" = "Forgot Password?";
+"auth.login.no_account" = "Don't have an account?";
+"auth.login.sign_up" = "Sign Up";
+
+"auth.register.title" = "Create Account";
+"auth.register.subtitle" = "Join DynaTrain today";
+"auth.register.name" = "Full Name";
+"auth.register.email" = "Email";
+"auth.register.password" = "Password";
+"auth.register.confirm_password" = "Confirm Password";
+"auth.register.button" = "Create Account";
+"auth.register.have_account" = "Already have an account?";
+"auth.register.sign_in" = "Sign In";
+
+"auth.error.invalid_email" = "Please enter a valid email address";
+"auth.error.password_too_short" = "Password must be at least 6 characters";
+"auth.error.passwords_dont_match" = "Passwords don't match";
+"auth.error.fields_empty" = "Please fill in all fields";
+
+// MARK: - Main Tabs
+"tab.workout" = "Workout";
+"tab.nutrition" = "Nutrition";
+"tab.kine" = "Recovery";
+"tab.profile" = "Profile";
+
+// MARK: - Workout
+"workout.title" = "Workouts";
+"workout.today" = "Today's Workout";
+"workout.upcoming" = "Upcoming";
+"workout.completed" = "Completed";
+"workout.rest_day" = "Rest Day";
+"workout.start" = "Start Workout";
+"workout.continue" = "Continue";
+"workout.complete" = "Complete Workout";
+"workout.exercises" = "exercises";
+"workout.duration" = "Duration";
+"workout.calories" = "Calories";
+"workout.sets" = "sets";
+"workout.reps" = "reps";
+"workout.kg" = "kg";
+"workout.no_workouts" = "No workouts scheduled";
+"workout.rest_and_recover" = "Rest and recover";
+
+// MARK: - Nutrition
+"nutrition.title" = "Nutrition";
+"nutrition.overview" = "Overview";
+"nutrition.meals" = "Meals";
+"nutrition.advice" = "Advice";
+"nutrition.loading" = "Loading Nutrition Plan...";
+"nutrition.loading.subtitle" = "Preparing your personalized plan...";
+
+"nutrition.overview.daily_calorie_target" = "Daily Calorie Target";
+"nutrition.macronutrients" = "Macronutrients";
+"nutrition.protein" = "Protein";
+"nutrition.carbs" = "Carbs";
+"nutrition.fats" = "Fats";
+
+"nutrition.hydration.title" = "Hydration";
+"nutrition.hydration.subtitle" = "Track your daily water intake";
+"nutrition.hydration.glasses" = "glasses";
+"nutrition.hydration.target" = "Target";
+"nutrition.hydration.clear" = "Clear";
+
+"nutrition.meal.items_count" = "%d items";
+"nutrition.meal.breakfast" = "Breakfast";
+"nutrition.meal.lunch" = "Lunch";
+"nutrition.meal.dinner" = "Dinner";
+"nutrition.meal.snack" = "Snack";
+
+"nutrition.empty.title" = "No Nutrition Plan";
+"nutrition.empty.description" = "Fetch your personalized nutrition plan to get started.";
+"nutrition.empty.button" = "Fetch Nutrition Plan";
+"nutrition.fetching" = "Fetching...";
+
+"nutrition.date_picker.today" = "Today";
+"nutrition.date_picker.done" = "Done";
+"nutrition.date_picker.cancel" = "Cancel";
+
+"nutrition.advice.title" = "Nutritional Advice";
+"nutrition.advice.empty" = "No nutrition advice available";
+"nutrition.advice.foods_to_avoid" = "Foods to Avoid";
+"nutrition.advice.foods_to_eat" = "Foods to Eat";
+"nutrition.advice.natural_remedies" = "Natural Remedies";
+
+"nutrition.today_target" = "Today's Target";
+"nutrition.water" = "Water";
+"nutrition.viewing_plan" = "Viewing nutrition plan for %@";
+
+// MARK: - Recovery (Kine)
+"kine.title" = "Recovery";
+"kine.measurements" = "Measurements";
+"kine.health" = "Health";
+"kine.sleep" = "Sleep";
+"kine.weight" = "Weight";
+"kine.body_fat" = "Body Fat";
+"kine.muscle_mass" = "Muscle Mass";
+"kine.heart_rate" = "Heart Rate";
+"kine.blood_pressure" = "Blood Pressure";
+"kine.hours" = "hours";
+"kine.kg" = "kg";
+"kine.bpm" = "bpm";
+"kine.add_measurement" = "Add Measurement";
+"kine.no_data" = "No data available";
+"kine.track_progress" = "Track your recovery progress";
+
+// MARK: - Profile
+"profile.title" = "Profile";
+"profile.settings" = "Settings";
+"profile.account" = "Account";
+"profile.edit_profile" = "Edit Profile";
+"profile.preferences" = "Preferences";
+"profile.language" = "Language";
+"profile.theme" = "Theme";
+"profile.notifications" = "Notifications";
+"profile.privacy" = "Privacy";
+"profile.terms" = "Terms & Conditions";
+"profile.support" = "Support";
+"profile.about" = "About";
+"profile.version" = "Version";
+"profile.logout" = "Logout";
+"profile.delete_account" = "Delete Account";
+
+"profile.stats.workouts_completed" = "Workouts Completed";
+"profile.stats.calories_burned" = "Calories Burned";
+"profile.stats.active_days" = "Active Days";
+"profile.stats.current_streak" = "Current Streak";
+
+"profile.theme.light" = "Light";
+"profile.theme.dark" = "Dark";
+"profile.theme.system" = "System";
+
+// MARK: - Settings
+"settings.title" = "Settings";
+"settings.general" = "General";
+"settings.appearance" = "Appearance";
+"settings.notifications.title" = "Notifications";
+"settings.notifications.workouts" = "Workout Reminders";
+"settings.notifications.meals" = "Meal Reminders";
+"settings.notifications.water" = "Water Reminders";
+"settings.units" = "Units";
+"settings.units.metric" = "Metric";
+"settings.units.imperial" = "Imperial";
+
+// MARK: - Errors
+"error.network" = "Network connection error";
+"error.server" = "Server error. Please try again later";
+"error.unknown" = "An unknown error occurred";
+"error.no_data" = "No data available";
+"error.load_failed" = "Failed to load data";
+"error.save_failed" = "Failed to save";
+"error.delete_failed" = "Failed to delete";
+
+// MARK: - Date & Time
+"date.yesterday" = "Yesterday";
+"date.tomorrow" = "Tomorrow";
+"date.days_ago" = "%d days ago";
+"date.in_days" = "in %d days";
+"date.week" = "Week";
+"date.month" = "Month";
+"date.year" = "Year";
+
+// MARK: - Units
+"units.kg" = "kg";
+"units.lbs" = "lbs";
+"units.cm" = "cm";
+"units.ft" = "ft";
+"units.kcal" = "kcal";
+"units.g" = "g";
+"units.ml" = "ml";
+"units.oz" = "oz";
+"units.min" = "min";
+"units.sec" = "sec";
+"units.hours" = "hours";
+
+// MARK: - Language Names
+"language.system" = "System";
+"language.english" = "English";
+"language.french" = "Français";
+"language.arabic" = "العربية";
+
+/*
+  Localizable.strings (English)
+  FootballApp
+  
+  English localization strings
+*/
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.done" = "Done";
+"common.save" = "Save";
+"common.delete" = "Delete";
+"common.edit" = "Edit";
+"common.add" = "Add";
+"common.refresh" = "Refresh";
+"common.retry" = "Retry";
+"common.skip" = "Skip";
+"common.next" = "Next";
+"common.back" = "Back";
+"common.close" = "Close";
+"common.continue" = "Continue";
+"common.today" = "Today";
+"common.loading" = "Loading...";
+"common.error" = "Error";
+
+// MARK: - Alert
+"alert.error.title" = "Error";
+"alert.button.ok" = "OK";
+
+// MARK: - Splash Screen
+"splash.title" = "DynaTrain";
+"splash.subtitle" = "Your Personal Trainer";
+
+// MARK: - App Introduction
+"intro.skip" = "Skip";
+"intro.swipe" = "Swipe to continue";
+
+// Welcome Page
+"intro.welcome.title" = "DynaTrain";
+"intro.welcome.subtitle" = "Your Personal Training Journey";
+
+// Features Page
+"intro.features.header" = "Everything You Need";
+"intro.features.subheader" = "All-in-one solution for your fitness goals";
+"intro.features.training.title" = "Smart Training";
+"intro.features.training.description" = "Personalized workout plans tailored to your goals";
+"intro.features.nutrition.title" = "Nutrition Guide";
+"intro.features.nutrition.description" = "Customized meal plans and dietary advice";
+"intro.features.recovery.title" = "Recovery Tracking";
+"intro.features.recovery.description" = "Monitor your health and recovery progress";
+"intro.features.progress.title" = "Progress Analytics";
+"intro.features.progress.description" = "Track your achievements and improvements";
+
+// Language Selection Page
+"intro.language.title" = "Choose Your Language";
+"intro.language.subtitle" = "Select your preferred language";
+
+// Ready Page
+"intro.ready.title" = "Ready to Begin?";
+"intro.ready.subtitle" = "Start your transformation today";
+"intro.ready.button" = "Get Started";
+
+// MARK: - Onboarding
+"onboarding.loading.title" = "Preparing Your Journey";
+"onboarding.loading.subtitle" = "Setting up your personalized experience";
+"onboarding.error.title" = "Connection Error";
+"onboarding.error.retry" = "Try Again";
+"onboarding.skip" = "Skip";
+
+// Intro
+"onboarding.intro.title" = "Welcome to DynaTrain";
+"onboarding.intro.subtitle" = "Let's personalize your training experience";
+"onboarding.intro.button" = "Start";
+
+// Gender Selection
+"onboarding.gender.title" = "What's your gender?";
+"onboarding.gender.subtitle" = "This helps us personalize your plan";
+"onboarding.gender.male" = "Male";
+"onboarding.gender.female" = "Female";
+
+// Age Selection
+"onboarding.age.title" = "How old are you?";
+"onboarding.age.subtitle" = "Your age helps us optimize your training";
+"onboarding.age.years" = "years old";
+
+// Height & Weight
+"onboarding.height_weight.title" = "Your Measurements";
+"onboarding.height_weight.subtitle" = "Help us calculate your BMI and caloric needs";
+"onboarding.height_weight.height" = "Height";
+"onboarding.height_weight.weight" = "Weight";
+"onboarding.height_weight.cm" = "cm";
+"onboarding.height_weight.kg" = "kg";
+
+// Discipline Selection
+"onboarding.discipline.title" = "Choose Your Sport";
+"onboarding.discipline.subtitle" = "What sport do you practice?";
+
+// Player Profile
+"onboarding.player_profile.title" = "Your Position";
+"onboarding.player_profile.subtitle" = "Select your playing position";
+
+// Fitness Level
+"onboarding.fitness_level.title" = "Fitness Level";
+"onboarding.fitness_level.subtitle" = "How would you rate your current fitness?";
+"onboarding.fitness_level.beginner" = "Beginner";
+"onboarding.fitness_level.intermediate" = "Intermediate";
+"onboarding.fitness_level.advanced" = "Advanced";
+
+// Training Location
+"onboarding.training_location.title" = "Where do you train?";
+"onboarding.training_location.subtitle" = "Select your preferred training environment";
+"onboarding.training_location.gym" = "Gym";
+"onboarding.training_location.home" = "Home";
+"onboarding.training_location.outdoor" = "Outdoor";
+
+// Training Days
+"onboarding.training_days.title" = "Training Schedule";
+"onboarding.training_days.subtitle" = "How many days per week?";
+"onboarding.training_days.days" = "days per week";
+
+// Training Preferences
+"onboarding.training_preferences.title" = "Training Preferences";
+"onboarding.training_preferences.subtitle" = "What type of training do you prefer?";
+
+// Goal Selection
+"onboarding.goal.title" = "What's Your Goal?";
+"onboarding.goal.subtitle" = "Choose your primary fitness objective";
+"onboarding.goal.lose_weight" = "Lose Weight";
+"onboarding.goal.build_muscle" = "Build Muscle";
+"onboarding.goal.maintain" = "Maintain";
+"onboarding.goal.improve_endurance" = "Improve Endurance";
+
+// Ideal Weight
+"onboarding.ideal_weight.title" = "Target Weight";
+"onboarding.ideal_weight.subtitle" = "What's your goal weight?";
+"onboarding.ideal_weight.kg" = "kg";
+
+// Birth Date
+"onboarding.birth_date.title" = "Date of Birth";
+"onboarding.birth_date.subtitle" = "When were you born?";
+
+// Activity Level
+"onboarding.activity_level.title" = "Daily Activity";
+"onboarding.activity_level.subtitle" = "How active are you outside training?";
+"onboarding.activity_level.sedentary" = "Sedentary";
+"onboarding.activity_level.light" = "Lightly Active";
+"onboarding.activity_level.moderate" = "Moderately Active";
+"onboarding.activity_level.very" = "Very Active";
+
+// Morphology
+"onboarding.morphology.title" = "Body Type";
+"onboarding.morphology.subtitle" = "Select your body type";
+"onboarding.morphology.ectomorph" = "Ectomorph";
+"onboarding.morphology.mesomorph" = "Mesomorph";
+"onboarding.morphology.endomorph" = "Endomorph";
+
+// Hormonal Issues
+"onboarding.hormonal.title" = "Health Conditions";
+"onboarding.hormonal.subtitle" = "Do you have any hormonal issues?";
+"onboarding.hormonal.yes" = "Yes";
+"onboarding.hormonal.no" = "No";
+
+// Vegetarian
+"onboarding.vegetarian.title" = "Dietary Preference";
+"onboarding.vegetarian.subtitle" = "Are you vegetarian or vegan?";
+"onboarding.vegetarian.yes" = "Yes";
+"onboarding.vegetarian.no" = "No";
+
+// Goal Achievement
+"onboarding.goal_achievement.title" = "Timeline";
+"onboarding.goal_achievement.subtitle" = "When do you want to achieve your goal?";
+"onboarding.goal_achievement.months" = "months";
+
+"onboarding.completion.title" = "All Set!";
+"onboarding.completion.subtitle" = "Your personalized plan is ready";
+"onboarding.completion.button" = "Start Training";
+
+// MARK: - Authentication
+"auth.login.title" = "Welcome Back";
+"auth.login.subtitle" = "Sign in to continue";
+"auth.login.email" = "Email";
+"auth.login.password" = "Password";
+"auth.login.button" = "Sign In";
+"auth.login.forgot_password" = "Forgot Password?";
+"auth.login.no_account" = "Don't have an account?";
+"auth.login.sign_up" = "Sign Up";
+
+"auth.register.title" = "Create Account";
+"auth.register.subtitle" = "Join DynaTrain today";
+"auth.register.name" = "Full Name";
+"auth.register.email" = "Email";
+"auth.register.password" = "Password";
+"auth.register.confirm_password" = "Confirm Password";
+"auth.register.button" = "Create Account";
+"auth.register.have_account" = "Already have an account?";
+"auth.register.sign_in" = "Sign In";
+
+"auth.error.invalid_email" = "Please enter a valid email address";
+"auth.error.password_too_short" = "Password must be at least 6 characters";
+"auth.error.passwords_dont_match" = "Passwords don't match";
+"auth.error.fields_empty" = "Please fill in all fields";
+
+// MARK: - Main Tabs
+"tab.workout" = "Workout";
+"tab.nutrition" = "Nutrition";
+"tab.kine" = "Recovery";
+"tab.profile" = "Profile";
+
+// MARK: - Workout
+"workout.title" = "Workouts";
+"workout.today" = "Today's Workout";
+"workout.upcoming" = "Upcoming";
+"workout.completed" = "Completed";
+"workout.rest_day" = "Rest Day";
+"workout.start" = "Start Workout";
+"workout.continue" = "Continue";
+"workout.complete" = "Complete Workout";
+"workout.exercises" = "exercises";
+"workout.duration" = "Duration";
+"workout.calories" = "Calories";
+"workout.sets" = "sets";
+"workout.reps" = "reps";
+"workout.kg" = "kg";
+"workout.no_workouts" = "No workouts scheduled";
+"workout.rest_and_recover" = "Rest and recover";
+
+// MARK: - Nutrition
+"nutrition.title" = "Nutrition";
+"nutrition.overview" = "Overview";
+"nutrition.meals" = "Meals";
+"nutrition.advice" = "Advice";
+"nutrition.loading" = "Loading Nutrition Plan...";
+"nutrition.loading.subtitle" = "Preparing your personalized plan...";
+
+"nutrition.overview.daily_calorie_target" = "Daily Calorie Target";
+"nutrition.macronutrients" = "Macronutrients";
+"nutrition.protein" = "Protein";
+"nutrition.carbs" = "Carbs";
+"nutrition.fats" = "Fats";
+
+"nutrition.hydration.title" = "Hydration";
+"nutrition.hydration.subtitle" = "Track your daily water intake";
+"nutrition.hydration.glasses" = "glasses";
+"nutrition.hydration.target" = "Target";
+"nutrition.hydration.clear" = "Clear";
+
+"nutrition.meal.items_count" = "%d items";
+"nutrition.meal.breakfast" = "Breakfast";
+"nutrition.meal.lunch" = "Lunch";
+"nutrition.meal.dinner" = "Dinner";
+"nutrition.meal.snack" = "Snack";
+
+"nutrition.empty.title" = "No Nutrition Plan";
+"nutrition.empty.description" = "Fetch your personalized nutrition plan to get started.";
+"nutrition.empty.button" = "Fetch Nutrition Plan";
+"nutrition.fetching" = "Fetching...";
+
+"nutrition.date_picker.today" = "Today";
+"nutrition.date_picker.done" = "Done";
+"nutrition.date_picker.cancel" = "Cancel";
+
+"nutrition.advice.title" = "Nutritional Advice";
+"nutrition.advice.empty" = "No nutrition advice available";
+"nutrition.advice.foods_to_avoid" = "Foods to Avoid";
+"nutrition.advice.foods_to_eat" = "Foods to Eat";
+"nutrition.advice.natural_remedies" = "Natural Remedies";
+
+"nutrition.today_target" = "Today's Target";
+"nutrition.water" = "Water";
+"nutrition.viewing_plan" = "Viewing nutrition plan for %@";
+
+// MARK: - Recovery (Kine)
+"kine.title" = "Recovery";
+"kine.measurements" = "Measurements";
+"kine.health" = "Health";
+"kine.sleep" = "Sleep";
+"kine.weight" = "Weight";
+"kine.body_fat" = "Body Fat";
+"kine.muscle_mass" = "Muscle Mass";
+"kine.heart_rate" = "Heart Rate";
+"kine.blood_pressure" = "Blood Pressure";
+"kine.hours" = "hours";
+"kine.kg" = "kg";
+"kine.bpm" = "bpm";
+"kine.add_measurement" = "Add Measurement";
+"kine.no_data" = "No data available";
+"kine.track_progress" = "Track your recovery progress";
+
+// MARK: - Profile
+"profile.title" = "Profile";
+"profile.settings" = "Settings";
+"profile.account" = "Account";
+"profile.edit_profile" = "Edit Profile";
+"profile.preferences" = "Preferences";
+"profile.language" = "Language";
+"profile.theme" = "Theme";
+"profile.notifications" = "Notifications";
+"profile.privacy" = "Privacy";
+"profile.terms" = "Terms & Conditions";
+"profile.support" = "Support";
+"profile.about" = "About";
+"profile.version" = "Version";
+"profile.logout" = "Logout";
+"profile.delete_account" = "Delete Account";
+
+"profile.stats.workouts_completed" = "Workouts Completed";
+"profile.stats.calories_burned" = "Calories Burned";
+"profile.stats.active_days" = "Active Days";
+"profile.stats.current_streak" = "Current Streak";
+
+"profile.theme.light" = "Light";
+"profile.theme.dark" = "Dark";
+"profile.theme.system" = "System";
+
+// MARK: - Settings
+"settings.title" = "Settings";
+"settings.general" = "General";
+"settings.appearance" = "Appearance";
+"settings.notifications.title" = "Notifications";
+"settings.notifications.workouts" = "Workout Reminders";
+"settings.notifications.meals" = "Meal Reminders";
+"settings.notifications.water" = "Water Reminders";
+"settings.units" = "Units";
+"settings.units.metric" = "Metric";
+"settings.units.imperial" = "Imperial";
+
+// MARK: - Errors
+"error.network" = "Network connection error";
+"error.server" = "Server error. Please try again later";
+"error.unknown" = "An unknown error occurred";
+"error.no_data" = "No data available";
+"error.load_failed" = "Failed to load data";
+"error.save_failed" = "Failed to save";
+"error.delete_failed" = "Failed to delete";
+
+// MARK: - Date & Time
+"date.yesterday" = "Yesterday";
+"date.tomorrow" = "Tomorrow";
+"date.days_ago" = "%d days ago";
+"date.in_days" = "in %d days";
+"date.week" = "Week";
+"date.month" = "Month";
+"date.year" = "Year";
+
+// MARK: - Units
+"units.kg" = "kg";
+"units.lbs" = "lbs";
+"units.cm" = "cm";
+"units.ft" = "ft";
+"units.kcal" = "kcal";
+"units.g" = "g";
+"units.ml" = "ml";
+"units.oz" = "oz";
+"units.min" = "min";
+"units.sec" = "sec";
+"units.hours" = "hours";
+
+// MARK: - Language Names
+"language.system" = "System";
+"language.english" = "English";
+"language.french" = "Français";
+"language.arabic" = "العربية";
+
+// MARK: - Additional Keys
+"nutrition.meals.empty" = "No meals planned yet";
+"nutrition.meals_for_date" = "Meals for %@";
+"common.yesterday" = "Yesterday";
+"common.tomorrow" = "Tomorrow";
+"common.submit" = "Submit";
+"common.confirm" = "Confirm";
+"common.in_days" = "In %d days";
+"common.days_ago" = "%d days ago";
+"button.submit" = "Submit";
+"button.confirm" = "Confirm";
+
