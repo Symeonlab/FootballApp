@@ -94,43 +94,8 @@ struct PullToRefreshIndicator: View {
     }
 }
 
-// MARK: - Floating Action Button
-struct FloatingActionButton: View {
-    let icon: String
-    let action: () -> Void
-    @State private var isPressed = false
-    
-    var body: some View {
-        Button(action: {
-            let generator = UIImpactFeedbackGenerator(style: .medium)
-            generator.impactOccurred()
-            action()
-        }) {
-            Image(systemName: icon)
-                .font(.title2.weight(.semibold))
-                .foregroundColor(.white)
-                .frame(width: 60, height: 60)
-                .background(
-                    LinearGradient(
-                        colors: [Color.theme.primary, Color.theme.accent],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .clipShape(Circle())
-                .strongShadow()
-        }
-        .scaleEffect(isPressed ? 0.9 : 1.0)
-        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isPressed)
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged { _ in isPressed = true }
-                .onEnded { _ in isPressed = false }
-        )
-    }
-}
-
 // MARK: - Success Checkmark Animation
+// Note: FloatingActionButton is now defined in UIUXImprovements.swift to avoid duplication
 struct SuccessCheckmark: View {
     @State private var trimEnd: CGFloat = 0
     @State private var scale: CGFloat = 0.8
@@ -418,13 +383,7 @@ struct ToastView: View {
         .background(Color.theme.background)
 }
 
-#Preview("Floating Action Button") {
-    FloatingActionButton(icon: "plus") {
-        print("FAB tapped")
-    }
-    .padding()
-    .background(Color.theme.background)
-}
+// Preview for FloatingActionButton moved to UIUXImprovements.swift
 
 #Preview("Success Checkmark") {
     SuccessCheckmark()

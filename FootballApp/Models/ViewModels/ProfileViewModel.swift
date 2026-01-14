@@ -41,9 +41,11 @@ class ProfileViewModel: ObservableObject {
     }
     
     func fetchAllData() {
+        logger.info("📥 ProfileViewModel: Fetching all data...")
         fetchReminderSettings()
         fetchProgressLogs()
         requestHealthKitPermission() // This will trigger the HealthKit fetches
+        logger.info("✅ ProfileViewModel: All data fetch requests initiated")
     }
     
     // --- HealthKit ---
@@ -62,10 +64,14 @@ class ProfileViewModel: ObservableObject {
     }
     
     func fetchHealthData() {
+        logger.info("📊 ProfileViewModel: Fetching HealthKit data...")
         healthKitManager.fetchTodayHealthData { [weak self] (data: HealthData) in
             DispatchQueue.main.async {
                 self?.stepsToday = data.steps
                 self?.caloriesToday = data.activeCalories
+                self?.logger.info("✅ ProfileViewModel: HealthKit data loaded")
+                self?.logger.info("   - Steps: \(data.steps ?? 0)")
+                self?.logger.info("   - Calories: \(data.activeCalories ?? 0)")
             }
         }
     }
@@ -73,11 +79,18 @@ class ProfileViewModel: ObservableObject {
     // --- Reminders ---
     
     func fetchReminderSettings() {
+        logger.info("🔔 ProfileViewModel: Fetching reminder settings...")
         isLoading = true
         APIService.shared.request(endpoint: "/api/settings/reminders", method: "GET")
-            .sink(receiveCompletion: { _ in self.isLoading = false },
-                  receiveValue: { (settings: ReminderSettings) in
-                self.reminderSettings = settings
+            .sink(receiveCompletion: { [weak self] completion in
+                self?.isLoading = false
+                if case .failure(let error) = completion {
+                    self?.logger.error("❌ ProfileViewModel: Failed to fetch reminder settings - \(error.localizedDescription)")
+                } else {
+                    self?.logger.info("✅ ProfileViewModel: Reminder settings loaded")
+                }
+            }, receiveValue: { [weak self] (settings: ReminderSettings) in
+                self?.reminderSettings = settings
             })
             .store(in: &cancellables)
     }
@@ -97,15 +110,24 @@ class ProfileViewModel: ObservableObject {
     // --- Progress Logging ---
     
     func fetchProgressLogs() {
+        logger.info("📈 ProfileViewModel: Fetching progress logs...")
         APIService.shared.request(endpoint: "/api/user-progress", method: "GET")
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 if case .failure(let error) = completion {
-                    self.errorMessage = "Failed to load progress: \(error.localizedDescription)"
+                    self?.errorMessage = "Failed to load progress: \(error.localizedDescription)"
+                    self?.logger.error("❌ ProfileViewModel: Failed to fetch progress logs - \(error.localizedDescription)")
+                } else {
+                    self?.logger.info("✅ ProfileViewModel: Progress logs loaded successfully")
                 }
-            }, receiveValue: { (logs: [UserProgress]) in
-                self.progressLogs = logs
+            }, receiveValue: { [weak self] (logs: [UserProgress]) in
+                self?.progressLogs = logs
                 // Update the dashboard stat with the latest weight
-                self.latestWeight = logs.first(where: { $0.weight != nil })?.weight
+                self?.latestWeight = logs.first(where: { $0.weight != nil })?.weight
+                
+                self?.logger.info("📊 ProfileViewModel: Loaded \(logs.count) progress logs")
+                if let weight = self?.latestWeight {
+                    self?.logger.debug("   - Latest weight: \(weight) kg")
+                }
             })
             .store(in: &cancellables)
     }

@@ -138,7 +138,7 @@ class WorkoutsViewModel: ObservableObject {
             _ = try await APIService.shared.logProgress(progress)
             logger.info("✅ Workout progress logged to API")
             // Update local UI state
-            await MainActor.run {
+            _ = await MainActor.run {
                 self.completedWorkouts.insert(session.id)
             }
         } catch {

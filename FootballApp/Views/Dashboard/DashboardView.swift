@@ -31,7 +31,7 @@ struct DashboardView: View {
                         // --- FIX: Pass the 'stats' object, not the whole viewmodel ---
                         DashboardStatsView(stats: metrics.stats)
                         
-                        if let chartData = metrics.chart {
+                        if metrics.chart != nil {
                             // TODO: Add your LineChartView
                             Text("Chart Goes Here")
                                 .frame(height: 200)

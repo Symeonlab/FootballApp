@@ -7,11 +7,15 @@
 
 import SwiftUI
 import Combine
+import os.log
 
 struct KineView: View {
     // 1. Use the new API-driven ViewModel
     @EnvironmentObject var viewModel: KineViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
+    
+    // Logger for KineView
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.app", category: "KineView")
     
     @State private var selectedCategory: KineCategoryType = .mobility
     @State private var searchText: String = ""
@@ -186,6 +190,56 @@ struct KineView: View {
             }
             .sheet(isPresented: $showQuickTips) {
                 EnhancedRecoveryTipsView()
+            }
+            .onAppear {
+                logger.info("👁️ KineView: View appeared")
+                
+                // Log current state
+                logger.info("📊 KineView: Current data state:")
+                logger.info("   - Categories: \(viewModel.categories.count)")
+                logger.info("   - Total exercises: \(viewModel.allExercises.count)")
+                logger.info("   - Exercise groups: \(viewModel.exerciseGroups.count)")
+                logger.info("   - Favorites: \(viewModel.favoriteIDs.count)")
+                logger.info("   - Selected category: \(String(describing: selectedCategory))")
+                logger.info("   - Is loading: \(viewModel.isLoading)")
+                
+                // Log filtered state
+                logger.info("🔍 KineView: Filtered state:")
+                logger.info("   - Filtered groups: \(filteredGroups.count)")
+                logger.info("   - Filtered exercises: \(filteredExercises.count)")
+                logger.info("   - Search text: '\(searchText)'")
+                logger.info("   - Show only favorites: \(showOnlyFavorites)")
+                
+                // Log if data is shown correctly
+                if !viewModel.allExercises.isEmpty {
+                    logger.info("✅ KineView: Exercises loaded and displayed successfully")
+                    
+                    // Log category breakdown
+                    for group in exerciseGroups {
+                        logger.debug("   - \(group.groupName): \(group.exercises.count) exercises")
+                    }
+                } else if let error = viewModel.errorMessage {
+                    logger.error("❌ KineView: Error state - \(error)")
+                } else if viewModel.isLoading {
+                    logger.debug("⏳ KineView: Still loading...")
+                } else {
+                    logger.warning("⚠️ KineView: No exercises loaded (no error)")
+                }
+            }
+            .onChange(of: viewModel.allExercises) { oldValue, newValue in
+                logger.info("🔄 KineView: Exercises changed - \(oldValue.count) -> \(newValue.count)")
+                
+                if !newValue.isEmpty {
+                    logger.info("✅ KineView: Successfully displaying \(newValue.count) exercises across \(viewModel.categories.count) categories")
+                }
+            }
+            .onChange(of: viewModel.isLoading) { oldValue, newValue in
+                logger.info("⏳ KineView: Loading state changed - \(oldValue) -> \(newValue)")
+            }
+            .onChange(of: viewModel.errorMessage) { oldValue, newValue in
+                if let error = newValue {
+                    logger.error("❌ KineView: Error occurred - \(error)")
+                }
             }
         }
         .navigationViewStyle(.stack)

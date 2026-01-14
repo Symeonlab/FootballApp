@@ -43,9 +43,14 @@ class APIService {
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "API")
 
     // --- IMPORTANT ---
-    // Use "http://localhost:8000" for the iOS Simulator (default Laravel port)
-    // Use your computer's IP (e.g., "http://192.168.1.10:8000") if testing on a real device
-    private let baseURL = "http://localhost:8000"
+    // For iOS Simulator: Use your Mac's IP address
+    // For Real Device: Use your computer's local network IP
+    // Find your IP: System Settings > Network > Wi-Fi > Details > TCP/IP
+    #if targetEnvironment(simulator)
+    private let baseURL = "http://127.0.0.1:80"  // Simulator (your Laravel is on port 80)
+    #else
+    private let baseURL = "http://192.168.1.10:80"  // Real device - CHANGE THIS to your Mac's IP
+    #endif
 
     /// The core Combine-based request function.
     func request<T: Decodable>(
@@ -72,11 +77,12 @@ class APIService {
         // ---
 
         if requiresAuth {
-            guard let token = APITokenManager.shared.currentToken else {
+            guard let token = APITokenManager.shared.currentToken, !token.isEmpty else {
                 logger.warning("❌ Request to \(endpoint) failed: Missing auth token.")
                 return Fail(error: URLError(.userAuthenticationRequired)).eraseToAnyPublisher()
             }
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            logger.debug("🔐 Auth header attached for \(endpoint)")
         }
 
         // --- Custom Encoder for OnboardingData ---
@@ -118,6 +124,13 @@ class APIService {
                 
                 if !(200...299).contains(httpResponse.statusCode) {
                     self?.logger.error("❌ [\(method)] \(url.path) failed with status code: \(httpResponse.statusCode)")
+                    if let bodyString = String(data: data, encoding: .utf8) {
+                        self?.logger.error("    Response body: \(bodyString)")
+                    }
+                    if httpResponse.statusCode == 401 {
+                        self?.logger.error("    Unauthorized (401). Token missing/expired or rejected.")
+                        throw URLError(.userAuthenticationRequired)
+                    }
                     if let apiError = try? JSONDecoder().decode(APIError.self, from: data) {
                         self?.logger.error("    Error message: \(apiError.message)")
                         throw apiError
@@ -129,6 +142,9 @@ class APIService {
                 return data
             }
             .decode(type: T.self, decoder: decoder)
+            .handleEvents(receiveOutput: { [weak self] decoded in
+                self?.logger.info("📦 [\(method)] \(url.path) decoded successfully as \(String(describing: T.self))")
+            })
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
@@ -362,3 +378,4 @@ class APIService {
         try await request(endpoint: "/api/settings/reminders", method: "PUT", body: settings)
     }
 }
+

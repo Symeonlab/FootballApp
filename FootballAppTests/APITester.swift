@@ -84,8 +84,8 @@ class APITester: ObservableObject {
             }
             """,
             testBody: [
-                "email": "user@example.com",
-                "password": "password"
+                "email": "test@example.com",
+                "password": "Password123"
             ]
         ),
         
@@ -100,7 +100,7 @@ class APITester: ObservableObject {
             }
             """,
             testBody: [
-                "email": "user@example.com"
+                "email": "test@example.com"
             ]
         ),
         
@@ -157,19 +157,6 @@ class APITester: ObservableObject {
         // ========================================
         // 3. PROTECTED ROUTES (Requires API Token)
         // ========================================
-        
-        // --- Auth ---
-        APIEndpoint(
-            name: "Logout User",
-            path: "/api/auth/logout",
-            method: "POST",
-            requiresAuth: true,
-            expectedFormat: """
-            {
-              "message": "Logged out successfully"
-            }
-            """
-        ),
         
         // --- User & Profile ---
         APIEndpoint(
@@ -384,6 +371,19 @@ class APITester: ObservableObject {
                 "dinner_enabled": true,
                 "workout_enabled": true
             ]
+        ),
+        
+        // --- Auth (Logout LAST - it invalidates the token!) ---
+        APIEndpoint(
+            name: "Logout User",
+            path: "/api/auth/logout",
+            method: "POST",
+            requiresAuth: true,
+            expectedFormat: """
+            {
+              "message": "Logged out successfully"
+            }
+            """
         )
     ]
     
@@ -402,29 +402,133 @@ class APITester: ObservableObject {
     
     // Test all endpoints
     func testAllEndpoints() async {
+        print("\n" + String(repeating: "=", count: 80))
+        print("🧪 STARTING API TEST SUITE")
+        print(String(repeating: "=", count: 80))
+        print("⏰ Start Time: \(Date())")
+        print("🔐 Token Status: \(hasToken ? "✅ Available" : "❌ Missing")")
+        print(String(repeating: "=", count: 80) + "\n")
+        
         logger.info("🧪 Starting full API test suite")
         isTesting = true
         
-        for endpoint in endpoints {
+        // Test in smart order: public first, then setup, then protected
+        let publicEndpoints = endpoints.filter { !$0.requiresAuth }
+        let protectedEndpoints = endpoints.filter { $0.requiresAuth }
+        
+        print("📊 Test Plan:")
+        print("   - Public endpoints: \(publicEndpoints.count)")
+        print("   - Protected endpoints: \(protectedEndpoints.count)")
+        print("   - Total: \(endpoints.count)\n")
+        
+        // 1. Test public endpoints first
+        print("📋 PHASE 1: Testing Public Endpoints (\(publicEndpoints.count) tests)")
+        print(String(repeating: "-", count: 80))
+        logger.info("📋 Phase 1: Testing public endpoints...")
+        
+        for (index, endpoint) in publicEndpoints.enumerated() {
+            print("\n[\(index + 1)/\(publicEndpoints.count)] Testing: \(endpoint.name)")
             await testEndpoint(endpoint)
-            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 second delay between tests
+            try? await Task.sleep(nanoseconds: 500_000_000)
         }
         
+        // 2. Check if we have a token now (from registration/login)
+        checkToken()
+        
+        print("\n" + String(repeating: "=", count: 80))
+        print("🔄 TOKEN CHECK AFTER PUBLIC TESTS")
+        print(String(repeating: "=", count: 80))
+        
+        if !hasToken {
+            print("⚠️  WARNING: No authentication token available")
+            print("💡 TIP: Protected endpoints will likely fail with 401 errors")
+            print("📝 ACTION: Login first, then re-run tests")
+            logger.warning("⚠️ No token available. Protected endpoints will fail.")
+            logger.warning("💡 Tip: Login in the app first, then re-run tests.")
+        } else {
+            print("✅ Authentication token is available")
+            if let token = APITokenManager.shared.currentToken {
+                print("🔑 Token: \(token.prefix(20))...")
+            }
+        }
+        
+        print(String(repeating: "=", count: 80) + "\n")
+        
+        // 3. Test protected endpoints
+        print("📋 PHASE 2: Testing Protected Endpoints (\(protectedEndpoints.count) tests)")
+        print(String(repeating: "-", count: 80))
+        logger.info("📋 Phase 2: Testing protected endpoints...")
+        
+        for (index, endpoint) in protectedEndpoints.enumerated() {
+            print("\n[\(index + 1)/\(protectedEndpoints.count)] Testing: \(endpoint.name)")
+            await testEndpoint(endpoint)
+            try? await Task.sleep(nanoseconds: 500_000_000)
+        }
+        
+        // Final summary
         await MainActor.run {
             isTesting = false
-            logger.info("✅ Test suite completed")
+            let passed = results.values.filter { $0.success }.count
+            let failed = results.values.filter { !$0.success }.count
+            let total = results.count
+            
+            print("\n" + String(repeating: "=", count: 80))
+            print("📊 FINAL TEST RESULTS")
+            print(String(repeating: "=", count: 80))
+            print("⏰ Completion Time: \(Date())")
+            print("📈 Results: \(passed) passed, \(failed) failed, \(total) total")
+            print("📊 Success Rate: \(total > 0 ? String(format: "%.1f%%", Double(passed) / Double(total) * 100) : "0%")")
+            print(String(repeating: "=", count: 80))
+            
+            // Detailed breakdown
+            print("\n✅ PASSED TESTS (\(passed)):")
+            for endpoint in endpoints {
+                if let result = results[endpoint.id], result.success {
+                    print("   ✓ \(endpoint.name) - \(Int(result.responseTime * 1000))ms")
+                }
+            }
+            
+            if failed > 0 {
+                print("\n❌ FAILED TESTS (\(failed)):")
+                for endpoint in endpoints {
+                    if let result = results[endpoint.id], !result.success {
+                        print("   ✗ \(endpoint.name)")
+                        if let error = result.error {
+                            print("     └─ Error: \(error)")
+                        }
+                    }
+                }
+            }
+            
+            print("\n" + String(repeating: "=", count: 80) + "\n")
+            
+            logger.info("✅ Test suite completed: \(passed)/\(total) passed")
         }
     }
     
     // Test single endpoint
     func testEndpoint(_ endpoint: APIEndpoint) async {
+        print("   🔍 Endpoint: \(endpoint.name)")
+        print("   📍 \(endpoint.method) \(endpoint.path)")
+        print("   🔐 Auth Required: \(endpoint.requiresAuth ? "Yes" : "No")")
+        
         logger.info("🧪 Testing: \(endpoint.method) \(endpoint.path)")
         
         let startTime = Date()
         
         do {
+            // Use the same base URL as APIService
+            #if targetEnvironment(simulator)
+            let baseURL = "http://127.0.0.1:80"
+            #else
+            let baseURL = "http://192.168.1.10:80"
+            #endif
+            
+            print("   🌐 URL: \(baseURL)\(endpoint.path)")
+            
             // Create request
-            guard let url = URL(string: "http://localhost" + endpoint.path) else {
+            guard let url = URL(string: baseURL + endpoint.path) else {
+                print("   ❌ FAILED: Invalid URL")
                 await recordResult(for: endpoint, success: false, error: "Invalid URL", data: nil, startTime: startTime)
                 return
             }
@@ -437,37 +541,95 @@ class APITester: ObservableObject {
             // Add auth token if required
             if endpoint.requiresAuth {
                 guard let token = APITokenManager.shared.currentToken else {
+                    print("   ❌ FAILED: No auth token available")
                     await recordResult(for: endpoint, success: false, error: "No auth token available", data: nil, startTime: startTime)
                     return
                 }
+                print("   🔑 Using token: \(token.prefix(15))...")
                 request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             }
             
             // Add body for POST/PUT requests
             if (endpoint.method == "POST" || endpoint.method == "PUT"), let testBody = endpoint.testBody {
                 request.httpBody = try? JSONSerialization.data(withJSONObject: testBody)
+                if let bodyData = request.httpBody,
+                   let bodyString = String(data: bodyData, encoding: .utf8) {
+                    print("   📦 Request Body: \(bodyString.prefix(200))\(bodyString.count > 200 ? "..." : "")")
+                }
             }
+            
+            print("   ⏳ Sending request...")
             
             // Make request
             let (data, response) = try await URLSession.shared.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
+                print("   ❌ FAILED: Invalid response type")
                 await recordResult(for: endpoint, success: false, error: "Invalid response", data: nil, startTime: startTime)
                 return
             }
+            
+            let responseTime = Date().timeIntervalSince(startTime)
+            let responseTimeMs = Int(responseTime * 1000)
+            
+            print("   📥 Response received: HTTP \(httpResponse.statusCode) (\(responseTimeMs)ms)")
             
             _ = String(data: data, encoding: .utf8) ?? "Unable to decode response"
             let prettyJSON = prettyPrintJSON(data)
             
             if (200...299).contains(httpResponse.statusCode) {
+                print("   ✅ SUCCESS: HTTP \(httpResponse.statusCode)")
+                print("   ⏱️  Response Time: \(responseTimeMs)ms")
+                
+                // Show preview of response data
+                let preview = prettyJSON.prefix(300)
+                print("   📄 Response Preview: \(preview)\(prettyJSON.count > 300 ? "..." : "")")
+                
+                // Special handling for login/register endpoints - extract and store token
+                if endpoint.path.contains("/login") || endpoint.path.contains("/register") {
+                    if let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                       let token = jsonObject["token"] as? String {
+                        print("   🔑 Extracted token from response: \(token.prefix(20))...")
+                        await MainActor.run {
+                            APITokenManager.shared.currentToken = token
+                            print("   💾 Token saved to APITokenManager")
+                            // Update hasToken flag
+                            self.checkToken()
+                        }
+                    }
+                }
+                
                 logger.info("✅ \(endpoint.name): Success (\(httpResponse.statusCode))")
                 await recordResult(for: endpoint, success: true, error: nil, data: prettyJSON, startTime: startTime)
             } else {
-                logger.error("❌ \(endpoint.name): Failed (\(httpResponse.statusCode))")
-                await recordResult(for: endpoint, success: false, error: "HTTP \(httpResponse.statusCode)", data: prettyJSON, startTime: startTime)
+                // Extract error message from response
+                var errorMsg = "HTTP \(httpResponse.statusCode)"
+                if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                    if let message = errorData["message"] as? String {
+                        errorMsg += ": \(message)"
+                    } else if let error = errorData["error"] as? String {
+                        errorMsg += ": \(error)"
+                    }
+                }
+                
+                print("   ❌ FAILED: \(errorMsg)")
+                print("   ⏱️  Response Time: \(responseTimeMs)ms")
+                
+                // Show error response data
+                let preview = prettyJSON.prefix(300)
+                print("   📄 Error Response: \(preview)\(prettyJSON.count > 300 ? "..." : "")")
+                
+                logger.error("❌ \(endpoint.name): \(errorMsg)")
+                await recordResult(for: endpoint, success: false, error: errorMsg, data: prettyJSON, startTime: startTime)
             }
             
         } catch {
+            let responseTime = Date().timeIntervalSince(startTime)
+            let responseTimeMs = Int(responseTime * 1000)
+            
+            print("   ❌ EXCEPTION: \(error.localizedDescription)")
+            print("   ⏱️  Time: \(responseTimeMs)ms")
+            
             logger.error("❌ \(endpoint.name): \(error.localizedDescription)")
             await recordResult(for: endpoint, success: false, error: error.localizedDescription, data: nil, startTime: startTime)
         }

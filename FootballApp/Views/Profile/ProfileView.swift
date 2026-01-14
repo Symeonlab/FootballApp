@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import os.log
 
 struct ProfileView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var profileViewModel: ProfileViewModel
     @EnvironmentObject var languageManager: LanguageManager
     @EnvironmentObject var themeManager: ThemeManager
+    
+    // Logger for ProfileView
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.app", category: "ProfileView")
     
     @State private var showingLogMeasurement = false
     @State private var showingReminders = false
@@ -113,10 +117,50 @@ struct ProfileView: View {
                 AchievementsView(viewModel: profileViewModel)
             }
             .onAppear {
+                logger.info("👁️ ProfileView: View appeared")
+                
+                // Log current user info
+                if let user = authViewModel.currentUser {
+                    logger.info("👤 ProfileView: User loaded")
+                    let userName = user.name ?? "Unknown"
+                    logger.info("   - Name: \(userName)")
+                    logger.info("   - Email: \(user.email)")
+                    if let profile = user.profile {
+                        let goal = profile.goal ?? "N/A"
+                        let activityLevel = profile.activity_level ?? "N/A"
+                        logger.debug("   - Profile exists: goal=\(goal), activity=\(activityLevel)")
+                    } else {
+                        logger.warning("   - No profile data available")
+                    }
+                } else {
+                    logger.warning("⚠️ ProfileView: No user data available")
+                }
+                
+                // Fetch data
+                logger.info("📥 ProfileView: Fetching profile data...")
                 profileViewModel.fetchProgressLogs()
                 profileViewModel.fetchHealthData()
+                
+                // Log after a short delay to see if data loaded
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    logger.info("📊 ProfileView: Profile data state:")
+                    logger.info("   - Progress logs: \(profileViewModel.progressLogs.count)")
+                    logger.info("   - Steps today: \(profileViewModel.stepsToday ?? 0)")
+                    logger.info("   - Calories today: \(profileViewModel.caloriesToday ?? 0)")
+                    logger.info("   - Latest weight: \(profileViewModel.latestWeight ?? 0.0)")
+                    logger.info("   - Is loading: \(profileViewModel.isLoading)")
+                    
+                    if let error = profileViewModel.errorMessage {
+                        logger.error("❌ ProfileView: Error - \(error)")
+                    } else if !profileViewModel.progressLogs.isEmpty || profileViewModel.stepsToday != nil {
+                        logger.info("✅ ProfileView: Data loaded and displayed successfully")
+                    } else {
+                        logger.warning("⚠️ ProfileView: No data loaded yet")
+                    }
+                }
             }
             .refreshable {
+                logger.info("🔄 ProfileView: Pull-to-refresh triggered")
                 profileViewModel.fetchProgressLogs()
                 profileViewModel.fetchHealthData()
             }

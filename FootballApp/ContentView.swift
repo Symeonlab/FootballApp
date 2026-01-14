@@ -2,283 +2,356 @@
 //  ContentView.swift
 //  FootballApp
 //
+//  Root view that manages the entire app lifecycle and state transitions
+//
 
 import SwiftUI
 import Combine
+import os.log
 
 struct ContentView: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
     @Environment(\.scenePhase) private var scenePhase
+    
+    // Logger for ContentView
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.app", category: "ContentView")
+    
+    // MARK: - View Models
+    // Create view models at the root level to ensure data persistence across tab switches
+    @StateObject private var workoutsViewModel = WorkoutsViewModel()
+    @StateObject private var nutritionViewModel = NutritionViewModel()
+    @StateObject private var kineViewModel = KineViewModel()
+    @StateObject private var profileViewModel = ProfileViewModel()
+    
+    // Track if we've already loaded main app data
+    @State private var hasLoadedMainAppData = false
 
-    var body: some View {
-        Group {
-            switch authViewModel.appState {
-            case .loading:
-                LoadingView()
-
-            case .authentication:
-                AuthView()
-
-            case .onboarding:
-                OnboardingFlow()
-
-            case .mainApp:
-                MainTabView()
-            }
-        }
-        .onAppear {
-            authViewModel.fetchUser()
-        }
-        .onChange(of: scenePhase) { oldPhase, newPhase in
-            guard newPhase == .active else { return }
-            authViewModel.fetchUser()
-        }
-    }
-}
-
-// MARK: - Subviews
-
-private struct LoadingView: View {
     var body: some View {
         ZStack {
-            DarkPurpleAnimatedBackground().ignoresSafeArea()
-            VStack(spacing: 16) {
-                ProgressView()
-                Text("Loading…").font(.headline)
-            }
-            .padding()
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        }
-    }
-}
+            // ✅ One consistent brand background across the whole app
+            AppRootPurpleBackground()
 
-// MARK: - Preview Helper for Full App Experience
+            // ✅ Main content with smooth transitions
+            Group {
+                switch authViewModel.appState {
+                case .loading:
+                    LoadingView()
+                        .transition(.opacity.combined(with: .scale(scale: 0.98)))
 
-private class PreviewAppStateManager: ObservableObject {
-    @Published var appState: AppState = .authentication
-    @Published var isLoggedIn = false
-    
-    func login() {
-        appState = .loading
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.appState = .mainApp
-            self.isLoggedIn = true
-        }
-    }
-}
+                case .authentication:
+                    AuthView()
+                        .transition(.asymmetric(
+                            insertion: .opacity.combined(with: .move(edge: .bottom)),
+                            removal: .opacity
+                        ))
 
-#Preview("Real App - Main Tab with Live Data") {
-    @Previewable @StateObject var authVM = AuthViewModel()
-    @Previewable @StateObject var langManager = LanguageManager()
-    @Previewable @StateObject var themeManager = ThemeManager()
-    
-    MainTabView()
-        .environmentObject(authVM)
-        .environmentObject(langManager)
-        .environmentObject(themeManager)
-}
+                case .onboarding:
+                    OnboardingFlow()
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .trailing).combined(with: .opacity),
+                            removal: .move(edge: .leading).combined(with: .opacity)
+                        ))
 
-#Preview("Real App - Auth Flow") {
-    @Previewable @StateObject var authVM = AuthViewModel()
-    @Previewable @StateObject var langManager = LanguageManager()
-    @Previewable @StateObject var themeManager = ThemeManager()
-    
-    AuthView()
-        .environmentObject(authVM)
-        .environmentObject(langManager)
-        .environmentObject(themeManager)
-}
-
-#Preview("Real App - Onboarding") {
-    @Previewable @StateObject var authVM = AuthViewModel()
-    @Previewable @StateObject var langManager = LanguageManager()
-    @Previewable @StateObject var themeManager = ThemeManager()
-    
-    OnboardingFlow()
-        .environmentObject(authVM)
-        .environmentObject(langManager)
-        .environmentObject(themeManager)
-}
-
-#Preview("Full App Experience - Interactive") {
-    @Previewable @StateObject var previewAuth = PreviewAppStateManager()
-    @Previewable @StateObject var langManager = LanguageManager()
-    @Previewable @StateObject var themeManager = ThemeManager()
-    
-    ZStack {
-        // Simulate the real app flow
-        Group {
-            switch previewAuth.appState {
-            case .loading:
-                LoadingView()
-                
-            case .authentication:
-                ZStack {
-                    DarkPurpleAnimatedBackground().ignoresSafeArea()
-                    
-                    VStack(spacing: 14) {
-                        Text("FootballApp").font(.largeTitle.bold())
-                        Text("Interactive Preview - Tap to Sign In")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                        
-                        Button {
-                            previewAuth.login()
-                        } label: {
-                            Text("Sign In").frame(maxWidth: .infinity)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .padding(.top, 6)
-                    }
-                    .padding(24)
-                    .background(.ultraThinMaterial)
-                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                    .padding()
+                case .mainApp:
+                    MainTabView()
+                        // ✅ Inject view models from ContentView so data persists
+                        .environmentObject(workoutsViewModel)
+                        .environmentObject(nutritionViewModel)
+                        .environmentObject(kineViewModel)
+                        .environmentObject(profileViewModel)
+                        .transition(.asymmetric(
+                            insertion: .opacity.combined(with: .move(edge: .trailing)),
+                            removal: .opacity
+                        ))
                 }
-                
-            case .onboarding:
-                ZStack {
-                    DarkPurpleAnimatedBackground().ignoresSafeArea()
-                    
-                    VStack(spacing: 14) {
-                        Text("Welcome").font(.title.bold())
-                        Text("Complete onboarding to start using the app.")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                            .multilineTextAlignment(.center)
-                        
-                        Button {
-                            previewAuth.appState = .mainApp
-                        } label: {
-                            Text("Finish Onboarding").frame(maxWidth: .infinity)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .padding(.top, 6)
-                    }
-                    .padding(24)
-                    .background(.ultraThinMaterial)
-                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                    .padding()
-                }
-                
-            case .mainApp:
-                MainAppRootViewWithMockData()
-                    .environmentObject(langManager)
-                    .environmentObject(themeManager)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .animation(.easeInOut(duration: 0.35), value: authViewModel.appState)
         }
+        .preferredColorScheme(.dark) // Force dark mode for consistent branding
+        .onAppear { setupApp() }
+        .onChange(of: scenePhase) { oldValue, newValue in
+            handleScenePhaseChange(to: newValue)
+        }
+        .onChange(of: authViewModel.appState) { oldValue, newValue in
+            handleAppStateChange(to: newValue)
+        }
+    }
+
+    // MARK: - Lifecycle Methods
+
+    /// Setup app on initial launch
+    private func setupApp() {
+        logger.info("🚀 ContentView: Setting up app")
+        print("🔵 PRINT TEST: ContentView setupApp called - if you see this, logging should work!")
+        authViewModel.fetchUser()
+    }
+
+    /// Handle app lifecycle changes (background, foreground, etc.)
+    private func handleScenePhaseChange(to newPhase: ScenePhase) {
+        logger.info("📱 ContentView: Scene phase changed to \(String(describing: newPhase))")
+        
+        switch newPhase {
+        case .active:
+            logger.info("✅ ContentView: App became active")
+            // App became active - refresh user data
+            authViewModel.fetchUser()
+            
+            // Refresh data when app becomes active
+            if authViewModel.appState == .mainApp {
+                logger.info("🔄 ContentView: Refreshing main app data (app state = mainApp)")
+                Task {
+                    await refreshMainAppData()
+                }
+            }
+        case .inactive:
+            logger.info("⚠️ ContentView: App is inactive")
+            // App is inactive (e.g., during transition)
+            break
+        case .background:
+            logger.info("⏸️ ContentView: App moved to background")
+            // App moved to background - save state if needed
+            break
+        @unknown default:
+            logger.warning("❓ ContentView: Unknown scene phase")
+            break
+        }
+    }
+    
+    /// Handle app state transitions
+    private func handleAppStateChange(to newState: AppState) {
+        logger.info("🔄 ContentView: App state changed to \(String(describing: newState))")
+        
+        // When entering main app, fetch all data (only once)
+        if newState == .mainApp && !hasLoadedMainAppData {
+            logger.info("🎯 ContentView: Entering main app for first time, loading data...")
+            hasLoadedMainAppData = true
+            Task {
+                await refreshMainAppData()
+            }
+        } else if newState == .mainApp {
+            logger.info("✅ ContentView: Already in main app, data already loaded")
+        }
+    }
+    
+    /// Refresh all main app data
+    @MainActor
+    private func refreshMainAppData() async {
+        logger.info("🔄 ContentView: Starting main app data refresh...")
+        
+        // Fetch workout plan (only if not already loaded)
+        if workoutsViewModel.workoutSessions.isEmpty {
+            logger.info("📥 ContentView: Fetching workout plan (empty)...")
+            await workoutsViewModel.fetchWorkoutPlan()
+            
+            // Log result
+            if !workoutsViewModel.workoutSessions.isEmpty {
+                logger.info("✅ ContentView: Workout plan loaded successfully - \(workoutsViewModel.workoutSessions.count) sessions")
+            } else if let error = workoutsViewModel.errorMessage {
+                logger.error("❌ ContentView: Workout plan fetch failed - \(error)")
+            } else {
+                logger.warning("⚠️ ContentView: Workout plan is still empty (no error)")
+            }
+        } else {
+            logger.info("✅ ContentView: Workout plan already loaded (\(workoutsViewModel.workoutSessions.count) sessions), skipping fetch")
+        }
+        
+        // Fetch nutrition plan (uses Combine, not async)
+        logger.info("📥 ContentView: Fetching nutrition plan...")
+        nutritionViewModel.fetchNutritionPlan()
+        
+        // Give it a moment to complete and log result
+        try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
+        if let plan = nutritionViewModel.nutritionPlan {
+            logger.info("✅ ContentView: Nutrition plan loaded successfully")
+            logger.info("   - Daily calories: \(plan.daily_calorie_intake)")
+            logger.info("   - Meals: \(plan.daily_meals?.count ?? 0)")
+            logger.info("   - Advice items: \(plan.advice?.count ?? 0)")
+        } else if let error = nutritionViewModel.errorMessage {
+            logger.error("❌ ContentView: Nutrition plan fetch failed - \(error)")
+        } else {
+            logger.warning("⚠️ ContentView: Nutrition plan is still nil (may still be loading)")
+        }
+        
+        // Fetch kine data (uses Combine, not async)
+        logger.info("📥 ContentView: Fetching kine data...")
+        kineViewModel.fetchKineData()
+        kineViewModel.fetchFavorites()
+        
+        // Give it a moment to complete and log result
+        try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
+        if !kineViewModel.allExercises.isEmpty {
+            logger.info("✅ ContentView: Kine data loaded successfully")
+            logger.info("   - Categories: \(kineViewModel.categories.count)")
+            logger.info("   - Exercises: \(kineViewModel.allExercises.count)")
+            logger.info("   - Favorites: \(kineViewModel.favoriteIDs.count)")
+        } else if let error = kineViewModel.errorMessage {
+            logger.error("❌ ContentView: Kine data fetch failed - \(error)")
+        } else {
+            logger.warning("⚠️ ContentView: Kine data is still empty (may still be loading)")
+        }
+        
+        // Profile data is fetched by ProfileViewModel automatically
+        logger.info("📥 ContentView: Profile view model manages its own data")
+        
+        logger.info("✅ ContentView: Main app data refresh complete")
     }
 }
 
-// Preview version with mock data
-private struct MainAppRootViewWithMockData: View {
-    @StateObject private var kineViewModel = KineViewModel()
-    @StateObject private var nutritionViewModel = NutritionViewModel()
-    @StateObject private var profileViewModel = ProfileViewModel()
-    @StateObject private var workoutsViewModel = WorkoutsViewModel()
-    
+// MARK: - Root Background Wrapper
+
+private struct AppRootPurpleBackground: View {
     var body: some View {
-        TabView {
-            WorkoutView()
-                .tabItem { Label("Workout", systemImage: "figure.strengthtraining.traditional") }
-                .environmentObject(workoutsViewModel)
-            
-            KineView()
-                .tabItem { Label("Recovery", systemImage: "heart.text.square") }
-                .environmentObject(kineViewModel)
-            
-            NutritionView()
-                .tabItem { Label("Nutrition", systemImage: "fork.knife") }
-                .environmentObject(nutritionViewModel)
-            
-            ProfileView()
-                .tabItem { Label("Profile", systemImage: "person.circle") }
-                .environmentObject(profileViewModel)
+        ZStack {
+            DarkPurpleAnimatedBackground()
+                .ignoresSafeArea()
+
+            // ✅ Legibility veil (keeps text readable without washing out purple)
+            LinearGradient(
+                colors: [
+                    Color.black.opacity(0.30),
+                    Color.black.opacity(0.10),
+                    Color.black.opacity(0.35)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+
+            // Optional: faint “spotlight” to center the UI
+            RadialGradient(
+                colors: [
+                    Color.lightPurple.opacity(0.18),
+                    .clear
+                ],
+                center: .center,
+                startRadius: 30,
+                endRadius: 520
+            )
+            .ignoresSafeArea()
         }
+    }
+}
+
+// MARK: - Loading View (Brand-Aligned)
+
+private struct LoadingView: View {
+    @State private var pulse = false
+
+    var body: some View {
+        ZStack {
+            // Background is already provided by ContentView; keep this transparent
+            Color.clear
+
+            VStack(spacing: 18) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 28, style: .continuous)
+                        .fill(.ultraThinMaterial)
+                        .frame(width: 108, height: 108)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                                .strokeBorder(Color.white.opacity(0.12), lineWidth: 1)
+                        )
+                        .shadow(color: .black.opacity(0.35), radius: 24, x: 0, y: 14)
+
+                    Text("D")
+                        .font(.system(size: 52, weight: .bold, design: .rounded))
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [Color.theme.primary, Color.theme.accent],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .scaleEffect(pulse ? 1.06 : 0.96)
+                        .animation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true), value: pulse)
+                }
+
+                VStack(spacing: 10) {
+                    ProgressView()
+                        .tint(.white)
+
+                    Text("Loading…")
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    Text("Preparing your training dashboard")
+                        .font(.footnote)
+                        .foregroundColor(.white.opacity(0.75))
+                }
+            }
+            .padding(.vertical, 22)
+            .padding(.horizontal, 22)
+            .background(
+                RoundedRectangle(cornerRadius: 26, style: .continuous)
+                    .fill(.ultraThinMaterial)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 26, style: .continuous)
+                            .fill(Color.deepPurple.opacity(0.14))
+                    )
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 26, style: .continuous)
+                    .strokeBorder(Color.white.opacity(0.12), lineWidth: 1)
+            )
+            .shadow(color: .black.opacity(0.35), radius: 26, x: 0, y: 14)
+            .padding(.horizontal, 24)
+        }
+        .onAppear { pulse = true }
+    }
+}
+
+#Preview("ContentView - Loading State") {
+    @Previewable @StateObject var authVM = AuthViewModel()
+    @Previewable @StateObject var langManager = LanguageManager()
+    @Previewable @StateObject var themeManager = ThemeManager()
+
+    ContentView()
+        .environmentObject(authVM)
+        .environmentObject(langManager)
+        .environmentObject(themeManager)
+        .preferredColorScheme(.dark)
         .onAppear {
-            setupMockData()
+            print("🔵 Preview: ContentView appeared with loading state")
+            authVM.appState = .loading
         }
-    }
-    
-    private func setupMockData() {
-        // Setup KineViewModel mock data
-        kineViewModel.loadMockDataForDevelopment()
-        
-        // Setup NutritionViewModel mock data
-        nutritionViewModel.caloriesConsumed = 1850
-        nutritionViewModel.proteinConsumed = 125
-        nutritionViewModel.carbsConsumed = 195
-        nutritionViewModel.fatsConsumed = 55
-        nutritionViewModel.waterGlasses = 6
-        nutritionViewModel.meals = [
-            Meal(id: UUID(), name: "Breakfast", type: "Breakfast", time: "8:00 AM", calories: 450, protein: 25, carbs: 50, fats: 15),
-            Meal(id: UUID(), name: "Lunch", type: "Lunch", time: "12:30 PM", calories: 650, protein: 45, carbs: 70, fats: 20),
-            Meal(id: UUID(), name: "Snack", type: "Snack", time: "3:00 PM", calories: 250, protein: 15, carbs: 25, fats: 10),
-            Meal(id: UUID(), name: "Dinner", type: "Dinner", time: "7:00 PM", calories: 500, protein: 40, carbs: 50, fats: 10)
-        ]
-        
-        // Setup ProfileViewModel mock data
-        profileViewModel.stepsToday = 8542
-        profileViewModel.caloriesToday = 450
-        profileViewModel.latestWeight = 75.5
-    }
 }
 
+#Preview("ContentView - Main App (Run Simulator for Data)") {
+    @Previewable @StateObject var authVM = AuthViewModel()
+    @Previewable @StateObject var langManager = LanguageManager()
+    @Previewable @StateObject var themeManager = ThemeManager()
 
-#Preview("Quick - Main App Only") {
-    MainAppRootViewWithMockData()
+    ContentView()
+        .environmentObject(authVM)
+        .environmentObject(langManager)
+        .environmentObject(themeManager)
+        .preferredColorScheme(.dark)
+        .onAppear {
+            print("🔵 Preview: ContentView main app state")
+            print("⚠️ Preview: No data will show - press Cmd+R to run on simulator!")
+            authVM.appState = .mainApp
+        }
 }
 
-#Preview("Individual Tab - Workout") {
-    let kineVM = KineViewModel()
-    kineVM.loadMockDataForDevelopment()
-    let workoutsVM = WorkoutsViewModel()
-    
-    NavigationStack {
-        WorkoutView()
-            .environmentObject(workoutsVM)
-    }
+#Preview("ContentView - Authentication") {
+    @Previewable @StateObject var authVM = AuthViewModel()
+    @Previewable @StateObject var langManager = LanguageManager()
+    @Previewable @StateObject var themeManager = ThemeManager()
+
+    ContentView()
+        .environmentObject(authVM)
+        .environmentObject(langManager)
+        .environmentObject(themeManager)
+        .preferredColorScheme(.dark)
+        .onAppear {
+            print("🔵 Preview: ContentView appeared with authentication state")
+            authVM.appState = .authentication
+        }
 }
 
-#Preview("Individual Tab - Recovery") {
-    let kineVM = KineViewModel()
-    kineVM.loadMockDataForDevelopment()
-    
-    NavigationStack {
-        KineView()
-            .environmentObject(kineVM)
-    }
-}
+// Note: For previews with mock data, see individual tab views (WorkoutView.swift, etc.)
+// To test with real data and full logging, press Cmd+R to run on simulator
 
-#Preview("Individual Tab - Nutrition") {
-    let nutritionVM = NutritionViewModel()
-    nutritionVM.caloriesConsumed = 1800
-    nutritionVM.proteinConsumed = 120
-    nutritionVM.carbsConsumed = 180
-    nutritionVM.fatsConsumed = 50
-    nutritionVM.waterGlasses = 6
-    nutritionVM.meals = [
-        Meal(id: UUID(), name: "Breakfast", type: "Breakfast", time: "8:00 AM", calories: 450, protein: 25, carbs: 50, fats: 15),
-        Meal(id: UUID(), name: "Lunch", type: "Lunch", time: "12:30 PM", calories: 650, protein: 45, carbs: 70, fats: 20)
-    ]
-    
-    NavigationStack {
-        NutritionView()
-            .environmentObject(nutritionVM)
-    }
-}
-
-#Preview("Individual Tab - Profile") {
-    let profileVM = ProfileViewModel()
-    profileVM.stepsToday = 8542
-    profileVM.caloriesToday = 450
-    profileVM.latestWeight = 75.5
-    
-    NavigationStack {
-        ProfileView()
-            .environmentObject(profileVM)
-    }
-}
 
 

@@ -47,16 +47,25 @@ final class HealthKitManager {
     // 1. Request Authorization from the User
     func requestAuthorization(completion: @escaping (Bool, Error?) -> Void) {
         guard isHealthDataAvailable else {
+            logger.info("HealthKit not available on this device/simulator")
             completion(false, nil)
             return
         }
         
+        #if targetEnvironment(simulator)
+        // On simulator, HealthKit may not work properly - mock success
+        logger.info("⚠️ Running on Simulator - HealthKit may not be fully functional")
+        DispatchQueue.main.async {
+            completion(true, nil)
+        }
+        #else
         healthStore.requestAuthorization(toShare: writeTypes, read: readTypes) { (success, error) in
             self.logger.info("HealthKit Auth Success: \(success), Error: \(error?.localizedDescription ?? "None")")
             DispatchQueue.main.async {
                 completion(success, error)
             }
         }
+        #endif
     }
     
     // 2. Read Today's Step Count

@@ -6,10 +6,14 @@
 
 import SwiftUI
 import Combine
+import os.log
 
 struct NutritionView: View {
     @EnvironmentObject var viewModel: NutritionViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
+    
+    // Logger for NutritionView
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.app", category: "NutritionView")
     
     var body: some View {
         NavigationStack {
@@ -47,8 +51,45 @@ struct NutritionView: View {
             }
             .navigationTitle("Nutrition - Dipodi")
             .onAppear {
+                logger.info("👁️ NutritionView: View appeared")
+                
                 if viewModel.nutritionPlan == nil {
+                    logger.info("📥 NutritionView: No nutrition plan loaded, fetching...")
                     viewModel.fetchNutritionPlan()
+                    
+                    // Check result after a short delay (since fetchNutritionPlan uses Combine)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        if let plan = viewModel.nutritionPlan {
+                            logger.info("✅ NutritionView: Nutrition plan loaded and displayed")
+                            logger.info("   - Daily calories: \(plan.daily_calorie_intake)")
+                            logger.info("   - Meals: \(plan.daily_meals?.count ?? 0)")
+                            logger.info("   - Advice items: \(plan.advice?.count ?? 0)")
+                        } else if let error = viewModel.errorMessage {
+                            logger.error("❌ NutritionView: Failed to load nutrition plan - \(error)")
+                        } else if viewModel.isLoading {
+                            logger.debug("⏳ NutritionView: Still loading nutrition plan...")
+                        } else {
+                            logger.warning("⚠️ NutritionView: No nutrition plan loaded (no error)")
+                        }
+                    }
+                } else {
+                    logger.info("✅ NutritionView: Nutrition plan already loaded")
+                    logger.info("   - Daily calories: \(viewModel.nutritionPlan!.daily_calorie_intake)")
+                    logger.info("   - Meals: \(viewModel.nutritionPlan!.daily_meals?.count ?? 0)")
+                    logger.info("   - Advice items: \(viewModel.nutritionPlan!.advice?.count ?? 0)")
+                }
+                
+                // Log user profile info if available
+                if let profile = authViewModel.currentUser?.profile {
+                    logger.debug("👤 NutritionView: User profile available")
+                    let goal = profile.goal ?? "N/A"
+                    let activityLevel = profile.activity_level ?? "N/A"
+                    let isVegetarian = profile.is_vegetarian ?? false
+                    logger.debug("   - Goal: \(goal)")
+                    logger.debug("   - Vegetarian: \(isVegetarian)")
+                    logger.debug("   - Activity level: \(activityLevel)")
+                } else {
+                    logger.warning("⚠️ NutritionView: No user profile available")
                 }
             }
         }

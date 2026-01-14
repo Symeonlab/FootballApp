@@ -4,19 +4,12 @@ struct AuthView: View {
     @State private var isRegistering = false
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                LoginView(isRegistering: $isRegistering)
-                
-                NavigationLink(
-                    destination: RegisterView(isRegistering: $isRegistering),
-                    isActive: $isRegistering
-                ) {
-                    EmptyView()
+        NavigationStack {
+            LoginView(isRegistering: $isRegistering)
+                .navigationDestination(isPresented: $isRegistering) {
+                    RegisterView(isRegistering: $isRegistering)
                 }
-            }
         }
-        .navigationViewStyle(.stack)
     }
 }
 

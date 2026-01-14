@@ -6,6 +6,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import os.log
 
 // MARK: - Models
 
@@ -77,20 +78,34 @@ struct KineExerciseGroup: Identifiable, Hashable {
 
 // MARK: - API DTOs
 
-private struct KineAPIResponse: Codable {
-    let categories: [KineCategory]
-    let exercises: [KineExercise]
+// The API returns a dictionary like: { "ADDUCTEURS": [...], "QUADRICEPS": [...] }
+private typealias KineAPIResponse = [String: [KineAPIExercise]]
+
+// Exercise structure from API
+private struct KineAPIExercise: Codable {
+    let id: Int
+    let name: String
+    let category: String
+    let sub_category: String?
+    let description: String?
+    let video_url: String?
+    let met_value: Double?
+    let created_at: String?
+    let updated_at: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, category, description, created_at, updated_at
+        case sub_category, video_url, met_value
+    }
 }
 
-private struct FavoritesResponse: Codable {
-    struct FavoriteItem: Codable {
-        let exerciseId: Int
-    }
-    let data: [FavoriteItem]
-}
+// Favorites API returns an array of exercise IDs
+private typealias FavoritesResponse = [Int]
 
 private struct GenericSuccessResponse: Codable {
     let success: Bool?
+    let status: String?
+    let attached: Bool?
 }
 
 // MARK: - ViewModel
@@ -111,6 +126,7 @@ final class KineViewModel: ObservableObject {
     }
 
     private var cancellables = Set<AnyCancellable>()
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.app", category: "KineViewModel")
     
     // MARK: - Computed Properties for Category-based Access
     
@@ -198,12 +214,13 @@ final class KineViewModel: ObservableObject {
     // MARK: - API Calls
 
     func fetchKineData() {
+        logger.info("📥 KineViewModel: Fetching kine data from API...")
         isLoading = true
         errorMessage = nil
 
-        // Adjust endpoint paths to your backend routes if needed.
+        // Using correct API endpoint: /api/kine-data
         APIService.shared.request(
-            endpoint: "/kine/data",
+            endpoint: "/api/kine-data",
             method: "GET",
             body: nil as Data?
         )
@@ -213,30 +230,42 @@ final class KineViewModel: ObservableObject {
             self.isLoading = false
             if case .failure(let error) = completion {
                 self.errorMessage = error.localizedDescription
+                self.logger.error("❌ KineViewModel: Failed to fetch kine data - \(error.localizedDescription)")
                 ErrorLogger.shared.logError(error)
+            } else {
+                self.logger.info("✅ KineViewModel: Successfully fetched kine data")
             }
         } receiveValue: { [weak self] (response: KineAPIResponse) in
             guard let self else { return }
+            self.logger.info("📦 KineViewModel: Processing kine data response...")
+            self.logger.info("   - Received \(response.count) category groups")
             self.processApiData(response)
         }
         .store(in: &cancellables)
     }
 
     func fetchFavorites() {
+        logger.info("⭐ KineViewModel: Fetching favorites from API...")
         APIService.shared.request(
-            endpoint: "/kine/favorites",
+            endpoint: "/api/kine-favorites",
             method: "GET",
             body: nil as Data?
         )
         .receive(on: DispatchQueue.main)
-        .sink { completion in
+        .sink { [weak self] completion in
+            guard let self else { return }
             if case .failure(let error) = completion {
+                self.logger.error("❌ KineViewModel: Failed to fetch favorites - \(error.localizedDescription)")
                 ErrorLogger.shared.logError(error)
+            } else {
+                self.logger.info("✅ KineViewModel: Successfully fetched favorites")
             }
         } receiveValue: { [weak self] (response: FavoritesResponse) in
             guard let self else { return }
-            self.favoriteIDs = Set(response.data.map { $0.exerciseId })
+            // Response is just an array of IDs: [1, 3, 5, 10]
+            self.favoriteIDs = Set(response)
             self.saveFavoritesToDisk()
+            self.logger.info("⭐ KineViewModel: Loaded \(response.count) favorites")
         }
         .store(in: &cancellables)
     }
@@ -290,11 +319,48 @@ final class KineViewModel: ObservableObject {
 
     // MARK: - Data Processing
 
-    /// Required by your build errors: this method must exist and be in scope.
+    /// Process the API response and convert to our model format
     private func processApiData(_ response: KineAPIResponse) {
-        categories = response.categories
-        allExercises = response.exercises
-        // exerciseGroups is rebuilt by Combine subscription
+        logger.info("🔄 KineViewModel: Processing API data...")
+        
+        // Response is a dictionary: { "ADDUCTEURS": [...], "QUADRICEPS": [...] }
+        var extractedCategories: [KineCategory] = []
+        var extractedExercises: [KineExercise] = []
+        var categoryIdCounter = 1
+        
+        // Build category and exercise lists from the grouped response
+        for (categoryName, apiExercises) in response.sorted(by: { $0.key < $1.key }) {
+            let categoryId = categoryIdCounter
+            categoryIdCounter += 1
+            
+            // Create category
+            let category = KineCategory(id: categoryId, name: categoryName)
+            extractedCategories.append(category)
+            
+            logger.debug("   - Category: \(categoryName) with \(apiExercises.count) exercises")
+            
+            // Convert API exercises to our model
+            for apiExercise in apiExercises {
+                let exercise = KineExercise(
+                    id: apiExercise.id,
+                    title: apiExercise.name,
+                    description: apiExercise.description ?? "", // Unwrap optional
+                    categoryId: categoryId,
+                    difficulty: "Medium", // Default
+                    imageUrl: apiExercise.video_url
+                )
+                extractedExercises.append(exercise)
+            }
+        }
+        
+        // Update published properties
+        categories = extractedCategories
+        allExercises = extractedExercises
+        // exerciseGroups is rebuilt automatically by Combine subscription
+        
+        logger.info("✅ KineViewModel: Data processing complete")
+        logger.info("   - Total categories: \(extractedCategories.count)")
+        logger.info("   - Total exercises: \(extractedExercises.count)")
     }
 
     // MARK: - Development / Mocking

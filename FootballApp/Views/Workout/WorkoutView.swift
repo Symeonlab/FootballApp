@@ -2,35 +2,59 @@
 //  WorkoutView.swift
 //  FootballApp
 //
-//  Modern workout list view with enhanced UI
+//  Modern workout view matching iOS Fitness design
 //
 
 import SwiftUI
+import Combine
+import os.log
 
 struct WorkoutView: View {
     @EnvironmentObject var viewModel: WorkoutsViewModel
     @State private var showNewPlanSheet = false
+    @State private var selectedDay: Int? = nil
+    
+    // Logger for WorkoutView
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.app", category: "WorkoutView")
+    
+    // Get today's workout
+    private var todayWorkout: WorkoutSession? {
+        let calendar = Calendar.current
+        let today = Date()
+        let weekday = calendar.component(.weekday, from: today)
+        let todayIndex = (weekday + 5) % 7 // Convert to Monday-first (0 = Monday)
+        
+        guard viewModel.weeklySchedule.indices.contains(todayIndex) else { return nil }
+        let session = viewModel.weeklySchedule[todayIndex]
+        return session.theme != "Repos" ? session : nil
+    }
 
     var body: some View {
         NavigationView {
             ZStack {
-                // Dark purple animated background
-                DarkPurpleAnimatedBackground()
-                    .ignoresSafeArea()
+                // Dark background with gradient
+                LinearGradient(
+                    colors: [
+                        Color(hex: "0A0A1E"),
+                        Color(hex: "1A1A2E"),
+                        Color(hex: "0F0F23")
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
 
                 if viewModel.isLoading {
-                    // Use modern loading view
                     ModernWorkoutLoadingView()
+                        .onAppear {
+                            logger.debug("⏳ WorkoutView: Loading state - showing loading view")
+                        }
                 } else if viewModel.workoutSessions.isEmpty {
-                    // Use modern empty state
                     VStack(spacing: 20) {
                         ModernWorkoutEmptyStateView {
-                            Task {
-                                await viewModel.generateNewPlan()
-                            }
+                            Task { await viewModel.generateNewPlan() }
                         }
 
-                        // Show error message if there is one
                         if let errorMessage = viewModel.errorMessage {
                             VStack(spacing: 12) {
                                 Image(systemName: "exclamationmark.triangle.fill")
@@ -48,9 +72,7 @@ struct WorkoutView: View {
                                     .padding(.horizontal)
 
                                 Button {
-                                    Task {
-                                        await viewModel.fetchWorkoutPlan()
-                                    }
+                                    Task { await viewModel.fetchWorkoutPlan() }
                                 } label: {
                                     HStack {
                                         Image(systemName: "arrow.clockwise")
@@ -71,18 +93,16 @@ struct WorkoutView: View {
                                     .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
                             )
                             .padding(.horizontal)
+
                         }
                     }
                 } else {
-                    // Workout list with modern components
                     ScrollView {
                         VStack(spacing: 24) {
-                            // Modern Stats Header with progress
                             ModernWorkoutStatsHeader(viewModel: viewModel)
                                 .padding(.horizontal)
                                 .padding(.top, 8)
 
-                            // Modern Weekly Calendar
                             ModernWorkoutWeeklyCalendar(
                                 days: generateWeeklyCalendarData(),
                                 onDayTap: { index in
@@ -96,7 +116,6 @@ struct WorkoutView: View {
                             )
                             .padding(.horizontal)
 
-                            // Weekly schedule with modern session cards
                             VStack(spacing: 16) {
                                 ForEach(viewModel.weeklySchedule) { session in
                                     if session.theme != "Repos" {
@@ -106,12 +125,9 @@ struct WorkoutView: View {
                                             isCompleted: viewModel.completedWorkouts.contains(session.id),
                                             isRestDay: false,
                                             exercises: session.exercises?.map { $0.name } ?? [],
-                                            onStart: {
-                                                viewModel.activeSession = session
-                                            }
+                                            onStart: { viewModel.activeSession = session }
                                         )
                                     } else {
-                                        // Rest day card
                                         ModernWorkoutListRow(
                                             day: session.day,
                                             theme: "Rest Day",
@@ -127,6 +143,12 @@ struct WorkoutView: View {
                         }
                         .padding(.top, 8)
                     }
+                    .refreshable {
+                        await viewModel.fetchWorkoutPlan()
+                    }
+                    .onAppear {
+                        logger.info("✅ WorkoutView: Displaying \(viewModel.workoutSessions.count) workout sessions")
+                    }
                 }
             }
             .navigationTitle("Workouts - Dipodi")
@@ -134,19 +156,14 @@ struct WorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
-                        Button(action: {
-                            Task {
-                                await viewModel.fetchWorkoutPlan()
-                            }
-                        }) {
+                        Button {
+                            Task { await viewModel.fetchWorkoutPlan() }
+                        } label: {
                             Label("Refresh", systemImage: "arrow.clockwise")
                         }
-
-                        Button(action: {
-                            Task {
-                                await viewModel.generateNewPlan()
-                            }
-                        }) {
+                        Button {
+                            Task { await viewModel.generateNewPlan() }
+                        } label: {
                             Label("Generate New Plan", systemImage: "wand.and.stars")
                         }
                     } label: {
@@ -156,13 +173,11 @@ struct WorkoutView: View {
                     }
                 }
             }
-            .fullScreenCover(item: $viewModel.activeSession) { session in
+            .fullScreenCover(item: $viewModel.activeSession) { (session: WorkoutSession) in
                 WorkoutSessionReelsView(
                     viewModel: WorkoutDetailViewModel(session: session),
                     onComplete: {
-                        Task {
-                            await viewModel.logWorkoutCompleted(session: session, date: Date())
-                        }
+                        Task { await viewModel.logWorkoutCompleted(session: session, date: Date()) }
                         viewModel.activeSession = nil
                     }
                 )
@@ -170,31 +185,41 @@ struct WorkoutView: View {
         }
         .task {
             if viewModel.workoutSessions.isEmpty {
+                logger.info("📥 WorkoutView: Task triggered - fetching workout plan")
                 await viewModel.fetchWorkoutPlan()
+                
+                // Log the result after fetch
+                if !viewModel.workoutSessions.isEmpty {
+                    logger.info("✅ WorkoutView: Successfully loaded \(viewModel.workoutSessions.count) workout sessions")
+                    
+                    // Log details of each session
+                    for session in viewModel.workoutSessions {
+                        logger.debug("   - \(session.day): \(session.theme) (\(session.exercises?.count ?? 0) exercises)")
+                    }
+                } else if let error = viewModel.errorMessage {
+                    logger.error("❌ WorkoutView: Failed to load workout sessions - \(error)")
+                } else {
+                    logger.warning("⚠️ WorkoutView: No workout sessions loaded (no error)")
+                }
+            } else {
+                logger.info("✅ WorkoutView: Workout sessions already loaded (\(viewModel.workoutSessions.count) sessions)")
             }
         }
     }
 
     // MARK: - Helper Methods
-
-    /// Generate calendar data for the weekly calendar component
     private func generateWeeklyCalendarData() -> [(String, Bool, Bool, Bool)] {
         let daysOfWeek = ["M", "T", "W", "T", "F", "S", "S"]
-
-        // Get current day of week (1 = Sunday, 2 = Monday, etc.)
         let calendar = Calendar.current
         let today = Date()
         let weekday = calendar.component(.weekday, from: today)
-
-        // Convert to 0-indexed Monday-first (0 = Monday, 6 = Sunday)
-        let todayIndex = (weekday + 5) % 7
+        let todayIndex = (weekday + 5) % 7 // Monday-first index
 
         return daysOfWeek.enumerated().map { index, day in
             let session = viewModel.weeklySchedule.indices.contains(index) ? viewModel.weeklySchedule[index] : nil
             let isToday = index == todayIndex
             let isCompleted = session != nil && viewModel.completedWorkouts.contains(session!.id)
             let isRestDay = session?.theme == "Repos" || session?.theme.lowercased().contains("rest") ?? false
-
             return (day, isToday, isCompleted, isRestDay)
         }
     }
@@ -214,7 +239,6 @@ struct ModernWorkoutStatsHeader: View {
                     color: Color.appTheme.primary,
                     progress: Double(viewModel.workoutSessions.count) / 7.0
                 )
-
                 ModernWorkoutStatCard(
                     icon: "checkmark.circle.fill",
                     value: "\(viewModel.completedWorkoutsCount)",
@@ -222,7 +246,6 @@ struct ModernWorkoutStatsHeader: View {
                     color: .green,
                     progress: viewModel.completionPercentage
                 )
-
                 ModernWorkoutStatCard(
                     icon: "flame.fill",
                     value: "\(viewModel.totalExercises)",
@@ -230,7 +253,6 @@ struct ModernWorkoutStatsHeader: View {
                     color: .orange,
                     progress: Double(viewModel.completedWorkoutsCount) / Double(max(viewModel.workoutSessions.count, 1))
                 )
-
                 ModernWorkoutStatCard(
                     icon: "chart.line.uptrend.xyaxis",
                     value: "\(Int(viewModel.completionPercentage * 100))%",
@@ -255,13 +277,12 @@ class PreviewAuthViewModel: AuthViewModel {
 
 // MARK: - Preview
 #Preview {
-    // IMPORTANT: Type-erase to the base class so SwiftUI registers the correct EnvironmentObject key.
     let workoutsVM: WorkoutsViewModel = MockWorkoutsViewModel()
     let authVM: AuthViewModel = PreviewAuthViewModel()
     let langManager = LanguageManager()
     let themeManager = ThemeManager()
 
-    return NavigationView {
+    NavigationView {
         WorkoutView()
             .environmentObject(workoutsVM)
             .environmentObject(authVM)
@@ -272,13 +293,12 @@ class PreviewAuthViewModel: AuthViewModel {
 }
 
 #Preview("Workout Screen") {
-    // IMPORTANT: Type-erase to the base class so SwiftUI registers the correct EnvironmentObject key.
     let workoutsVM: WorkoutsViewModel = MockWorkoutsViewModel()
     let authVM: AuthViewModel = PreviewAuthViewModel()
     let langManager = LanguageManager()
     let themeManager = ThemeManager()
 
-    return NavigationView {
+    NavigationView {
         WorkoutView()
             .environmentObject(workoutsVM)
             .environmentObject(authVM)
@@ -291,11 +311,8 @@ class PreviewAuthViewModel: AuthViewModel {
 // MARK: - Mock ViewModel for Previews
 @MainActor
 final class MockWorkoutsViewModel: WorkoutsViewModel {
-
     override init() {
         super.init()
-
-        // Add mock workout sessions - all assignments happen synchronously during init
         self.workoutSessions = [
             WorkoutSession(
                 id: 1,
@@ -384,29 +401,9 @@ final class MockWorkoutsViewModel: WorkoutsViewModel {
                 completion_date: nil
             )
         ]
-
-        // Populate weekly schedule
         self.weeklySchedule = self.workoutSessions
-
-        // Mark some as completed
         self.completedWorkouts = [2, 5]
-
-        // Not loading
         self.isLoading = false
     }
-
-    override func fetchWorkoutPlan() async {
-        // Do nothing in preview - mock is already populated
-    }
-
-    override func generateNewPlan() async {
-        // Do nothing in preview - mock is already populated
-    }
-
-    override func logWorkoutCompleted(session: WorkoutSession, date: Date) async {
-        // Mock implementation - just update local state
-        await MainActor.run {
-            self.completedWorkouts.insert(session.id)
-        }
-    }
 }
+
