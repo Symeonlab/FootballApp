@@ -1258,7 +1258,7 @@ Translation file structure (`lang/{locale}/filament.php`):
 1. User registers/logs in
       │
       v
-2. Server creates Sanctum token (30-day expiry)
+2. Server creates Sanctum token (7-day expiry)
       │
       v
 3. Token returned in JSON response
@@ -1282,7 +1282,7 @@ Translation file structure (`lang/{locale}/filament.php`):
 | Layer | Implementation |
 |-------|---------------|
 | Transport | HTTPS + SSL certificate pinning (SHA-256 public key) |
-| Authentication | Laravel Sanctum (Bearer token, 30-day expiry) |
+| Authentication | Laravel Sanctum (Bearer token, 7-day expiry) |
 | App Verification | X-App-Key header (SHA-256 hash comparison) |
 | Rate Limiting | 3 tiers: auth (5/min), standard (60/min), heavy (10/min) |
 | Input Validation | Laravel Form Requests on all endpoints |
