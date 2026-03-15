@@ -72,7 +72,7 @@ struct NutritionReelsView: View {
                     
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Your Nutrition Plan")
+                            Text("nutrition.your_plan".localizedString)
                                 .font(.headline)
                                 .foregroundColor(.white)
                             
@@ -113,9 +113,9 @@ struct NutritionReelsView: View {
     private func reelTitle(for reel: NutritionReel) -> String {
         switch reel {
         case .calorieOverview:
-            return "Daily Target"
+            return "nutrition.daily_target".localizedString
         case .macros:
-            return "Macronutrients"
+            return "nutrition.macronutrients".localizedString
         case .meal(let meal):
             return meal.name
         case .advice(let advice):
@@ -241,7 +241,7 @@ struct CalorieOverviewReelContent: View {
                     .offset(y: isAnimating ? 0 : 50)
                     .opacity(isAnimating ? 1 : 0)
                 
-                Text("DAILY CALORIES")
+                Text("nutrition.daily_target".localizedString.uppercased())
                     .font(.title3.weight(.semibold))
                     .foregroundColor(.white.opacity(0.9))
                     .tracking(2)
@@ -254,7 +254,7 @@ struct CalorieOverviewReelContent: View {
                 HStack(spacing: 8) {
                     Image(systemName: "target")
                         .foregroundColor(.white.opacity(0.8))
-                    Text("Your personalized daily target")
+                    Text("nutrition.personalized_target".localizedString)
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.8))
                 }
@@ -262,7 +262,7 @@ struct CalorieOverviewReelContent: View {
                 HStack(spacing: 8) {
                     Image(systemName: "chart.line.uptrend.xyaxis")
                         .foregroundColor(.white.opacity(0.8))
-                    Text("Optimized for your fitness goals")
+                    Text("nutrition.optimized_goals".localizedString)
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.8))
                 }
@@ -285,7 +285,7 @@ struct MacrosReelContent: View {
             Spacer()
             
             VStack(spacing: 20) {
-                Text("MACRONUTRIENTS")
+                Text("nutrition.macronutrients".localizedString.uppercased())
                     .font(.title2.weight(.bold))
                     .foregroundColor(.white)
                     .tracking(2)
@@ -296,26 +296,26 @@ struct MacrosReelContent: View {
                     VStack(spacing: 24) {
                         ReelMacroRow(
                             icon: "🥩",
-                            name: "PROTEIN",
-                            value: Int(macros["protein"] ?? 0),
+                            name: "nutrition.protein".localizedString.uppercased(),
+                            value: Int(macros["protein_grams"] ?? macros["protein"] ?? 0),
                             color: .red,
                             delay: 0.1,
                             isAnimating: isAnimating
                         )
-                        
+
                         ReelMacroRow(
                             icon: "🍞",
-                            name: "CARBS",
-                            value: Int(macros["carbs"] ?? 0),
+                            name: "nutrition.carbs".localizedString.uppercased(),
+                            value: Int(macros["carb_grams"] ?? macros["carbs"] ?? 0),
                             color: .blue,
                             delay: 0.2,
                             isAnimating: isAnimating
                         )
-                        
+
                         ReelMacroRow(
                             icon: "🥑",
-                            name: "FATS",
-                            value: Int(macros["fats"] ?? 0),
+                            name: "nutrition.fats".localizedString.uppercased(),
+                            value: Int(macros["fat_grams"] ?? macros["fats"] ?? 0),
                             color: .orange,
                             delay: 0.3,
                             isAnimating: isAnimating
@@ -495,7 +495,7 @@ struct AdviceReelContent: View {
                 // Foods to Eat
                 if let eat = advice.foods_to_eat, !eat.isEmpty {
                     AdviceSection(
-                        title: "RECOMMENDED",
+                        title: "nutrition.recommended".localizedString.uppercased(),
                         icon: "checkmark.circle.fill",
                         items: eat,
                         color: .green,
@@ -510,7 +510,7 @@ struct AdviceReelContent: View {
                         HStack(spacing: 8) {
                             Image(systemName: "sparkles")
                                 .foregroundColor(.yellow)
-                            Text("TRADITIONAL REMEDIES")
+                            Text("nutrition.traditional_remedies".localizedString.uppercased())
                                 .font(.caption.weight(.bold))
                                 .foregroundColor(.white.opacity(0.9))
                                 .tracking(1)

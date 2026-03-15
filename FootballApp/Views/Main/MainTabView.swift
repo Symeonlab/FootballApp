@@ -2,250 +2,329 @@
 //  MainTabView.swift
 //  FootballApp
 //
-//  Created by Symeon Lampadarios on 11/11/2025.
-//
-
-//
-//  MainTabView.swift
-//  FootballApp
+//  Modern tab-based navigation with enhanced UX and animations
 //
 
 import SwiftUI
 
 struct MainTabView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    
-    // Receive view models from ContentView (injected via environment)
-    // This ensures data persists across the entire app lifecycle
     @EnvironmentObject var workoutsViewModel: WorkoutsViewModel
     @EnvironmentObject var nutritionViewModel: NutritionViewModel
     @EnvironmentObject var kineViewModel: KineViewModel
     @EnvironmentObject var profileViewModel: ProfileViewModel
-    
-    // For your custom tab bar
+
     @State private var selectedTab: Tab = .workout
+    @State private var previousTab: Tab = .workout
 
     var body: some View {
-        VStack(spacing: 0) {
-            // This is the main content area
-            ZStack {
-                switch selectedTab {
-                case .workout:
-                    // The Workout tab - Using Modern Workout View
-                    WorkoutView()
-                        .environmentObject(workoutsViewModel)
-                case .nutrition:
-                    // The Nutrition tab
-                    NutritionView()
-                        .environmentObject(nutritionViewModel)
-                case .kine:
-                    // The Kine tab
-                    KineView()
-                        .environmentObject(kineViewModel)
-                case .profile:
-                    // The Profile/Settings tab
-                    ProfileView() //
-                        .environmentObject(profileViewModel)
+        GeometryReader { geometry in
+            ZStack(alignment: .bottom) {
+                // Main content area - takes full space with bottom padding for tab bar
+                TabContent(
+                    selectedTab: selectedTab,
+                    previousTab: previousTab,
+                    workoutsViewModel: workoutsViewModel,
+                    nutritionViewModel: nutritionViewModel,
+                    kineViewModel: kineViewModel,
+                    profileViewModel: profileViewModel
+                )
+                .frame(width: geometry.size.width, height: geometry.size.height)
+
+                // Fixed floating tab bar at bottom
+                VStack {
+                    Spacer()
+                    FloatingTabBar(selectedTab: $selectedTab, onTabChange: { newTab in
+                        previousTab = selectedTab
+                        selectedTab = newTab
+                    })
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            // This is your custom Tab Bar view
-            CustomTabBarView(selectedTab: $selectedTab)
         }
+        .ignoresSafeArea(.keyboard)
     }
 }
 
-// MARK: - Custom Tab Bar
+// MARK: - Tab Content
+
+private struct TabContent: View {
+    let selectedTab: Tab
+    let previousTab: Tab
+    @ObservedObject var workoutsViewModel: WorkoutsViewModel
+    @ObservedObject var nutritionViewModel: NutritionViewModel
+    @ObservedObject var kineViewModel: KineViewModel
+    @ObservedObject var profileViewModel: ProfileViewModel
+
+    var body: some View {
+        // Use standard TabView-like switching for stability
+        Group {
+            switch selectedTab {
+            case .workout:
+                WorkoutView()
+                    .environmentObject(workoutsViewModel)
+                    .environmentObject(nutritionViewModel)
+            case .nutrition:
+                NutritionView()
+                    .environmentObject(nutritionViewModel)
+            case .kine:
+                KineView()
+                    .environmentObject(kineViewModel)
+            case .blog:
+                BlogTabView()
+            case .profile:
+                ProfileView()
+                    .environmentObject(profileViewModel)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .transition(.opacity)
+        .animation(.easeInOut(duration: 0.15), value: selectedTab)
+    }
+}
+
+// MARK: - Tab Enum
+
 enum Tab: String, CaseIterable {
-    case workout = "figure.walk"
-    case nutrition = "leaf.fill"
-    case kine = "plus.circle.fill"
-    case profile = "person.fill"
-    
+    case workout
+    case nutrition
+    case kine
+    case blog
+    case profile
+
+    var icon: String {
+        switch self {
+        case .workout: return "figure.run"
+        case .nutrition: return "leaf.fill"
+        case .kine: return "waveform.path.ecg"
+        case .blog: return "book"
+        case .profile: return "person.fill"
+        }
+    }
+
+    var selectedIcon: String {
+        switch self {
+        case .workout: return "figure.run"
+        case .nutrition: return "leaf.fill"
+        case .kine: return "waveform.path.ecg.rectangle.fill"
+        case .blog: return "book.fill"
+        case .profile: return "person.fill"
+        }
+    }
+
     var title: LocalizedStringKey {
         switch self {
         case .workout: return "tab.workout"
         case .nutrition: return "tab.nutrition"
         case .kine: return "tab.kine"
+        case .blog: return "tab.blog"
         case .profile: return "tab.profile"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .workout: return Color(hex: "FF6B6B")
+        case .nutrition: return Color(hex: "4ECB71")
+        case .kine: return Color(hex: "5E7CE2")
+        case .blog: return Color(hex: "FF9F43")
+        case .profile: return Color(hex: "A06CD5")
         }
     }
 }
 
-struct CustomTabBarView: View {
+// MARK: - Floating Tab Bar
+
+struct FloatingTabBar: View {
     @Binding var selectedTab: Tab
+    let onTabChange: (Tab) -> Void
+
     @Namespace private var animation
-    @State private var tabBarGlow = false
-    
+    @State private var showGlow = false
+
     var body: some View {
         HStack(spacing: 0) {
             ForEach(Tab.allCases, id: \.self) { tab in
-                TabBarButton(
+                TabBarItem(
                     tab: tab,
                     isSelected: selectedTab == tab,
                     namespace: animation,
-                    action: {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                            selectedTab = tab
+                    onTap: {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                            onTabChange(tab)
                         }
-                        // Enhanced haptic feedback
-                        #if !targetEnvironment(simulator)
-                        let generator = UIImpactFeedbackGenerator(style: .medium)
-                        generator.impactOccurred()
-                        #endif
+                        generateHaptic()
                     }
                 )
             }
         }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 10)
+        .background(
+            TabBarBackground(showGlow: showGlow)
+        )
+        .overlay(
+            TabBarBorder()
+        )
+        .shadow(color: .black.opacity(0.25), radius: 20, x: 0, y: 8)
+        .shadow(color: Color.theme.primary.opacity(0.1), radius: 15, x: 0, y: 4)
         .padding(.horizontal, 20)
-        .padding(.top, 20)
-        .padding(.bottom, 40)
-        .background {
-            ZStack {
-                // Enhanced glass effect with blur
-                Rectangle()
-                    .fill(.ultraThinMaterial)
-                
-                // Dynamic gradient overlay
-                LinearGradient(
-                    colors: [
-                        Color.white.opacity(0.15),
-                        Color.theme.primary.opacity(0.05),
-                        Color.clear
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                
-                // Subtle animated glow at the top
-                LinearGradient(
-                    colors: [
-                        Color.theme.primary.opacity(tabBarGlow ? 0.15 : 0.05),
-                        Color.clear
-                    ],
-                    startPoint: .top,
-                    endPoint: .center
-                )
-                .animation(.easeInOut(duration: 3.0).repeatForever(autoreverses: true), value: tabBarGlow)
-            }
-            .ignoresSafeArea(edges: .bottom)
-        }
-        .overlay(alignment: .top) {
-            // Enhanced top border with gradient
-            LinearGradient(
-                colors: [
-                    Color.white.opacity(0.5),
-                    Color.white.opacity(0.2),
-                    Color.clear
-                ],
-                startPoint: .leading,
-                endPoint: .trailing
-            )
-            .frame(height: 1)
-            .blur(radius: 0.5)
-        }
-        .shadow(color: .black.opacity(0.2), radius: 30, x: 0, y: -10)
-        .shadow(color: Color.theme.primary.opacity(0.1), radius: 20, x: 0, y: -5)
-        .onAppear {
-            tabBarGlow = true
-        }
+        .padding(.bottom, 20)
+        .onAppear { showGlow = true }
+    }
+
+    private func generateHaptic() {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.prepare()
+        generator.impactOccurred()
     }
 }
 
-struct TabBarButton: View {
+// MARK: - Tab Bar Item
+
+private struct TabBarItem: View {
     let tab: Tab
     let isSelected: Bool
     let namespace: Namespace.ID
-    let action: () -> Void
-    
+    let onTap: () -> Void
+
     @State private var isPressed = false
-    
+
     var body: some View {
         Button(action: {
-            withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
-                isPressed = true
-            }
-            action()
+            isPressed = true
+            onTap()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 isPressed = false
             }
         }) {
-            VStack(spacing: 8) {
+            VStack(spacing: 6) {
                 ZStack {
+                    // Selection background
                     if isSelected {
-                        // Enhanced glass effect background for selected tab
                         Capsule()
-                            .fill(.thinMaterial)
-                            .frame(width: 70, height: 44)
-                            .overlay {
-                                Capsule()
-                                    .fill(
-                                        LinearGradient(
-                                            colors: [
-                                                Color.theme.primary.opacity(0.4),
-                                                Color.theme.accent.opacity(0.2)
-                                            ],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        )
-                                    )
-                            }
-                            .overlay {
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        tab.color.opacity(0.25),
+                                        tab.color.opacity(0.1)
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                            .frame(width: 56, height: 40)
+                            .overlay(
                                 Capsule()
                                     .strokeBorder(
                                         LinearGradient(
                                             colors: [
-                                                Color.white.opacity(0.5),
-                                                Color.white.opacity(0.2)
+                                                tab.color.opacity(0.5),
+                                                tab.color.opacity(0.2)
                                             ],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
+                                            startPoint: .top,
+                                            endPoint: .bottom
                                         ),
                                         lineWidth: 1
                                     )
-                            }
-                            .shadow(color: Color.theme.primary.opacity(0.4), radius: 12, x: 0, y: 6)
-                            .matchedGeometryEffect(id: "tab_selection", in: namespace)
+                            )
+                            .matchedGeometryEffect(id: "tab_bg", in: namespace)
                     }
-                    
-                    Image(systemName: tab.rawValue)
-                        .font(.system(size: 24, weight: isSelected ? .semibold : .regular))
+
+                    // Icon
+                    Image(systemName: isSelected ? tab.selectedIcon : tab.icon)
+                        .font(.system(size: 20, weight: isSelected ? .semibold : .regular))
                         .foregroundStyle(
-                            isSelected ? 
+                            isSelected ?
                             LinearGradient(
-                                colors: [Color.white, Color.white.opacity(0.9)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ) : 
+                                colors: [tab.color, tab.color.opacity(0.8)],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            ) :
                             LinearGradient(
-                                colors: [Color.secondary.opacity(0.8), Color.secondary.opacity(0.6)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
+                                colors: [Color.white.opacity(0.5), Color.white.opacity(0.3)],
+                                startPoint: .top,
+                                endPoint: .bottom
                             )
                         )
-                        .scaleEffect(isSelected ? 1.15 : 1.0)
-                        .scaleEffect(isPressed ? 0.95 : 1.0)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isSelected)
-                        .animation(.spring(response: 0.2, dampingFraction: 0.5), value: isPressed)
+                        .scaleEffect(isPressed ? 0.85 : (isSelected ? 1.1 : 1.0))
+                        .animation(.spring(response: 0.25, dampingFraction: 0.6), value: isPressed)
+                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
                 }
-                .frame(height: 44)
-                
+                .frame(height: 40)
+
+                // Label
                 Text(tab.title)
-                    .font(.system(size: 11, weight: isSelected ? .bold : .medium))
-                    .foregroundStyle(
-                        isSelected ? 
-                        Color.white : 
-                        Color.secondary.opacity(0.8)
-                    )
-                    .animation(.easeInOut(duration: 0.2), value: isSelected)
+                    .font(.system(size: 10, weight: isSelected ? .semibold : .medium))
+                    .foregroundColor(isSelected ? tab.color : .white.opacity(0.4))
+                    .lineLimit(1)
             }
             .frame(maxWidth: .infinity)
             .contentShape(Rectangle())
         }
-        .buttonStyle(PlainButtonStyle())
+        .buttonStyle(.plain)
     }
 }
+
+// MARK: - Tab Bar Background
+
+private struct TabBarBackground: View {
+    let showGlow: Bool
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 28, style: .continuous)
+            .fill(.ultraThinMaterial)
+            .overlay(
+                RoundedRectangle(cornerRadius: 28, style: .continuous)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color(hex: "1A1A2E").opacity(0.8),
+                                Color(hex: "0F0F23").opacity(0.9)
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+            )
+            .overlay(
+                // Animated top glow
+                RoundedRectangle(cornerRadius: 28, style: .continuous)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.theme.primary.opacity(showGlow ? 0.1 : 0.02),
+                                .clear
+                            ],
+                            startPoint: .top,
+                            endPoint: .center
+                        )
+                    )
+                    .animation(.easeInOut(duration: 2.5).repeatForever(autoreverses: true), value: showGlow)
+            )
+    }
+}
+
+// MARK: - Tab Bar Border
+
+private struct TabBarBorder: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: 28, style: .continuous)
+            .strokeBorder(
+                LinearGradient(
+                    colors: [
+                        Color.white.opacity(0.2),
+                        Color.white.opacity(0.05),
+                        Color.white.opacity(0.1)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ),
+                lineWidth: 1
+            )
+    }
+}
+
+// MARK: - Preview
 
 #Preview {
     @Previewable @StateObject var authVM = AuthViewModel()
@@ -255,15 +334,19 @@ struct TabBarButton: View {
     @Previewable @StateObject var profileVM = ProfileViewModel()
     @Previewable @StateObject var langManager = LanguageManager()
     @Previewable @StateObject var themeManager = ThemeManager()
-    
-    return MainTabView()
-        .environmentObject(authVM)
-        .environmentObject(workoutsVM)
-        .environmentObject(nutritionVM)
-        .environmentObject(kineVM)
-        .environmentObject(profileVM)
-        .environmentObject(langManager)
-        .environmentObject(themeManager)
-        .preferredColorScheme(.dark)
-}
 
+    ZStack {
+        Color(hex: "0A0A1E")
+            .ignoresSafeArea()
+
+        MainTabView()
+            .environmentObject(authVM)
+            .environmentObject(workoutsVM)
+            .environmentObject(nutritionVM)
+            .environmentObject(kineVM)
+            .environmentObject(profileVM)
+            .environmentObject(langManager)
+            .environmentObject(themeManager)
+    }
+    .preferredColorScheme(.dark)
+}

@@ -56,9 +56,9 @@ struct GoalVisualizationView: View {
     
     var body: some View {
         ModernOnboardingQuestionView(
-            title: "Votre Profil est Prêt !",
-            subtitle: "Visualisez vos objectifs et métriques",
-            buttonTitle: "Voir le Résumé",
+            title: "onboarding.goal.title",
+            subtitle: "onboarding.goal.subtitle",
+            buttonTitle: "onboarding.goal.view_summary",
             action: onContinue
         ) {
             VStack(spacing: 20) {
@@ -83,13 +83,13 @@ struct GoalCard: View {
     var goalInfo: (icon: String, title: String, color: Color) {
         switch goal {
         case "WEIGHT_LOSS":
-            return ("flame.fill", "Perte de Poids", Color.red)
+            return ("flame.fill", "onboarding.goal.weight_loss".localizedString, Color.red)
         case "MUSCLE_GAIN":
-            return ("figure.strengthtraining.traditional", "Prise de Masse", Color.blue)
+            return ("figure.strengthtraining.traditional", "onboarding.goal.muscle_gain".localizedString, Color.blue)
         case "MAINTENANCE":
-            return ("heart.fill", "Maintien de Forme", Color.green)
+            return ("heart.fill", "onboarding.goal.maintenance".localizedString, Color.green)
         default:
-            return ("star.fill", "Objectif Personnalisé", Color.purple)
+            return ("star.fill", "onboarding.goal.custom".localizedString, Color.purple)
         }
     }
     
@@ -108,7 +108,7 @@ struct GoalCard: View {
             .opacity(animateMetrics ? 1 : 0)
             
             VStack(alignment: .leading, spacing: 4) {
-                Text("Votre Objectif")
+                Text("goal.your_goal".localizedString)
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.6))
                 
@@ -145,35 +145,35 @@ struct MetricsGrid: View {
         ], spacing: 16) {
             MetricCard(
                 icon: "ruler.fill",
-                title: "Taille",
+                title: "onboarding.goal.height".localizedString,
                 value: "\(Int(viewModel.data.height ?? 170)) cm",
                 color: .blue,
                 animateMetrics: animateMetrics,
                 delay: 0.1
             )
-            
+
             MetricCard(
                 icon: "scalemass.fill",
-                title: "Poids",
+                title: "onboarding.goal.weight".localizedString,
                 value: "\(Int(viewModel.data.weight ?? 70)) kg",
                 color: .purple,
                 animateMetrics: animateMetrics,
                 delay: 0.2
             )
-            
+
             MetricCard(
                 icon: "target",
-                title: "Objectif",
+                title: "onboarding.goal.objective".localizedString,
                 value: "\(Int(viewModel.data.idealWeight ?? 70)) kg",
                 color: .green,
                 animateMetrics: animateMetrics,
                 delay: 0.3
             )
-            
+
             MetricCard(
                 icon: "calendar",
-                title: "Âge",
-                value: "\(viewModel.data.age ?? 25) ans",
+                title: "onboarding.goal.age".localizedString,
+                value: "\(viewModel.data.age ?? 25) \("onboarding.goal.years".localizedString)",
                 color: .orange,
                 animateMetrics: animateMetrics,
                 delay: 0.4
@@ -285,13 +285,17 @@ struct OnboardingSummaryView: View {
                         .scaleEffect(animateContent ? 1 : 0.5)
                         .opacity(animateContent ? 1 : 0)
                         
-                        Text("Profil Complété !")
+                        Text(viewModel.isUpdateMode
+                             ? "onboarding.preferences_updated_title".localizedString
+                             : "goal.profile_completed".localizedString)
                             .font(.title.bold())
                             .foregroundColor(.white)
                             .opacity(animateContent ? 1 : 0)
                             .offset(y: animateContent ? 0 : 20)
-                        
-                        Text("Voici votre plan nutritionnel personnalisé")
+
+                        Text(viewModel.isUpdateMode
+                             ? "onboarding.preferences_updated_subtitle".localizedString
+                             : "goal.your_personalized_plan".localizedString)
                             .font(.subheadline)
                             .foregroundColor(.white.opacity(0.8))
                             .multilineTextAlignment(.center)
@@ -303,33 +307,33 @@ struct OnboardingSummaryView: View {
                     // BMR & Calories Card
                     VStack(spacing: 16) {
                         CalorieMetricRow(
-                            title: "Métabolisme de Base (MB)",
+                            title: "onboarding.goal.bmr".localizedString,
                             value: String(format: "%.0f kcal", bmr),
                             icon: "flame.fill",
                             color: .orange,
-                            subtitle: "Calories brûlées au repos"
+                            subtitle: "onboarding.goal.bmr_subtitle".localizedString
                         )
-                        
+
                         Divider()
                             .background(.white.opacity(0.2))
-                        
+
                         CalorieMetricRow(
-                            title: "Dépense Énergétique Totale",
+                            title: "onboarding.goal.tdee".localizedString,
                             value: String(format: "%.0f kcal", dailyCalories),
                             icon: "bolt.fill",
                             color: .yellow,
-                            subtitle: "Avec votre niveau d'activité"
+                            subtitle: "onboarding.goal.tdee_subtitle".localizedString
                         )
-                        
+
                         Divider()
                             .background(.white.opacity(0.2))
-                        
+
                         CalorieMetricRow(
-                            title: "Apport Calorique Recommandé",
+                            title: "onboarding.goal.recommended_intake".localizedString,
                             value: String(format: "%.0f kcal", adjustedCalories),
                             icon: "target",
                             color: .green,
-                            subtitle: "Pour atteindre votre objectif"
+                            subtitle: "onboarding.goal.recommended_intake_subtitle".localizedString
                         )
                     }
                     .padding(20)
@@ -358,11 +362,11 @@ struct OnboardingSummaryView: View {
                             .foregroundColor(.blue)
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Basé sur la formule de Harris-Benedict")
+                            Text("goal.based_on_formula".localizedString)
                                 .font(.caption.bold())
                                 .foregroundColor(.white)
-                            
-                            Text("Votre plan sera ajusté selon vos progrès et vos habitudes alimentaires")
+
+                            Text("goal.plan_adjusted".localizedString)
                                 .font(.caption)
                                 .foregroundColor(.white.opacity(0.7))
                         }
@@ -399,10 +403,12 @@ struct OnboardingSummaryView: View {
                             ProgressView()
                                 .tint(.white)
                         } else {
-                            Text("Terminer")
+                            Text(viewModel.isUpdateMode
+                                 ? "onboarding.update_regenerate".localizedString
+                                 : "goal.finish".localizedString)
                                 .font(.headline.bold())
-                            
-                            Image(systemName: "checkmark")
+
+                            Image(systemName: viewModel.isUpdateMode ? "arrow.triangle.2.circlepath" : "checkmark")
                                 .font(.headline)
                         }
                     }
@@ -466,7 +472,7 @@ struct OnboardingSummaryView: View {
                     }
                 } else {
                     showError = true
-                    errorMessage = viewModel.errorMessage ?? "Une erreur est survenue"
+                    errorMessage = viewModel.errorMessage ?? "common.error_occurred".localizedString
                 }
             }
         }
@@ -518,28 +524,28 @@ struct ProfileSummaryCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Résumé de votre profil")
+            Text("onboarding.goal.profile_summary".localizedString)
                 .font(.headline.bold())
                 .foregroundColor(.white)
-            
+
             VStack(spacing: 12) {
                 if let discipline = viewModel.data.discipline {
-                    SummaryRow(icon: "figure.run", title: "Discipline", value: discipline)
+                    SummaryRow(icon: "figure.run", title: "onboarding.goal.discipline".localizedString, value: discipline)
                 }
-                
+
                 if let level = viewModel.data.level {
-                    SummaryRow(icon: "chart.bar.fill", title: "Niveau", value: level)
+                    SummaryRow(icon: "chart.bar.fill", title: "onboarding.goal.level".localizedString, value: level)
                 }
-                
+
                 if let morphology = viewModel.data.morphology {
-                    SummaryRow(icon: "person.fill", title: "Morphologie", value: morphology)
+                    SummaryRow(icon: "person.fill", title: "onboarding.goal.morphology".localizedString, value: morphology)
                 }
-                
+
                 if let isVegetarian = viewModel.data.isVegetarian {
                     SummaryRow(
                         icon: "leaf.fill",
-                        title: "Régime",
-                        value: isVegetarian ? "Végétarien" : "Standard"
+                        title: "onboarding.goal.diet".localizedString,
+                        value: isVegetarian ? "onboarding.goal.vegetarian".localizedString : "onboarding.goal.standard".localizedString
                     )
                 }
             }
@@ -627,12 +633,12 @@ func getGoalAdjustment(_ goal: String) -> Double {
 // MARK: - Preview
 #Preview {
     ZStack {
-        OnboardingBackground(currentStep: 35, totalSteps: 35)
+        OnboardingBackground(currentStep: 14, totalSteps: 15)
             .ignoresSafeArea()
-        
+
         GoalAchievementView(
             viewModel: OnboardingViewModel(),
-            selection: .constant(35)
+            selection: .constant(14)
         )
         .environmentObject(AuthViewModel())
     }

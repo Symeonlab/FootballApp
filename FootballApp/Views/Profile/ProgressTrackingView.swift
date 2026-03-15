@@ -17,7 +17,7 @@ struct ProgressTrackingView: View {
         if viewModel.isLoading && viewModel.progressLogs.isEmpty {
             ProgressView()
         } else if viewModel.progressLogs.isEmpty {
-            Text("No progress logged yet.")
+            Text("progress.no_logs".localizedString)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         } else {
@@ -29,7 +29,7 @@ struct ProgressTrackingView: View {
                     
                     if viewModel.progressLogs.count > 3 {
                         NavigationLink(destination: FullProgressListView(viewModel: viewModel)) {
-                            Text("View all \(viewModel.progressLogs.count) entries...")
+                            Text(String(format: "progress.view_all".localizedString, viewModel.progressLogs.count))
                                 .foregroundColor(Color.theme.primary)
                         }
                     }
@@ -44,7 +44,7 @@ struct ProgressTrackingView: View {
                     }
                 }
                 .listStyle(.insetGrouped)
-                .navigationTitle("Full Progress")
+                .navigationTitle("profile.full_progress".localizedString)
             }
         }
     }
@@ -57,7 +57,7 @@ struct FullProgressListView: View {
         List(viewModel.progressLogs) { log in
             ProgressRow(log: log)
         }
-        .navigationTitle("Full Progress")
+        .navigationTitle("profile.full_progress".localizedString)
         .onAppear {
             viewModel.fetchProgressLogs() // Refresh when view appears
         }

@@ -27,7 +27,7 @@ error: Ambiguous use of 'init(icon:action:)'
 
 ## 📱 What is FootballApp?
 
-**FootballApp** (also called **Dipodi**) is a comprehensive **fitness and training management application** for iOS that helps athletes (particularly football/soccer players) manage their:
+**FootballApp** (also called **Dipoddi**) is a comprehensive **fitness and training management application** for iOS that helps athletes (particularly football/soccer players) manage their:
 
 1. **Workout Training Programs**
 2. **Nutrition & Meal Planning**
@@ -614,7 +614,7 @@ All major views have SwiftUI Previews:
 
 ## 🎉 Summary
 
-**FootballApp (Dipodi)** is a comprehensive fitness management app that helps athletes:
+**FootballApp (Dipoddi)** is a comprehensive fitness management app that helps athletes:
 
 1. **Train smarter** with personalized workout plans
 2. **Eat better** with customized nutrition guidance

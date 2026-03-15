@@ -15,21 +15,27 @@ import SwiftUI
 struct OnboardingFlow: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject private var viewModel = OnboardingViewModel()
-    
+
+    /// When true, skips Welcome + About You steps (personal info is locked)
+    var isUpdateMode: Bool = false
+
     @State private var selection = 0
     @State private var dragOffset: CGFloat = 0
-    private let totalSteps = 35 // Increased to accommodate all nutrition questions
+
+    private var totalSteps: Int {
+        isUpdateMode ? 5 : 7 // Update mode: Sport, Goals, Nutrition, Health, Summary
+    }
 
     var body: some View {
         ZStack {
             // Dynamic animated background
             OnboardingBackground(currentStep: selection, totalSteps: totalSteps)
                 .ignoresSafeArea()
-            
+
             if viewModel.isLoading && viewModel.options == nil {
                 OnboardingLoadingView()
                     .transition(.opacity.combined(with: .scale(scale: 0.95)))
-                    
+
             } else if viewModel.options != nil {
                 VStack(spacing: 0) {
                     OnboardingProgressHeader(
@@ -49,69 +55,58 @@ struct OnboardingFlow: View {
                             }
                         }
                     )
-                    
-                    TabView(selection: $selection) {
-                        // Introduction
-                        OnboardingIntroView(selection: $selection).tag(0)
-                        
-                        // Basic Info (Steps 1-3)
-                        GenderSelectionView(viewModel: viewModel, selection: $selection).tag(1)
-                        AgeSelectionView(viewModel: viewModel, selection: $selection).tag(2)
-                        HeightAndWeightView(viewModel: viewModel, selection: $selection).tag(3)
-                        
-                        // Sport Info (Steps 4-9)
-                        DisciplineSelectionView(viewModel: viewModel, selection: $selection).tag(4)
-                        PlayerProfileSelectionView(viewModel: viewModel, selection: $selection).tag(5)
-                        FitnessLevelView(viewModel: viewModel, selection: $selection).tag(6)
-                        TrainingLocationView(viewModel: viewModel, selection: $selection).tag(7)
-                        TrainingDaysSelectionView(viewModel: viewModel, selection: $selection).tag(8)
-                        TrainingPreferencesView(viewModel: viewModel, selection: $selection).tag(9)
-                        
-                        // Nutrition - Goals & Metabolism (Steps 10-14)
-                        GoalSelectionView(viewModel: viewModel, selection: $selection).tag(10)
-                        IdealWeightView(viewModel: viewModel, selection: $selection).tag(11)
-                        BirthDateView(viewModel: viewModel, selection: $selection).tag(12)
-                        ActivityLevelView(viewModel: viewModel, selection: $selection).tag(13)
-                        MorphologyView(viewModel: viewModel, selection: $selection).tag(14)
-                        
-                        // Nutrition - Personal Preferences (Steps 15-18)
-                        HormonalIssuesView(viewModel: viewModel, selection: $selection).tag(15)
-                        VegetarianView(viewModel: viewModel, selection: $selection).tag(16)
-                        MealsPerDayView(viewModel: viewModel, selection: $selection).tag(17)
-                        BreakfastPreferencesView(viewModel: viewModel, selection: $selection).tag(18)
-                        
-                        // Nutrition - Eating Habits (Steps 19-21)
-                        BadHabitsView(viewModel: viewModel, selection: $selection).tag(19)
-                        SnackingHabitsView(viewModel: viewModel, selection: $selection).tag(20)
-                        
-                        // Nutrition - Food Consumption (Steps 21-30)
-                        VegetableConsumptionView(viewModel: viewModel, selection: $selection).tag(21)
-                        FishConsumptionView(viewModel: viewModel, selection: $selection).tag(22)
-                        MeatConsumptionView(viewModel: viewModel, selection: $selection).tag(23)
-                        DairyConsumptionView(viewModel: viewModel, selection: $selection).tag(24)
-                        SugaryFoodConsumptionView(viewModel: viewModel, selection: $selection).tag(25)
-                        CerealConsumptionView(viewModel: viewModel, selection: $selection).tag(26)
-                        StarchyFoodConsumptionView(viewModel: viewModel, selection: $selection).tag(27)
-                        SugaryDrinkConsumptionView(viewModel: viewModel, selection: $selection).tag(28)
-                        EggConsumptionView(viewModel: viewModel, selection: $selection).tag(29)
-                        FruitConsumptionView(viewModel: viewModel, selection: $selection).tag(30)
-                        
-                        // Nutrition - Medical History (Steps 31-33)
-                        MedicationView(viewModel: viewModel, selection: $selection).tag(31)
-                        DiabetesView(viewModel: viewModel, selection: $selection).tag(32)
-                        FamilyHistoryView(viewModel: viewModel, selection: $selection).tag(33)
-                        MedicalHistoryView(viewModel: viewModel, selection: $selection).tag(34)
-                        
-                        // Final step
-                        GoalAchievementView(viewModel: viewModel, selection: $selection).tag(35)
+
+                    if isUpdateMode {
+                        // Update mode: skip Welcome + About You (personal info locked)
+                        TabView(selection: $selection) {
+                            // Step 0: Sport & Level
+                            SportAndLevelView(viewModel: viewModel, selection: $selection).tag(0)
+
+                            // Step 1: Goals & Training
+                            GoalsAndTrainingView(viewModel: viewModel, selection: $selection).tag(1)
+
+                            // Step 2: Nutrition
+                            NutritionHabitsView(viewModel: viewModel, selection: $selection).tag(2)
+
+                            // Step 3: Health
+                            HealthOverviewView(viewModel: viewModel, selection: $selection).tag(3)
+
+                            // Step 4: Summary & Finish
+                            GoalAchievementView(viewModel: viewModel, selection: $selection).tag(4)
+                        }
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                    } else {
+                        // Full onboarding flow
+                        TabView(selection: $selection) {
+                            // Step 0: Welcome
+                            OnboardingIntroView(selection: $selection).tag(0)
+
+                            // Step 1: About You (Gender + Height + Weight)
+                            AboutYouView(viewModel: viewModel, selection: $selection).tag(1)
+
+                            // Step 2: Sport & Level (Discipline + Player Profile + Fitness Level)
+                            SportAndLevelView(viewModel: viewModel, selection: $selection).tag(2)
+
+                            // Step 3: Goals & Training (Goal + Ideal Weight + Location + Days)
+                            GoalsAndTrainingView(viewModel: viewModel, selection: $selection).tag(3)
+
+                            // Step 4: Nutrition (Diet + Habits + Food Grid)
+                            NutritionHabitsView(viewModel: viewModel, selection: $selection).tag(4)
+
+                            // Step 5: Health (Medical + Conditions)
+                            HealthOverviewView(viewModel: viewModel, selection: $selection).tag(5)
+
+                            // Step 6: Summary & Finish
+                            GoalAchievementView(viewModel: viewModel, selection: $selection).tag(6)
+                        }
+                        .tabViewStyle(.page(indexDisplayMode: .never))
                     }
-                    .tabViewStyle(.page(indexDisplayMode: .never))
                 }
                 .transition(.asymmetric(
                     insertion: .opacity.combined(with: .scale(scale: 0.95)),
                     removal: .opacity
                 ))
-                    
+
             } else if let errorMessage = viewModel.errorMessage {
                 OnboardingErrorView(
                     errorMessage: errorMessage,
@@ -121,15 +116,13 @@ struct OnboardingFlow: View {
             }
         }
         .onAppear {
+            viewModel.isUpdateMode = isUpdateMode
+            if isUpdateMode, let user = authViewModel.currentUser {
+                viewModel.loadCurrentProfile(from: user)
+            }
             viewModel.fetchOnboardingData()
         }
         .onChange(of: selection) { oldValue, newSelection in
-            if viewModel.data.discipline == "FITNESS" && newSelection == 5 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    selection = 6
-                }
-            }
-            
             let generator = UIImpactFeedbackGenerator(style: .soft)
             generator.impactOccurred()
         }
@@ -250,7 +243,7 @@ struct OnboardingProgressHeader: View {
                 Spacer()
                 
                 Button(action: onSkip) {
-                    Text("Skip")
+                    Text("common.skip".localizedString)
                         .font(.subheadline.weight(.semibold))
                         .foregroundColor(.white.opacity(0.8))
                         .padding(.horizontal, 16)
@@ -360,11 +353,11 @@ struct OnboardingLoadingView: View {
             }
             
             VStack(spacing: 12) {
-                Text("Preparing Your Journey")
+                Text("onboarding.preparing_journey".localizedString)
                     .font(.title2.bold())
                     .foregroundColor(.white)
-                
-                Text("Setting up your personalized experience...")
+
+                Text("onboarding.setting_up_experience".localizedString)
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.8))
                     .multilineTextAlignment(.center)
@@ -408,7 +401,7 @@ struct OnboardingErrorView: View {
             .modifier(ShakeEffect(shakes: shake ? 2 : 0))
             
             VStack(spacing: 12) {
-                Text("Connection Error")
+                Text("onboarding.connection_error".localizedString)
                     .font(.title.bold())
                     .foregroundColor(.white)
                 
@@ -425,7 +418,7 @@ struct OnboardingErrorView: View {
             }) {
                 HStack(spacing: 12) {
                     Image(systemName: "arrow.clockwise")
-                    Text("Try Again")
+                    Text("onboarding.try_again".localizedString)
                 }
                 .font(.headline)
                 .foregroundColor(.white)

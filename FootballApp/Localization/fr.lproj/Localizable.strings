@@ -27,8 +27,9 @@
 "common.duration" = "Durée";
 
 // MARK: - App
-"app.title" = "Dipodi";
-"app_name" = "Dipodi";
+"app.title" = "DiPODDI";
+"app_name" = "DiPODDI";
+"app.tagline" = "Votre Parcours Fitness";
 "train_smarter" = "Entraînez-vous plus intelligemment, jouez mieux";
 
 // MARK: - Authentication
@@ -79,8 +80,8 @@
 "tab.progress" = "Progrès";
 
 // MARK: - Onboarding
-"onboarding.welcome" = "Bienvenue sur Dipodi";
-"onboarding.intro.title" = "Bienvenue sur Dipodi";
+"onboarding.welcome" = "Bienvenue sur DiPODDI";
+"onboarding.intro.title" = "Bienvenue sur DiPODDI";
 "onboarding.intro.subtitle" = "Pour créer le meilleur plan d'entraînement et de nutrition pour vous, nous devons poser quelques questions. Vos réponses nous aideront à tout adapter à vos besoins et objectifs spécifiques.";
 "onboarding.intro.start" = "Commencer";
 "onboarding.get_started" = "Commencer";
@@ -211,7 +212,7 @@
 "workout.finished" = "Entraînement terminé !";
 "workout.finish_set" = "Terminer la série";
 "workout.skip_rest" = "Passer le repos";
-"workout.generate_plan" = "Générer un nouveau plan";
+// workout.generate_plan removed — now handled via Update Workout Type flow
 "workout.log_progress" = "Enregistrer la progression";
 "workout.show_stats" = "Afficher les statistiques";
 "workout.hide_stats" = "Masquer les statistiques";
@@ -1259,3 +1260,1170 @@
 "button.submit" = "Soumettre";
 "button.confirm" = "Confirmer";
 
+// MARK: - Day Abbreviations
+"day.mon" = "LUN";
+"day.tue" = "MAR";
+"day.wed" = "MER";
+"day.thu" = "JEU";
+"day.fri" = "VEN";
+"day.sat" = "SAM";
+"day.sun" = "DIM";
+
+// MARK: - Workout View Keys
+"workout.your_week" = "Votre Semaine";
+"workout.this_week" = "Cette Semaine";
+"workout.day" = "Jour";
+"workout.no_exercises" = "Aucun exercice";
+"workout.exercise_of" = "Exercice %d sur %d";
+"workout.enjoy_rest" = "Profitez de Votre Repos !";
+"workout.start" = "Commencer l'Entraînement";
+"workout.completed_count" = "%d/%d terminés";
+"workout.x_of_y_completed" = "%d sur %d terminés";
+"workout.start_now" = "Commencer";
+"workout.im_ready" = "Je suis prêt";
+"workout.skip_warmup" = "Passer l'échauffement";
+"workout.finish_workout" = "Terminer l'entraînement";
+"workout.skip_cooldown" = "Passer le retour au calme";
+"workout.complete_set_x_of_y" = "Série %d/%d terminée";
+"workout.finish_last_set" = "Dernière série !";
+"workout.total_time" = "Temps total";
+"workout.sets_completed" = "Séries faites";
+"workout.est_calories" = "Calories est.";
+"workout.no_plan" = "Aucun programme";
+"workout.generate_plan_subtitle" = "Générez un programme d'entraînement personnalisé selon vos objectifs et votre niveau de forme";
+"workout.generate_plan" = "Générer un programme";
+"workout.weekly_progress" = "Progression hebdomadaire";
+"workout.session.breathe_and_prepare" = "Respirez profondément et préparez votre corps";
+"workout.session.stretch_and_breathe" = "Étirez-vous doucement et ralentissez votre respiration";
+"workout.motivation.champion" = "Tu es un champion ! 🏆";
+"workout.motivation.unstoppable" = "Inarrêtable ! 💪";
+"workout.motivation.crushed_it" = "Tu as tout déchiré ! 🔥";
+"workout.motivation.beast_mode" = "Mode bête activé ! 🦁";
+"workout.motivation.on_fire" = "Tu es en feu ! ⚡️";
+
+// MARK: - Post-Workout Feedback
+"workout_feedback.title" = "Évaluez Votre Séance";
+"workout_feedback.subtitle" = "Vos retours nous aident à personnaliser votre prochaine séance";
+"workout_feedback.rate_workout" = "Évaluer la Séance";
+"workout_feedback.skip" = "Passer pour l'instant";
+"workout_feedback.difficulty" = "Difficulté";
+"workout_feedback.too_easy" = "Trop Facile";
+"workout_feedback.too_hard" = "Trop Difficile";
+"workout_feedback.energy" = "Niveau d'Énergie";
+"workout_feedback.exhausted" = "Épuisé";
+"workout_feedback.energized" = "Énergisé";
+"workout_feedback.enjoyment" = "Plaisir";
+"workout_feedback.boring" = "Ennuyeux";
+"workout_feedback.loved_it" = "Adoré";
+"workout_feedback.completed_sets" = "Avez-vous terminé toutes les séries ?";
+"workout_feedback.skip.too_hard" = "Trop dur";
+"workout_feedback.skip.injury" = "Blessure";
+"workout_feedback.skip.time" = "Pas le temps";
+"workout_feedback.soreness" = "Courbatures";
+"workout_feedback.no_soreness" = "Aucune";
+"workout_feedback.very_sore" = "Très Douloureux";
+"workout_feedback.sore_areas" = "Quelles zones sont douloureuses ?";
+"workout_feedback.area.shoulders" = "Épaules";
+"workout_feedback.area.chest" = "Poitrine";
+"workout_feedback.area.back" = "Dos";
+"workout_feedback.area.arms" = "Bras";
+"workout_feedback.area.core" = "Abdominaux";
+"workout_feedback.area.legs" = "Jambes";
+"workout_feedback.area.glutes" = "Fessiers";
+"workout_feedback.area.calves" = "Mollets";
+"workout_feedback.next_workout" = "Pour ma prochaine séance, je préfère :";
+"workout_feedback.adjust.increase" = "Plus d'intensité";
+"workout_feedback.adjust.decrease" = "Moins d'intensité";
+"workout_feedback.adjust.more_rest" = "Plus de repos";
+"workout_feedback.adjust.fewer" = "Moins d'exercices";
+"workout_feedback.adjust.variety" = "Plus de variété";
+"workout_feedback.adjust.keep_same" = "Garder la même chose";
+"workout_feedback.notes" = "Notes supplémentaires (optionnel)";
+"workout_feedback.notes_placeholder" = "Vos impressions sur la séance d'aujourd'hui...";
+"workout_feedback.submit" = "Envoyer le Retour";
+"workout_feedback.thank_you" = "Merci !";
+"workout_feedback.feedback_helps" = "Vos retours nous aident à personnaliser vos entraînements";
+"workout_feedback.rec.increase" = "Prochaine fois : on augmente l'intensité";
+"workout_feedback.rec.decrease" = "Prochaine fois : on réduit un peu";
+"workout_feedback.rec.rest" = "Prochaine fois : plus de temps de récupération";
+"workout_feedback.rec.variety" = "Prochaine fois : on varie les exercices";
+"workout_feedback.rec.keep" = "Vous êtes sur la bonne voie ! On garde le même rythme";
+"workout_feedback.rec.fewer" = "Prochaine fois : On réduira le nombre d'exercices";
+"workout_feedback.loading" = "Chargement des questions...";
+"workout_feedback.error_loading" = "Impossible de charger les questions. Veuillez réessayer.";
+"workout_feedback.plan_evolving" = "Votre programme évolue en fonction de vos retours";
+"workout_feedback.intensity" = "Intensité";
+"workout_feedback.exercises" = "Exercices";
+"workout_feedback.rest" = "Repos";
+"common.next" = "Suivant";
+"common.back" = "Retour";
+"common.done" = "Terminé";
+"common.list" = "Liste";
+"common.cards" = "Cartes";
+"common.retry" = "Réessayer";
+"error.connection" = "Erreur de Connexion";
+"error.unauthorized" = "Session expirée. Veuillez vous reconnecter.";
+"workout.error.profile_incomplete" = "Veuillez compléter votre profil dans les Paramètres pour générer un plan d'entraînement.";
+
+// MARK: - Workout Session Keys
+"workout.session.warmup" = "ÉCHAUFFEMENT";
+"workout.session.rest" = "REPOS";
+"workout.session.cooldown" = "RÉCUPÉRATION";
+"workout.session.exercise" = "Exercice";
+"workout.session.next_up" = "Suivant";
+"workout.session.great_job" = "Excellent travail !";
+"workout.session.keep_going" = "Continuez !";
+"workout.session.almost_done" = "Presque fini !";
+"workout.no_exercises" = "Aucun Exercice";
+"workout.no_exercises_description" = "Cet entraînement n'a pas encore d'exercices.\nGénérez un nouveau plan pour commencer.";
+"workout.enjoy_rest" = "Profitez de Votre Repos !";
+"workout.start_workout" = "Démarrer l'Entraînement";
+"workout.no_exercises_available" = "Aucun exercice disponible";
+"workout.skip_rest" = "Passer le Repos";
+"workout.complete_set" = "Série Terminée";
+"workout.workout_complete" = "Entraînement Terminé !";
+"workout.exercise_of" = "Exercice %d sur %d";
+"workout.set_label" = "Série :";
+
+// MARK: - Activity Dashboard Keys
+"activity.steps" = "Pas";
+"activity.calories" = "Calories";
+"activity.minutes" = "Minutes";
+"activity.distance" = "Distance";
+"activity.heart_rate" = "Fréquence Cardiaque";
+"activity.bpm" = "bpm";
+"activity.km" = "km";
+"activity.active_calories" = "Calories Actives";
+"activity.exercise_minutes" = "Minutes d'Exercice";
+
+// MARK: - Kine/Recovery Additional Keys
+"kine.explore" = "Explorer";
+"kine.my_recovery" = "Ma Récupération";
+"kine.suggested" = "Suggestions pour Vous";
+"kine.all_categories" = "Toutes les Catégories";
+"kine.start_exercise" = "Commencer l'Exercice";
+"kine.play_video" = "Lire la Vidéo";
+
+// MARK: - Blog Additional Keys
+"blog.search" = "Rechercher des articles...";
+"blog.no_results" = "Aucun article trouvé";
+"blog.read_time" = "%d min de lecture";
+"blog.featured" = "À LA UNE";
+"blog.related" = "Sujets Connexes";
+"blog.share" = "Partager";
+"blog.training_tips" = "Conseils d'Entraînement";
+"blog.articles_available" = "%d articles disponibles";
+"blog.header_title" = "Conseils d'Entraînement";
+"blog.articles_count" = "%d articles disponibles";
+
+// MARK: - Nutrition View Keys
+"nutrition.of_kcal" = "sur %d kcal";
+"nutrition.kcal_remaining" = "%d kcal restantes";
+"nutrition.kcal_over_target" = "%d kcal au-dessus de l'objectif";
+"nutrition.target_reached" = "Objectif quotidien atteint !";
+"nutrition.almost_there" = "Presque ! Excellente progression.";
+"nutrition.halfway" = "À mi-chemin de votre objectif quotidien";
+"nutrition.keep_fueling" = "Continuez à bien manger";
+"nutrition.todays_meal_plan" = "Plan Repas du Jour";
+"nutrition.meals_count" = "%d repas";
+"nutrition.items_count" = "%d éléments";
+"nutrition.your_profile" = "Votre Profil";
+"nutrition.goal" = "Objectif";
+"nutrition.diet" = "Régime";
+"nutrition.activity" = "Activité";
+"nutrition.vegetarian" = "Végétarien";
+"nutrition.standard" = "Standard";
+"nutrition.health_advice" = "Conseils Santé";
+"nutrition.conditions" = "conditions";
+"nutrition.foods_to_avoid" = "Aliments à Éviter";
+"nutrition.foods_to_eat" = "Aliments à Privilégier";
+"nutrition.prophetic_medicine" = "Médecine Prophétique";
+"nutrition.tap_to_collapse" = "Appuyez pour réduire";
+"nutrition.tap_to_see_advice" = "Appuyez pour voir les conseils";
+"nutrition.more_glasses" = "Encore %d verres pour atteindre votre objectif";
+
+// MARK: - Goal Types
+"goal.weight_loss" = "Perte de Poids";
+"goal.muscle_gain" = "Prise de Muscle";
+"goal.maintenance" = "Maintien";
+
+// MARK: - Activity Levels
+"activity.sedentary" = "Sédentaire";
+"activity.light" = "Léger";
+"activity.moderate" = "Modéré";
+"activity.very_active" = "Très Actif";
+"activity.extreme" = "Extrême";
+
+// MARK: - Profile View Keys
+"profile.dipodi" = "Profil - DiPODDI";
+"profile.edit_profile" = "Modifier le Profil";
+"profile.confirm_action" = "Confirmer l'Action";
+"profile.dark" = "Sombre";
+"profile.todays_activity" = "Activité du Jour";
+"profile.steps" = "Pas";
+"profile.kcal" = "kcal";
+"profile.quick_actions" = "Actions Rapides";
+"profile.log" = "Journal";
+"profile.reminders" = "Rappels";
+"profile.weight_progress" = "Évolution du Poids (7 Jours)";
+"profile.no_progress_data" = "Pas de données de progression";
+"profile.recent_measurements" = "Mesures Récentes";
+"profile.no_measurements" = "Aucune mesure enregistrée";
+"profile.plan_management" = "Gestion des Plans";
+"profile.update_workout_type" = "Mettre à Jour le Type d'Entraînement";
+"profile.update_workout_type_desc" = "Changer votre sport, objectifs et préférences d'entraînement";
+"profile.update_workout_type_confirm" = "Cela vous permettra de mettre à jour votre sport, vos objectifs et vos préférences d'entraînement, puis de générer un nouveau plan personnalisé.";
+"profile.regenerate_nutrition" = "Régénérer le Plan Nutritionnel";
+"profile.regenerate_nutrition_desc" = "Obtenir des recommandations de repas personnalisées";
+"profile.regenerate_nutrition_confirm" = "Cela créera un nouveau plan nutritionnel personnalisé basé sur vos objectifs actuels.";
+
+// MARK: - Kine View Keys
+"kine.recovery_dipodi" = "Récupération - DiPODDI";
+"kine.video_will_be_available" = "La vidéo sera bientôt disponible";
+"kine.instructions" = "Instructions";
+"kine.loading_video" = "Chargement de la vidéo...";
+"kine.video_load_error" = "Impossible de charger la vidéo";
+"kine.favorited" = "Favori";
+"kine.add_to_favorites" = "Ajouter aux Favoris";
+"kine.remove_from_favorites" = "Retirer des Favoris";
+
+// MARK: - Reminder Settings Keys
+"reminder.title" = "Paramètres des Rappels";
+"reminder.meal_reminders" = "Rappels de Repas";
+"reminder.workout_reminder" = "Rappel d'Entraînement";
+"reminder.breakfast" = "Petit-déjeuner";
+"reminder.lunch" = "Déjeuner";
+"reminder.dinner" = "Dîner";
+"reminder.workout" = "Entraînement";
+"reminder.time" = "Heure";
+
+// MARK: - Progress Keys
+"progress.log" = "Enregistrer Progrès";
+"progress.full" = "Progrès Complet";
+
+// MARK: - Measurement Log Keys
+"measurement.log_progress" = "Enregistrer les Progrès";
+"measurement.date" = "Date";
+"measurement.measurements" = "Mesures";
+"measurement.weight" = "Poids";
+"measurement.waist" = "Tour de Taille";
+"measurement.chest" = "Poitrine";
+"measurement.hips" = "Hanches";
+"measurement.mood" = "Humeur";
+"measurement.notes" = "Notes";
+
+// MARK: - Login View Keys
+"login.app_initial" = "D";
+"login.app_name" = "DiPODDI";
+
+// MARK: - Error Handling Keys
+"error.oops" = "Oups !";
+"error.try_again" = "Réessayer";
+"error.dismiss" = "Fermer";
+"error.main_content" = "Contenu Principal";
+
+// MARK: - Onboarding Missing Views Keys
+"onboarding.welcome_training" = "Bienvenue dans votre entraînement !";
+"onboarding.personalize_experience" = "Personnalisons votre expérience.";
+"onboarding.select_gender" = "Sélectionnez votre genre";
+"onboarding.male" = "Homme";
+"onboarding.female" = "Femme";
+"onboarding.height_weight" = "Taille & Poids";
+"onboarding.fitness_level" = "Niveau de Forme";
+"onboarding.beginner" = "Débutant";
+"onboarding.advanced" = "Avancé";
+"onboarding.training_location" = "Lieu d'Entraînement";
+"onboarding.gym" = "Salle de Sport";
+"onboarding.home" = "Maison";
+"onboarding.training_days" = "Jours d'Entraînement";
+"onboarding.preferences" = "Préférences";
+"onboarding.preparing_journey" = "Préparation de Votre Parcours";
+"onboarding.setting_up_experience" = "Configuration de votre expérience personnalisée...";
+"onboarding.connection_error" = "Erreur de Connexion";
+"onboarding.try_again" = "Réessayer";
+"onboarding.none" = "AUCUN";
+
+// MARK: - Onboarding Intro Keys
+"onboarding.welcome_to" = "Bienvenue dans";
+"onboarding.your_health_journey" = "Votre Parcours Santé";
+"onboarding.duration" = "5-7 minutes";
+"onboarding.will_ask_questions" = "Nous vous poserons quelques questions pour personnaliser votre expérience";
+"onboarding.start" = "Commencer";
+
+// MARK: - Goal Achievement Keys
+"goal.your_goal" = "Votre Objectif";
+"goal.profile_completed" = "Profil Complété !";
+"goal.your_personalized_plan" = "Voici votre plan nutritionnel personnalisé";
+"goal.based_on_formula" = "Basé sur la formule de Harris-Benedict";
+"goal.plan_adjusted" = "Votre plan sera ajusté selon vos progrès et habitudes alimentaires";
+"goal.finish" = "Terminer";
+"goal.profile_summary" = "Résumé du Profil";
+
+// MARK: - Update Workout Type (re-onboarding)
+"onboarding.update_regenerate" = "Mettre à Jour et Générer un Nouveau Plan";
+"onboarding.preferences_updated_title" = "Préférences Mises à Jour !";
+"onboarding.preferences_updated_subtitle" = "Consultez le résumé de votre plan mis à jour ci-dessous";
+
+// MARK: - Nutrition Onboarding Keys
+"nutrition.onboarding.select_meal" = "Veuillez sélectionner au moins un repas";
+"nutrition.onboarding.where_train" = "Où vous entraînez-vous ?";
+"nutrition.onboarding.training_days" = "Jours d'Entraînement";
+"nutrition.onboarding.diet_type" = "Type de Régime";
+"nutrition.onboarding.omnivore" = "Omnivore";
+"nutrition.onboarding.vegetarian" = "Végétarien";
+"nutrition.onboarding.daily_meals" = "Repas Quotidiens";
+"nutrition.onboarding.no_habits" = "Aucune de ces habitudes ? Continuez simplement.";
+"nutrition.onboarding.yes" = "Oui";
+"nutrition.onboarding.no" = "Non";
+
+// MARK: - Nutrition Reels Keys
+"nutrition.reels.your_plan" = "Votre Plan Nutritionnel";
+"nutrition.reels.daily_calories" = "CALORIES QUOTIDIENNES";
+"nutrition.reels.personalized_target" = "Votre objectif quotidien personnalisé";
+"nutrition.reels.optimized_goals" = "Optimisé pour vos objectifs fitness";
+"nutrition.reels.macronutrients" = "MACRONUTRIMENTS";
+"nutrition.reels.traditional_remedies" = "REMÈDES TRADITIONNELS";
+
+// MARK: - Nutrition Weekly Stories
+"nutrition.weekly_plan" = "Plan Nutritionnel Hebdomadaire";
+"nutrition.tap_for_details" = "Appuyez sur un jour pour les détails";
+"nutrition.daily_targets" = "Objectifs Quotidiens";
+"nutrition.meals_for_day" = "Repas du Jour";
+"nutrition.no_meals_planned" = "Aucun repas planifié";
+"nutrition.no_meals_yet" = "Votre plan de repas apparaîtra ici une fois généré";
+"nutrition.meal_prep_tips" = "Conseils Préparation";
+"nutrition.save_time_week" = "Gagnez du temps et mangez sainement";
+
+// MARK: - Common UI Keys
+"common.or" = "ou";
+"common.and" = "et";
+"common.of" = "de";
+"common.to" = "à";
+"common.from" = "de";
+"common.select" = "Sélectionner";
+"common.selected" = "Sélectionné";
+"common.none" = "Aucun";
+"common.all" = "Tout";
+"common.more" = "Plus";
+"common.less" = "Moins";
+"common.show_more" = "Afficher Plus";
+"common.show_less" = "Afficher Moins";
+"common.view_all" = "Voir Tout";
+"common.see_all" = "Voir Tout";
+"common.start" = "Démarrer";
+"common.stop" = "Arrêter";
+"common.pause" = "Pause";
+"common.resume" = "Reprendre";
+"common.reset" = "Réinitialiser";
+"common.clear" = "Effacer";
+"common.apply" = "Appliquer";
+"common.filter" = "Filtrer";
+"common.sort" = "Trier";
+"common.share" = "Partager";
+"common.copy" = "Copier";
+"common.paste" = "Coller";
+"common.undo" = "Annuler";
+"common.redo" = "Rétablir";
+"common.skip" = "Passer";
+"common.get_started" = "Commencer";
+"common.go_back" = "Retour";
+"common.watch_tutorial" = "Voir le Tutoriel";
+"common.complete" = "Terminer";
+"common.ready" = "Prêt !";
+
+// MARK: - Time-related Keys
+"time.now" = "Maintenant";
+"time.today" = "Aujourd'hui";
+"time.yesterday" = "Hier";
+"time.tomorrow" = "Demain";
+"time.this_week" = "Cette Semaine";
+"time.last_week" = "Semaine Dernière";
+"time.this_month" = "Ce Mois";
+"time.seconds" = "secondes";
+"time.minutes" = "minutes";
+"time.hours" = "heures";
+"time.days" = "jours";
+"time.weeks" = "semaines";
+"time.months" = "mois";
+
+// MARK: - Validation Messages
+"validation.required" = "Ce champ est obligatoire";
+"validation.invalid_email" = "Veuillez entrer un email valide";
+"validation.password_too_short" = "Le mot de passe doit contenir au moins 6 caractères";
+"validation.passwords_dont_match" = "Les mots de passe ne correspondent pas";
+"validation.invalid_number" = "Veuillez entrer un nombre valide";
+"validation.min_value" = "La valeur minimale est %d";
+"validation.max_value" = "La valeur maximale est %d";
+
+// MARK: - Empty States
+"empty.no_data" = "Aucune donnée disponible";
+"empty.no_results" = "Aucun résultat trouvé";
+"empty.no_items" = "Aucun élément";
+"empty.check_back" = "Revenez plus tard";
+
+// MARK: - Loading States
+"loading.please_wait" = "Veuillez patienter...";
+"loading.fetching_data" = "Récupération des données...";
+"loading.saving" = "Enregistrement...";
+"loading.processing" = "Traitement...";
+
+// MARK: - Success Messages
+"success.saved" = "Enregistré avec succès";
+"success.updated" = "Mis à jour avec succès";
+"success.deleted" = "Supprimé avec succès";
+"success.completed" = "Terminé avec succès";
+
+// MARK: - Confirmation Dialogs
+"confirm.delete" = "Voulez-vous vraiment supprimer ceci ?";
+"confirm.logout" = "Voulez-vous vraiment vous déconnecter ?";
+"confirm.discard_changes" = "Abandonner les modifications non enregistrées ?";
+"confirm.cancel_action" = "Annuler cette action ?";
+
+// MARK: - Settings Keys
+"settings.title" = "Paramètres";
+"settings.language" = "Langue";
+"settings.appearance" = "Apparence";
+"settings.select_language" = "Choisir la langue";
+"settings.language_note" = "L'application sera mise à jour dans la langue sélectionnée immédiatement.";
+
+// MARK: - Workout Session Reels
+"workout.phase.ready" = "Prêt";
+"workout.phase.warmup" = "Échauffement";
+"workout.phase.rest" = "Repos";
+"workout.phase.exercise" = "Exercice";
+"workout.phase.cooldown" = "Récupération";
+"workout.phase.done" = "Terminé !";
+"workout.rest_day_recovery" = "Jour de Repos - Récupération";
+"workout.exercises_count" = "%d Exercices";
+"workout.warmup_label" = "Échauffement : %@";
+"workout.finisher_label" = "Finisseur : %@";
+"workout.enjoy_rest" = "Profitez de Votre Repos !";
+"workout.start_workout" = "Démarrer l'Entraînement";
+"workout.no_exercises_available" = "Aucun exercice disponible";
+"workout.go_back" = "Retour";
+"workout.session.warmup" = "ÉCHAUFFEMENT";
+"workout.session.skip" = "Passer";
+"workout.session.ready" = "Prêt !";
+"workout.session.rest" = "REPOS";
+"workout.session.seconds" = "secondes";
+"workout.session.set_completed" = "SÉRIE TERMINÉE";
+"workout.session.up_next" = "À SUIVRE";
+"workout.session.skip_rest" = "Passer le Repos";
+"workout.session.cooldown" = "RÉCUPÉRATION";
+"workout.session.done" = "Terminé !";
+"workout.exercise_of" = "Exercice %d sur %d";
+"workout.set_label" = "Série :";
+"workout.complete_set" = "Terminer la Série";
+"workout.watch_tutorial" = "Voir le Tutoriel";
+"workout.watch_on_youtube" = "Regarder sur YouTube";
+"workout.tap_to_watch" = "Appuyez pour regarder la vidéo";
+"workout.tap_youtube" = "Appuyez pour ouvrir dans YouTube";
+"workout.workout_complete" = "Entraînement Terminé !";
+"workout.exercises_completed" = "exercices terminés";
+"workout.stat.exercises" = "Exercices";
+"workout.stat.effort" = "Effort";
+"workout.stat.performance" = "Performance";
+"workout.stat.great" = "Excellent";
+"workout.your_week" = "Aperçu Hebdomadaire";
+"workout.swipe_to_see" = "Glissez pour voir le plan de chaque jour";
+"workout.recovery_day" = "Jour de Récupération";
+"workout.recovery_message" = "Prenez le temps de vous reposer.\nVos muscles en ont besoin !";
+"workout.todays_focus" = "FOCUS DU JOUR";
+"workout.rest_and_recover" = "Repos et Récupération";
+"workout.no_workout_planned" = "Aucun Entraînement Prévu";
+"workout.recovery_part_of_progress" = "La récupération fait partie du progrès";
+"workout.rest_well_hydrate" = "Reposez-vous bien, hydratez-vous et étirez-vous légèrement";
+
+// MARK: - Kine View Additional Keys
+"kine.sort" = "Trier";
+"kine.recovery_tips" = "Conseils de Récupération";
+"kine.optimize_recovery" = "Optimisez votre processus de récupération";
+"kine.loading_exercises" = "Chargement des Exercices";
+"kine.preparing_routines" = "Préparation de vos routines de récupération...";
+"kine.favorites" = "Favoris";
+"kine.exercises" = "Exercices";
+"kine.recommended" = "Recommandé";
+"kine.based_on_favorites" = "Basé sur vos favoris";
+"kine.play_all" = "Tout Lire";
+"kine.tap_to_watch" = "Appuyez pour regarder sur YouTube";
+"kine.watch_video" = "Regarder la Vidéo";
+
+// MARK: - Goals
+"goal.weight_loss" = "Perte de Poids";
+"goal.muscle_gain" = "Prise de Muscle";
+"goal.maintain" = "Maintien de Forme";
+"goal.custom" = "Objectif Personnalisé";
+"goal.active" = "Actif";
+"goal.completed" = "Terminé";
+"goal.paused" = "En Pause";
+"goal.progress" = "Progression";
+"goal.on_track" = "Dans les Temps";
+"goal.behind" = "En Retard";
+
+// MARK: - Achievements
+"achievement.earned" = "Obtenu";
+"achievement.locked" = "Verrouillé";
+"achievement.points" = "Points";
+"achievement.leaderboard" = "Classement";
+
+// MARK: - Posts
+"post.read_more" = "Lire la Suite";
+"post.reading_time" = "%d min de lecture";
+"post.latest" = "Derniers Articles";
+
+// MARK: - Network
+"network.no_connection" = "Pas de connexion internet";
+"network.connection_restored" = "Connexion rétablie";
+"network.offline_mode" = "Vous êtes hors ligne";
+
+// MARK: - Auth UI
+"auth.done" = "Terminé";
+"auth.back" = "Retour";
+"auth.welcome_subtitle" = "Entraînez-vous mieux, jouez mieux";
+"auth.login_title" = "Bon Retour";
+"auth.login_subtitle" = "Connectez-vous pour continuer votre parcours";
+"auth.email_placeholder" = "Adresse e-mail";
+"auth.password_placeholder" = "Mot de passe";
+"auth.email_invalid" = "Veuillez entrer une adresse e-mail valide";
+"auth.email_label" = "E-mail";
+"auth.forgot_password" = "Mot de passe oublié ?";
+"auth.signin_button" = "Se Connecter";
+"auth.or_continue_with" = "ou continuer avec";
+"auth.no_account" = "Pas encore de compte ?";
+"auth.create_account" = "Créer un Compte";
+"auth.password_weak" = "Mot de passe faible";
+"auth.password_medium" = "Force moyenne";
+"auth.password_strong" = "Mot de passe fort";
+"auth.password_very_strong" = "Mot de passe très fort";
+"auth.forgot_password_sent" = "E-mail Envoyé";
+"auth.forgot_password_sent_message" = "Si un compte existe avec cet e-mail, vous recevrez bientôt un lien de réinitialisation.";
+"auth.reset_password_title" = "Réinitialiser le Mot de Passe";
+"auth.reset_password_subtitle" = "Entrez votre e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.";
+"auth.send_reset_link" = "Envoyer le Lien";
+"auth.register_title" = "Créer un Compte";
+"auth.register_subtitle" = "Rejoignez DiPODDI et commencez votre parcours fitness";
+"auth.fullname_placeholder" = "Nom complet";
+"auth.confirm_password_placeholder" = "Confirmer le mot de passe";
+"auth.passwords_match" = "Les mots de passe correspondent";
+"auth.passwords_dont_match" = "Les mots de passe ne correspondent pas";
+"auth.terms_agreement" = "J'accepte les Conditions d'Utilisation et la Politique de Confidentialité";
+"auth.create_account_button" = "Créer un Compte";
+"auth.already_have_account" = "Vous avez déjà un compte ?";
+"auth.signin_link" = "Se Connecter";
+"auth.error.invalid_credentials" = "Email ou mot de passe incorrect.";
+"auth.error.registration_failed" = "Échec de l'inscription. Veuillez réessayer.";
+"auth.error.social_login_failed" = "Échec de la connexion sociale. Veuillez réessayer.";
+"auth.password_requirements" = "Minimum 6 caractères";
+"auth.password_requirements_title" = "Exigences du mot de passe";
+"auth.password_req_length" = "Au moins 6 caractères";
+"auth.password_req_uppercase" = "Une lettre majuscule";
+"auth.password_req_number" = "Un chiffre";
+
+// MARK: - Goals View
+"goals.title" = "Objectifs";
+"goals.current" = "Objectif Actuel";
+"goals.active" = "Objectif Actif";
+"goals.new" = "Nouvel Objectif";
+"goals.create" = "Créer un Objectif";
+"goals.set_goal" = "Définir un Objectif";
+"goals.no_active" = "Aucun Objectif Actif";
+"goals.no_active_description" = "Définissez un objectif pour suivre vos progrès et rester motivé.";
+"goals.history" = "Historique des Objectifs";
+"goals.no_history" = "Aucun objectif passé";
+"goals.select_type" = "Sélectionner le Type d'Objectif";
+"goals.target_weight" = "Poids Cible (kg)";
+"goals.target_waist" = "Tour de Taille Cible (cm)";
+"goals.workouts_per_week" = "Entraînements par Semaine";
+"goals.duration" = "Durée (semaines)";
+"goals.notes" = "Notes (optionnel)";
+"goals.notes_placeholder" = "Ajoutez des notes personnelles...";
+"goals.weight_placeholder" = "ex: 75.0";
+"goals.waist_placeholder" = "ex: 85";
+"goals.times" = "fois";
+"goals.weeks" = "semaines";
+"goals.progress" = "Progression";
+"goals.on_track" = "En Bonne Voie";
+"goals.behind" = "En Retard";
+"goals.update_progress" = "Mettre à Jour";
+"goals.actions" = "Actions";
+"goals.pause" = "Mettre en Pause";
+"goals.resume" = "Reprendre";
+"goals.abandon" = "Abandonner";
+"goals.complete_short" = "terminé";
+"goals.target_kg" = "kg cible";
+"goals.per_week" = "par semaine";
+"goals.error.fetch_failed" = "Échec du chargement des objectifs";
+"goals.error.create_failed" = "Échec de la création de l'objectif";
+"goals.error.update_failed" = "Échec de la mise à jour des progrès";
+"goals.error.status_update_failed" = "Échec de la mise à jour du statut";
+"goals.status.active" = "Actif";
+"goals.status.completed" = "Terminé";
+"goals.status.paused" = "En Pause";
+"goals.status.abandoned" = "Abandonné";
+"goals.expected" = "Attendu";
+
+// MARK: - Achievements View
+"achievements.title" = "Réalisations";
+"achievements.all" = "Toutes";
+"achievements.leaderboard" = "Classement";
+"achievements.your_progress" = "Votre Progression";
+"achievements.earned" = "obtenues";
+"achievements.complete" = "terminé";
+"achievements.your_rank" = "Votre Rang";
+"achievements.achievements" = "réalisations";
+"achievements.unlocked" = "débloquées";
+"achievements.locked" = "Verrouillé";
+"achievements.error.fetch_failed" = "Échec du chargement des réalisations";
+
+// MARK: - Sign Out Confirmation
+"profile.sign_out_confirm_title" = "Déconnexion";
+"profile.sign_out_confirm_message" = "Êtes-vous sûr de vouloir vous déconnecter ? Vos données seront sauvegardées.";
+
+// MARK: - Feedback
+"feedback.title" = "Feedback";
+"feedback.select_category" = "Choisir une Catégorie";
+"feedback.select_category_subtitle" = "Sélectionnez une catégorie pour répondre aux questions";
+"feedback.history" = "Historique des Feedbacks";
+"feedback.questions" = "questions";
+"feedback.questions_answered" = "questions répondues";
+"feedback.previous" = "Précédent";
+"feedback.next" = "Suivant";
+"feedback.submit" = "Soumettre";
+"feedback.answer.yes" = "Oui";
+"feedback.answer.no" = "Non";
+"feedback.scale_low" = "Faible";
+"feedback.scale_high" = "Élevé";
+"feedback.type_answer" = "Tapez votre réponse...";
+"feedback.error.load_questions" = "Échec du chargement des questions";
+"feedback.error.submit" = "Échec de l'envoi du feedback";
+"feedback.completion.title" = "Merci !";
+"feedback.completion.message" = "Votre feedback a été soumis avec succès. Cela nous aide à améliorer votre expérience d'entraînement.";
+"feedback.completion.done" = "Terminé";
+
+// Catégories de Feedback
+"feedback.category.goalkeeper" = "Gardien";
+"feedback.category.defender" = "Défenseur";
+"feedback.category.midfielder" = "Milieu";
+"feedback.category.attacker" = "Attaquant";
+"feedback.category.after_match" = "Après Match";
+"feedback.category.weekly_no_club" = "Hebdomadaire (Sans Club)";
+"feedback.category.fitness_women" = "Fitness Femmes";
+"feedback.category.fitness_men" = "Fitness Hommes";
+"feedback.category.fitness_weekly" = "Fitness Hebdomadaire";
+"feedback.category.nutrition_weight_loss" = "Nutrition - Perte de Poids";
+"feedback.category.nutrition_muscle_gain" = "Nutrition - Prise de Masse";
+"feedback.category.nutrition_maintain" = "Nutrition - Maintien";
+"feedback.category.nutrition_prophetic" = "Médecine Prophétique";
+"feedback.category.injury_fitness" = "Récupération Blessure (Fitness)";
+"feedback.category.injury_football" = "Récupération Blessure (Football)";
+"feedback.category.cognitive" = "Mental & Cognitif";
+
+// MARK: - Kine Reels Tutorial
+"kine.reels.tutorial.title" = "Comment utiliser les Reels";
+"kine.reels.tutorial.subtitle" = "Apprenez les gestes";
+"kine.reels.tutorial.swipe.title" = "Glisser Haut/Bas";
+"kine.reels.tutorial.swipe.description" = "Naviguer entre les exercices";
+"kine.reels.tutorial.tap.title" = "Appuyer pour lire";
+"kine.reels.tutorial.tap.description" = "Ouvrir la vidéo sur YouTube";
+"kine.reels.tutorial.favorite.title" = "Favoris";
+"kine.reels.tutorial.favorite.description" = "Enregistrer les exercices pour un accès rapide";
+"kine.reels.tutorial.share.title" = "Partager";
+"kine.reels.tutorial.share.description" = "Partager avec vos amis";
+"kine.reels.tutorial.got_it" = "Compris !";
+
+// MARK: - Onboarding Intro Feature Cards
+"onboarding.intro.feature1.title" = "Programme d'Entraînement";
+"onboarding.intro.feature1.description" = "Créez votre plan personnalisé basé sur votre discipline, niveau et objectifs";
+"onboarding.intro.feature2.title" = "Nutrition Prophétique";
+"onboarding.intro.feature2.description" = "Recevez des conseils nutritionnels basés sur la médecine prophétique adaptés à votre métabolisme";
+"onboarding.intro.feature3.title" = "Suivi Personnalisé";
+"onboarding.intro.feature3.description" = "Vos antécédents médicaux et familiaux pour des recommandations sur-mesure";
+"onboarding.intro.feature4.title" = "Objectifs Réalisables";
+"onboarding.intro.feature4.description" = "Définissez et atteignez vos objectifs avec un plan adapté à votre morphologie";
+
+// MARK: - Onboarding Goal View Keys
+"onboarding.goal.title" = "Votre Profil est Prêt !";
+"onboarding.goal.subtitle" = "Visualisez vos objectifs et métriques";
+"onboarding.goal.view_summary" = "Voir le Résumé";
+"onboarding.goal.weight_loss" = "Perte de Poids";
+"onboarding.goal.muscle_gain" = "Prise de Masse";
+"onboarding.goal.maintenance" = "Maintien de Forme";
+"onboarding.goal.custom" = "Objectif Personnalisé";
+"onboarding.goal.height" = "Taille";
+"onboarding.goal.weight" = "Poids";
+"onboarding.goal.objective" = "Objectif";
+"onboarding.goal.age" = "Âge";
+"onboarding.goal.years" = "ans";
+"onboarding.goal.bmr" = "Métabolisme de Base (MB)";
+"onboarding.goal.bmr_subtitle" = "Calories brûlées au repos";
+"onboarding.goal.tdee" = "Dépense Énergétique Totale";
+"onboarding.goal.tdee_subtitle" = "Avec votre niveau d'activité";
+"onboarding.goal.recommended_intake" = "Apport Calorique Recommandé";
+"onboarding.goal.recommended_intake_subtitle" = "Pour atteindre votre objectif";
+"onboarding.goal.profile_summary" = "Résumé de votre profil";
+"onboarding.goal.discipline" = "Discipline";
+"onboarding.goal.level" = "Niveau";
+"onboarding.goal.morphology" = "Morphologie";
+"onboarding.goal.diet" = "Régime";
+"onboarding.goal.vegetarian" = "Végétarien";
+"onboarding.goal.standard" = "Standard";
+
+// MARK: - Common Error Keys
+"common.error_occurred" = "Une erreur est survenue";
+
+// MARK: - Common Days Keys
+"common.days.monday" = "Lundi";
+"common.days.tuesday" = "Mardi";
+"common.days.wednesday" = "Mercredi";
+"common.days.thursday" = "Jeudi";
+"common.days.friday" = "Vendredi";
+"common.days.saturday" = "Samedi";
+"common.days.sunday" = "Dimanche";
+"common.none" = "Aucun";
+
+// MARK: - Onboarding Streamlined Steps
+
+// Training Setup
+"onboarding.training_setup.title" = "Configuration d'entraînement";
+"onboarding.training_setup.subtitle" = "Lieu et jours de pratique";
+"onboarding.training_location.home_label" = "À la maison";
+"onboarding.training_location.gym_label" = "En salle";
+"onboarding.training_location.outdoor_label" = "En extérieur";
+"onboarding.training_location.mixed" = "Mixte";
+
+// Diet Preferences
+"onboarding.diet.title" = "Préférences alimentaires";
+"onboarding.diet.subtitle" = "Régime et habitudes de repas";
+"onboarding.diet.breakfast" = "Petit-déjeuner";
+"onboarding.diet.lunch" = "Déjeuner";
+"onboarding.diet.dinner" = "Dîner";
+
+// Eating Habits
+"onboarding.habits.title" = "Habitudes alimentaires";
+"onboarding.habits.subtitle" = "Sélectionnez celles qui s'appliquent";
+"onboarding.habits.late_eating" = "Je mange tard le soir";
+"onboarding.habits.insufficient_sleep" = "Je ne dors pas assez";
+"onboarding.habits.sweets_lover" = "J'aime trop les sucreries";
+"onboarding.habits.too_much_salt" = "Je consomme beaucoup de sel";
+"onboarding.habits.drink_sodas" = "Je bois des sodas";
+"onboarding.habits.snacking" = "Je grignote souvent";
+
+// Food Consumption Grid
+"onboarding.food.title" = "Consommation alimentaire";
+"onboarding.food.subtitle" = "Sélectionnez votre fréquence pour chaque aliment";
+"onboarding.food.vegetables" = "Légumes";
+"onboarding.food.fruits" = "Fruits";
+"onboarding.food.meat" = "Viande";
+"onboarding.food.fish" = "Poisson";
+"onboarding.food.dairy" = "Laitiers";
+"onboarding.food.eggs" = "Œufs";
+"onboarding.food.cereals" = "Céréales";
+"onboarding.food.starchy" = "Féculents";
+"onboarding.food.sugary" = "Sucreries";
+"onboarding.food.daily" = "Quotidien";
+"onboarding.food.weekly" = "1-2x/sem";
+"onboarding.food.never" = "Jamais";
+
+// Health Info
+"onboarding.health.title" = "Informations de santé";
+"onboarding.health.subtitle" = "Ces informations nous aident à personnaliser vos recommandations";
+"onboarding.health.medication" = "Prenez-vous des médicaments régulièrement ?";
+"onboarding.health.diabetes" = "Avez-vous du diabète ?";
+"onboarding.health.hormonal" = "Problèmes hormonaux ?";
+
+// Medical History
+"onboarding.medical.title" = "Antécédents médicaux";
+"onboarding.medical.subtitle" = "Cochez les troubles actuels ou passés (optionnel)";
+"onboarding.medical.allergies" = "Allergies";
+"onboarding.medical.lactose" = "Intolérance lactose";
+"onboarding.medical.asthma" = "Asthme";
+"onboarding.medical.digestive" = "Troubles digestifs";
+"onboarding.medical.fatigue" = "Fatigue chronique";
+"onboarding.medical.skin" = "Troubles cutanés";
+"onboarding.medical.joints" = "Douleurs articulaires";
+"onboarding.medical.migraines" = "Migraines";
+"onboarding.medical.hypertension" = "Hypertension";
+"onboarding.medical.cholesterol" = "Cholestérol élevé";
+"onboarding.medical.sleep" = "Troubles du sommeil";
+"onboarding.medical.finish" = "Terminer";
+
+// Common
+"common.continue" = "Continuer";
+
+// MARK: - Kine UI Fixes
+"kine.reels" = "Reels";
+"kine.tips" = "Astuces";
+"kine.share_text" = "Découvrez cet exercice : %@";
+
+// MARK: - Nutrition UI Keys
+"nutrition.week" = "SEMAINE";
+"nutrition.loading_plan" = "Chargement de votre plan...";
+"nutrition.error_retry" = "Appuyez pour réessayer";
+"nutrition.no_data" = "Pas encore de données nutritionnelles";
+
+// MARK: - Sleep & Recovery
+"sleep.title" = "Sommeil & Récupération";
+"sleep.calculator" = "Calculateur";
+"sleep.protocols" = "Protocoles";
+"sleep.chronotypes" = "Chronotypes";
+"sleep.wake_time" = "Heure de réveil";
+"sleep.cycles" = "Cycles de sommeil";
+"sleep.cycles_label" = "cycles";
+"sleep.calculate" = "Calculer l'heure du coucher";
+"sleep.recommended_bedtime" = "Heure de coucher recommandée";
+
+// MARK: - Prophetic Medicine
+"prophetic.title" = "Remèdes Naturels";
+"prophetic.all_conditions" = "Toutes les conditions";
+"prophetic.remedies" = "remèdes";
+"prophetic.natural_remedies" = "remèdes naturels";
+"prophetic.mechanism" = "Comment ça marche";
+"prophetic.recipe" = "Préparation";
+
+// MARK: - Recovery & Wellness
+"profile.recovery_wellness" = "Récupération & Bien-être";
+
+// MARK: - Intensity Zones
+"zone.blue" = "Récupération";
+"zone.green" = "Endurance";
+"zone.yellow" = "Tempo";
+"zone.orange" = "Seuil";
+"zone.red" = "Maximum";
+
+// MARK: - Workout Metadata
+"workout.zone" = "Zone";
+"workout.rpe" = "RPE";
+"workout.load" = "Charge";
+"workout.sleep_tip" = "Sommeil";
+"workout.hydration_tip" = "Hydratation";
+
+// MARK: - Zone Descriptions
+"zone.blue.desc" = "Récupération active légère, oxygénation, flux sanguin. Idéal pour les jours post-match ou de repos.";
+"zone.green.desc" = "Base aérobie, cardio en état stable. Développe la fondation cardiovasculaire.";
+"zone.yellow.desc" = "Effort au rythme du match, travail intermittent. Simule l'intensité de jeu.";
+"zone.orange.desc" = "Effort à haute intensité, travail de force et résistance. Développe la puissance et la capacité anaérobie.";
+"zone.red.desc" = "Effort explosif maximal, sprints et pliométrie. Activation neuromusculaire maximale.";
+
+// MARK: - Workout Info Views
+"workout.info.training_zones" = "Zones d'Entraînement";
+"workout.info.zone_guide" = "Guide des Zones";
+"workout.info.about_theme" = "À Propos de l'Entraînement";
+"workout.info.quality_method" = "Méthode d'Entraînement";
+"workout.info.gain_prediction" = "Gains Attendus";
+"workout.info.injury_risk" = "Risque de Blessure";
+"workout.info.supercomp_window" = "Fenêtre de Récupération";
+"workout.info.rpe_explanation" = "Perception de l'Effort (RPE)";
+"workout.info.principal_theme" = "Thème Principal";
+"workout.info.secondary_theme" = "Thème Complémentaire";
+"workout.info.zone_explanation" = "Votre entraînement est organisé en 5 zones d'intensité. Chaque zone cible des systèmes énergétiques différents et produit des adaptations spécifiques.";
+
+// MARK: - RPE Descriptions
+"workout.rpe.very_easy" = "Très Facile";
+"workout.rpe.easy" = "Facile";
+"workout.rpe.moderate" = "Modéré";
+"workout.rpe.hard" = "Difficile";
+"workout.rpe.maximum" = "Maximum";
+
+// MARK: - Common UI Strings
+"common.this_week" = "Cette Semaine";
+"common.todays_progress" = "Progrès du Jour";
+"common.preparing_dashboard" = "Préparation de votre tableau de bord";
+"common.preparing_journey" = "Préparation de Votre Parcours";
+"common.stay_hydrated" = "Restez hydraté";
+"common.light_stretching" = "Étirements légers";
+
+// MARK: - Story Card UI
+"story.today" = "AUJOURD'HUI";
+"story.daily_overview" = "Votre Aperçu Quotidien";
+"story.rest" = "Repos";
+"story.done" = "Fait";
+"story.todo" = "À faire";
+"story.workout" = "Entraînement";
+"story.calories" = "Calories";
+"story.water" = "Eau";
+"story.nutrition" = "Nutrition";
+"story.hydration" = "Hydratation";
+"story.rest_day" = "Jour de Repos";
+"story.recovery_relaxation" = "Récupération et détente";
+"story.exercises_planned" = "%d exercices prévus";
+"story.calories_of" = "%d sur %d kcal";
+"story.glasses_of" = "%d sur %d verres";
+"story.no_workout" = "Pas d'Entraînement";
+"story.min_duration" = "~%d min";
+
+// MARK: - Workout Phases
+"workout.phase.intro" = "Intro";
+"workout.phase.warmup" = "Échauffement";
+"workout.phase.exercise" = "Exercice";
+"workout.phase.cooldown" = "Retour au calme";
+"workout.phase.done" = "Terminé";
+"workout.label" = "Entraînement";
+
+// MARK: - Weekly & Workout UI
+"workout.week_complete" = "Semaine Complète";
+"workout.weekly_summary" = "Résumé Hebdomadaire";
+"workout.weekly_breakdown" = "Détail de la Semaine";
+"workout.weekly_tips" = "Conseils de la Semaine";
+"workout.heres_how_week" = "Voici le bilan de votre semaine";
+"workout.rest_day_message" = "La récupération est essentielle.\nÉtirez-vous, hydratez-vous et reposez-vous.";
+"workout.swipe_details" = "Glissez pour les détails";
+"workout.recovery_stretching" = "Récupération & étirements";
+"workout.progress_breakdown" = "Détail des Progrès";
+"workout.daily_nutrition" = "Nutrition du Jour";
+
+// MARK: - Kine UI Strings
+"kine.search_exercises" = "Rechercher des exercices";
+"kine.mobility" = "Mobilité";
+"kine.strengthening" = "Renforcement";
+"kine.no_results" = "Aucun Résultat";
+"kine.no_exercises" = "Aucun Exercice";
+"kine.try_adjusting_filters" = "Essayez d'ajuster vos filtres ou votre recherche";
+"kine.exercises_will_appear" = "Les exercices de %@ apparaîtront ici";
+"kine.stay_active" = "Restez Actif";
+"kine.light_movement" = "Le mouvement léger aide à la récupération";
+"kine.hydrate" = "Hydratez-vous";
+"kine.drink_water" = "Buvez de l'eau avant, pendant et après";
+"kine.rest_well" = "Reposez-vous Bien";
+"kine.quality_sleep" = "Un sommeil de qualité accélère la guérison";
+"kine.eat_protein" = "Mangez des Protéines";
+"kine.support_muscle" = "Soutenez la réparation musculaire avec la nutrition";
+"kine.stretch_daily" = "Étirez-vous Chaque Jour";
+"kine.maintain_flexibility" = "Maintenez la flexibilité et prévenez les blessures";
+"kine.listen_body" = "Écoutez Votre Corps";
+"kine.rest_when_needed" = "Reposez-vous quand vous en avez besoin";
+
+// MARK: - Nutrition UI Strings
+"nutrition.weekly_overview" = "Aperçu Hebdomadaire";
+"nutrition.calories" = "Calories";
+"nutrition.protein" = "Protéines";
+"nutrition.carbs" = "Glucides";
+"nutrition.fats" = "Lipides";
+"nutrition.plan_ahead" = "Planifiez à l'Avance";
+"nutrition.plan_ahead_desc" = "Faites votre liste de courses selon votre plan de repas";
+"nutrition.batch_cook" = "Cuisinez en Lot";
+"nutrition.batch_cook_desc" = "Préparez protéines et féculents en grande quantité le dimanche";
+"nutrition.portion_control" = "Contrôle des Portions";
+"nutrition.portion_control_desc" = "Utilisez des contenants pour pré-portionner les repas";
+"nutrition.freeze_smart" = "Congélation Intelligente";
+"nutrition.freeze_smart_desc" = "Congelez les portions que vous ne mangerez pas dans les 3 jours";
+"nutrition.fresh_last" = "Le Frais en Dernier";
+"nutrition.fresh_last_desc" = "Préparez les légumes au plus près de la consommation";
+"nutrition.cook_once" = "Cuisinez une Fois";
+"nutrition.cook_once_desc" = "Faites des recettes qui fonctionnent pour plusieurs repas";
+
+// MARK: - Profile UI Strings
+"profile.guest" = "Invité";
+"profile.no_email" = "Pas d'email";
+"profile.confirm_action" = "Confirmer l'Action";
+"profile.developer_tools" = "Outils Développeur";
+"profile.view_raw_api" = "Voir les réponses API brutes";
+"profile.edit_coming_soon" = "Modification du Profil Bientôt";
+"profile.full_progress" = "Progrès Complets";
+
+// MARK: - Nutrition Reels Strings
+"nutrition.your_plan" = "Votre Plan Nutritionnel";
+"nutrition.daily_target" = "Objectif Quotidien";
+"nutrition.macronutrients" = "Macronutriments";
+"nutrition.personalized_target" = "Votre objectif quotidien personnalisé";
+"nutrition.optimized_goals" = "Optimisé pour vos objectifs fitness";
+
+// MARK: - Blog UI Strings
+"blog.no_matching" = "Aucun article correspondant";
+"blog.no_posts" = "Pas encore d'articles";
+"blog.try_adjusting" = "Essayez d'ajuster votre recherche ou filtre";
+"blog.check_back" = "Revenez plus tard pour des conseils d'entraînement";
+"blog.category.all" = "Tout";
+"blog.category.training" = "Entraînement";
+"blog.category.nutrition" = "Nutrition";
+"blog.category.recovery" = "Récupération";
+"blog.category.mindset" = "Mental";
+"blog.search_articles" = "Rechercher des articles...";
+"common.dismiss" = "Fermer";
+"nutrition.recommended" = "Recommandé";
+"nutrition.traditional_remedies" = "Remèdes Traditionnels";
+"error.save_progress" = "Progrès sauvegardé localement mais la synchronisation a échoué. Réessai automatique.";
+"profile.edit" = "Modifier le Profil";
+"profile.edit_coming_soon_desc" = "La modification du profil sera disponible dans une prochaine mise à jour. Restez connecté !";
+"progress.no_logs" = "Aucun progrès enregistré.";
+"progress.view_all" = "Voir les %d entrées...";
+
+// MARK: - Missing Keys (Added)
+
+// Common
+"common.got_it" = "Compris !";
+"common.learn_more" = "En savoir plus";
+
+// Info Sheets - MET
+"info.met.title" = "Valeur MET";
+"info.met.description" = "Le MET (Équivalent Métabolique) mesure le coût énergétique des activités physiques. Un MET correspond à l'énergie utilisée au repos. Des valeurs MET plus élevées indiquent des activités plus intenses.";
+"info.met.tip1" = "1-3 METs : Activités légères (marche, étirements)";
+"info.met.tip2" = "3-6 METs : Activités modérées (marche rapide, vélo)";
+"info.met.tip3" = "6-9 METs : Activités vigoureuses (course, natation)";
+"info.met.tip4" = "9+ METs : Activités très intenses (sprint, HIIT)";
+"info.met.tip5" = "Utilisez ceci pour évaluer l'intensité de l'entraînement";
+
+// Info Sheets - Nutrition Plan
+"info.nutrition_plan.title" = "Plan Nutritionnel";
+"info.nutrition_plan.description" = "Votre plan nutritionnel personnalisé est basé sur vos objectifs, votre niveau d'activité et vos préférences alimentaires. Il comprend des objectifs caloriques quotidiens, la répartition des macronutriments et des suggestions de repas.";
+"info.nutrition_plan.tip1" = "Restez dans une marge de ±10% de votre objectif calorique quotidien";
+"info.nutrition_plan.tip2" = "Privilégiez l'apport en protéines pour la récupération musculaire";
+"info.nutrition_plan.tip3" = "Buvez au moins 2 à 3 litres d'eau par jour";
+"info.nutrition_plan.tip4" = "Suivez vos repas pour de meilleurs résultats";
+"info.nutrition_plan.tip5" = "Ajustez votre plan au fur et à mesure que vos objectifs changent";
+
+// Info Sheets - Player Profile
+"info.player_profile.title" = "Profil du Joueur";
+"info.player_profile.description" = "Votre position et votre style de jeu nous aident à personnaliser votre programme d'entraînement. Nous nous concentrerons sur les qualités physiques et les compétences spécifiques nécessaires à votre rôle sur le terrain.";
+"info.player_profile.tip1" = "Choisissez la position que vous occupez le plus souvent";
+"info.player_profile.tip2" = "L'entraînement sera axé sur les besoins spécifiques à votre poste";
+"info.player_profile.tip3" = "Comprend travail d'agilité, de force et d'endurance";
+"info.player_profile.tip4" = "Vous recevrez des exercices adaptés à votre position";
+
+// Info Sheets - Training Days
+"info.training_days.title" = "Programme d'Entraînement";
+"info.training_days.description" = "Choisissez les jours où vous prévoyez de vous entraîner pendant la semaine. Nous créerons un plan d'entraînement personnalisé adapté à votre emploi du temps. Sélectionnez au moins 3 jours pour des résultats optimaux.";
+"info.training_days.tip1" = "Répartissez vos jours d'entraînement tout au long de la semaine pour une meilleure récupération";
+"info.training_days.tip2" = "Incluez des jours de repos pour éviter le surentraînement et les blessures";
+"info.training_days.tip3" = "Soyez réaliste - choisissez des jours auxquels vous pouvez vous engager régulièrement";
+"info.training_days.tip4" = "Vous pouvez toujours ajuster votre programme plus tard dans les paramètres";
+
+// Info Sheets - General
+"info.about_this_feature" = "À propos de cette fonctionnalité";
+"info.tips" = "Conseils et bonnes pratiques";
+
+// Kine - Missing
+"kine.adjust_filters" = "Essayez d'ajuster vos filtres";
+"kine.check_back_later" = "Revenez plus tard pour de nouveaux exercices";
+"kine.done" = "Terminé";
+"kine.no_matching_exercises" = "Aucun exercice correspondant";
+
+// Recovery Tips
+"recovery.tips.sleep.title" = "Bien dormir";
+"recovery.tips.sleep.description" = "Visez 7 à 9 heures de sommeil de qualité chaque nuit pour une récupération optimale.";
+"recovery.tips.hydration.title" = "Restez hydraté";
+"recovery.tips.hydration.description" = "Buvez au moins 2 à 3 litres d'eau par jour pour favoriser la récupération musculaire.";
+"recovery.tips.active.title" = "Récupération active";
+"recovery.tips.active.description" = "Un mouvement léger les jours de repos favorise la circulation sanguine et réduit les courbatures.";
+"recovery.tips.nutrition.title" = "Nutrition appropriée";
+"recovery.tips.nutrition.description" = "Consommez des protéines dans les 30 minutes suivant l'entraînement pour la réparation musculaire.";
+"recovery.tips.breathing.title" = "Exercices de respiration";
+"recovery.tips.breathing.description" = "Pratiquez la respiration profonde pour réduire le stress et améliorer la récupération.";
+"recovery.tips.iceheat.title" = "Glace et chaleur";
+"recovery.tips.iceheat.description" = "Alternez entre bains de glace et thermothérapie pour l'inflammation.";
+
+// Nutrition - Menu
+"nutrition.menu.refresh" = "Actualiser le plan";
+"nutrition.menu.update_preferences" = "Mettre à jour les préférences";
+
+// Nutrition - Tabs
+"nutrition.tab.overview" = "Aperçu";
+"nutrition.tab.meals" = "Repas";
+"nutrition.tab.advice" = "Conseils";
+
+// Nutrition - Macros
+"nutrition.macros.protein.title" = "Protéines";
+"nutrition.macros.protein.subtitle" = "Réparation musculaire";
+"nutrition.macros.carbs.title" = "Glucides";
+"nutrition.macros.carbs.subtitle" = "Source d'énergie";
+"nutrition.macros.fats.title" = "Lipides";
+"nutrition.macros.fats.subtitle" = "Hormones";
+
+// Nutrition - Advice Empty
+"nutrition.advice.empty.title" = "Aucun conseil disponible";
+"nutrition.advice.empty.description" = "Complétez votre profil pour recevoir des conseils nutritionnels personnalisés";
+
+// Nutrition - Info
+"nutrition.info.title" = "Plan Nutritionnel";
+"nutrition.info.description" = "Votre plan nutritionnel personnalisé est basé sur vos objectifs, votre niveau d'activité et vos préférences alimentaires. Il comprend des objectifs caloriques quotidiens, la répartition des macronutriments et des suggestions de repas.";
+"nutrition.info.tip.calorie_target" = "Restez dans une marge de ±10% de votre objectif calorique quotidien";
+"nutrition.info.tip.protein_priority" = "Privilégiez l'apport en protéines pour la récupération musculaire";
+"nutrition.info.tip.hydration" = "Buvez au moins 2 à 3 litres d'eau par jour";
+"nutrition.info.tip.track_meals" = "Suivez vos repas pour de meilleurs résultats";
+
+// Onboarding - Birthdate
+"onboarding.birthdate.title" = "Quelle est votre date de naissance ?";
+"onboarding.birthdate.subtitle" = "Nous avons besoin de votre âge pour personnaliser votre plan";
+"onboarding.birthdate.select" = "Sélectionnez votre date de naissance";
+"onboarding.birthdate.age_display" = "Âge : %d ans";
+"onboarding.birthdate.info_title" = "Pourquoi nous en avons besoin";
+"onboarding.birthdate.info_description" = "Votre âge nous aide à calculer votre taux métabolique et à personnaliser votre plan nutritionnel pour des résultats optimaux.";
+
+// Profile - Missing
+"profile.appearance" = "Apparence";
+"profile.blog" = "Blog";
+"profile.system" = "Système";
+"profile.weight_progress_7days" = "Évolution du poids (7 jours)";
+
+// MARK: - Sleep Picker Labels
+"sleep.hour" = "Heure";
+"sleep.minute" = "Minute";
+
+// MARK: - Onboarding Match Day
+"onboarding.match_day" = "Jour de match";
+
+// MARK: - Privacy & Data (GDPR)
+"profile.privacy_data" = "Confidentialité et données";
+"profile.privacy_policy" = "Politique de confidentialité";
+"profile.export_data" = "Exporter mes données";
+"profile.export_data_message" = "Votre demande d'exportation de données a été reçue. Vous recevrez un email avec un lien de téléchargement sous 48 heures.";
+"profile.delete_account" = "Supprimer le compte";
+
+// MARK: - Privacy Policy View
+"privacy.title" = "Politique de confidentialité";
+"privacy.last_updated" = "Dernière mise à jour : mars 2026";
+"privacy.data_collection.title" = "Données collectées";
+"privacy.data_collection.content" = "Nous collectons vos informations de profil (nom, email, âge, niveau de forme), données d'entraînement (plans, progrès, retours), évaluations de santé et objectifs. Nous ne collectons que les données nécessaires à nos services.";
+"privacy.data_usage.title" = "Utilisation de vos données";
+"privacy.data_usage.content" = "Vos données sont utilisées exclusivement pour personnaliser vos plans d'entraînement, suivre vos progrès et fournir des conseils nutritionnels et de récupération adaptés. Nous ne vendons jamais vos données.";
+"privacy.data_security.title" = "Sécurité des données";
+"privacy.data_security.content" = "Vos données sont chiffrées en transit (HTTPS/TLS) et au repos. Les jetons d'authentification sont stockés en toute sécurité dans le Keychain de votre appareil.";
+"privacy.your_rights.title" = "Vos droits (RGPD)";
+"privacy.your_rights.content" = "Vous avez le droit de : accéder à vos données, les exporter dans un format portable, corriger les données inexactes, supprimer votre compte et toutes les données associées, et retirer votre consentement à tout moment.";
+"privacy.retention.title" = "Conservation des données";
+"privacy.retention.content" = "Vos données sont conservées tant que votre compte est actif. Lorsque vous supprimez votre compte, toutes les données personnelles sont définitivement supprimées sous 30 jours.";
+"privacy.contact.title" = "Nous contacter";
+"privacy.contact.content" = "Pour toute question relative à la confidentialité, contactez-nous à privacy@dipoddi.com";
+
+// MARK: - Delete Account View
+"delete_account.title" = "Supprimer le compte";
+"delete_account.warning_title" = "Cette action est irréversible";
+"delete_account.warning_message" = "La suppression de votre compte entraînera la suppression définitive de toutes vos données.";
+"delete_account.what_deleted" = "Ce qui sera supprimé :";
+"delete_account.item_profile" = "Votre profil et informations personnelles";
+"delete_account.item_workouts" = "Tous les plans et séances d'entraînement";
+"delete_account.item_progress" = "Historique de progrès et mesures";
+"delete_account.item_health" = "Évaluations de santé et résultats";
+"delete_account.item_feedback" = "Retours et réponses aux questionnaires";
+"delete_account.item_achievements" = "Réalisations et points";
+"delete_account.enter_password" = "Entrez votre mot de passe pour confirmer :";
+"delete_account.type_delete" = "Tapez SUPPRIMER pour confirmer :";
+"delete_account.confirm_button" = "Supprimer définitivement le compte";
+
+// MARK: - Feature Descriptions
+"workout.rpe_explanation" = "RPE = Perception de l'effort (1-10)";
+"health_assessment.description" = "Cette évaluation couvre vos antécédents médicaux, blessures, mode de vie et habitudes de récupération pour personnaliser votre entraînement en toute sécurité.";
+"sleep.chronotype_explanation" = "Votre chronotype est la préférence naturelle de votre corps pour les heures de sommeil et de réveil. Le connaître aide à optimiser vos horaires d'entraînement et de récupération.";
+
+// MARK: - Tooltips & Descriptions
+// MARK: - Zone Info View
+"zone.number" = "Zone %d";
+"zone.intensity_range" = "Plage d'intensite";
+"zone.rpe_range" = "Plage RPE";
+"zone.view_all" = "Voir Toutes les Zones";
+"zone.current_session" = "Zone de la Seance Actuelle";
+
+"tooltip.zone_color" = "La barre de couleur indique la zone d'intensite de cette seance.";
+"tooltip.rpe_short" = "Le RPE mesure la difficulte ressentie d'une seance sur une echelle de 1 a 10.";
+"tooltip.gain_prediction" = "Adaptation physique prevue pour cette seance.";
+"tooltip.injury_risk" = "Risque de blessure estime en fonction de la charge et de la fatigue.";
+"tooltip.freshness" = "Votre niveau de recuperation avant cette seance (100% = completement repose).";
+"tooltip.sleep_protocol" = "Les protocoles de sommeil sont des routines adaptees a votre charge d'entrainement et vos besoins de recuperation.";
+"tooltip.chronotype" = "Votre chronotype determine vos heures de vigilance optimale. S'entrainer pendant ces fenetres ameliore les performances.";
+"tooltip.recovery_wellness" = "Outils pour optimiser votre repos, la qualite de votre sommeil et votre bien-etre entre les seances.";
+"tooltip.privacy_data" = "Gerez vos donnees personnelles conformement au RGPD. Vous pouvez exporter ou supprimer vos donnees a tout moment.";
+"tooltip.export_data" = "Demandez une copie complete de vos donnees personnelles. Nous vous enverrons un lien de telechargement sous 48 heures.";
+"tooltip.delete_account" = "Supprime definitivement votre compte et toutes les donnees associees. Cette action est irreversible.";
+"tooltip.privacy_policy" = "Consultez comment nous collectons, stockons et protegeons vos informations personnelles.";
+"tooltip.weekly_schedule" = "Votre semaine est planifiee par periodisation : chaque jour cible une zone differente pour equilibrer charge et recuperation.";
+"tooltip.supercomp_window" = "La fenetre de temps apres cette seance pendant laquelle votre corps s'adapte et se renforce.";
+"workout.info.freshness" = "Fraicheur";

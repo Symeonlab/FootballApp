@@ -1,6 +1,6 @@
 //
 //  DesignSystem.swift
-//  Dipodi
+//  DiPODDI
 //
 //  Extracted from WorkoutPlan.swift to organize design components.
 //

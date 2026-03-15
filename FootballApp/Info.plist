@@ -12,6 +12,8 @@
     <string>6.0</string>
     <key>CFBundleName</key>
     <string>$(PRODUCT_NAME)</string>
+    <key>CFBundleDisplayName</key>
+    <string>DiPODDI</string>
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
@@ -34,7 +36,7 @@
     <key>UIApplicationSceneManifest</key>
     <dict>
         <key>UIApplicationSupportsMultipleScenes</key>
-        <true/>
+        <false/>
     </dict>
     
     <!-- Supported Interface Orientations -->
@@ -54,18 +56,18 @@
     
     <!-- HealthKit Permissions -->
     <key>NSHealthUpdateUsageDescription</key>
-    <string>Dipodi needs to save your body measurements (weight and waist circumference) to track your fitness progress over time.</string>
+    <string>DiPODDI needs to save your body measurements (weight and waist circumference) to track your fitness progress over time.</string>
     
     <key>NSHealthShareUsageDescription</key>
-    <string>Dipodi needs to read your health data (steps, calories, heart rate, distance, and body measurements) to provide personalized fitness insights and track your progress.</string>
+    <string>DiPODDI needs to read your health data (steps, calories, heart rate, distance, and body measurements) to provide personalized fitness insights and track your progress.</string>
     
     <!-- Camera Permission (if needed for profile pictures) -->
     <key>NSCameraUsageDescription</key>
-    <string>Dipodi needs access to your camera to take progress photos.</string>
+    <string>DiPODDI needs access to your camera to take progress photos.</string>
     
     <!-- Photo Library Permission (if needed) -->
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>Dipodi needs access to your photos to select progress pictures.</string>
+    <string>DiPODDI needs access to your photos to select progress pictures.</string>
     
     <!-- Network Usage (for background refreshing) -->
     <key>UIBackgroundModes</key>
@@ -74,24 +76,82 @@
         <string>remote-notification</string>
     </array>
     
-    <!-- App Transport Security (if you need to allow specific domains) -->
+    <!-- App Transport Security -->
     <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsArbitraryLoads</key>
         <false/>
-        <!-- Add specific domains if needed -->
+        <key>NSAllowsArbitraryLoadsForMedia</key>
+        <false/>
+        <key>NSAllowsArbitraryLoadsInWebContent</key>
+        <false/>
         <key>NSExceptionDomains</key>
         <dict>
-            <!-- Example: -->
-            <!--
-            <key>api.dipodi.com</key>
+            <!-- YouTube domains for embedded exercise videos -->
+            <key>youtube.com</key>
             <dict>
-                <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
                 <key>NSIncludesSubdomains</key>
                 <true/>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <false/>
+                <key>NSExceptionMinimumTLSVersion</key>
+                <string>TLSv1.2</string>
             </dict>
-            -->
+            <key>youtube-nocookie.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <false/>
+                <key>NSExceptionMinimumTLSVersion</key>
+                <string>TLSv1.2</string>
+            </dict>
+            <key>googlevideo.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <false/>
+                <key>NSExceptionMinimumTLSVersion</key>
+                <string>TLSv1.2</string>
+            </dict>
+            <key>ytimg.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <false/>
+                <key>NSExceptionMinimumTLSVersion</key>
+                <string>TLSv1.2</string>
+            </dict>
+            <!-- Google domains for YouTube player resources -->
+            <key>google.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <false/>
+                <key>NSExceptionMinimumTLSVersion</key>
+                <string>TLSv1.2</string>
+            </dict>
+            <key>gstatic.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <false/>
+                <key>NSExceptionMinimumTLSVersion</key>
+                <string>TLSv1.2</string>
+            </dict>
+            <key>googleapis.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <false/>
+                <key>NSExceptionMinimumTLSVersion</key>
+                <string>TLSv1.2</string>
+            </dict>
         </dict>
     </dict>
     
@@ -119,5 +179,9 @@
     <!-- Notification Permissions -->
     <key>UIUserInterfaceStyle</key>
     <string>Automatic</string>
+
+    <!-- Export Compliance -->
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
 </dict>
 </plist>

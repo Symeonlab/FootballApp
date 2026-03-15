@@ -49,7 +49,7 @@ struct MealsPerDayView: View {
                 }
                 
                 if selectedMeals.isEmpty {
-                    Text("Veuillez sélectionner au moins un repas")
+                    Text("nutrition.onboarding.select_meal".localizedString)
                         .font(.caption)
                         .foregroundColor(.red.opacity(0.8))
                         .padding(.top, 8)
@@ -774,15 +774,582 @@ struct MedicalHistoryView: View {
     }
 }
 
+// MARK: - Combined Training Setup View (Location + Days)
+struct TrainingSetupView: View {
+    @ObservedObject var viewModel: OnboardingViewModel
+    @Binding var selection: Int
+    @State private var selectedDays: Set<String> = []
+
+    let locationOptions = [
+        ("HOME", "À la maison", "house.fill"),
+        ("GYM", "En salle", "dumbbell.fill"),
+        ("OUTDOOR", "En extérieur", "leaf.fill"),
+        ("MIXED", "Mixte", "arrow.triangle.2.circlepath")
+    ]
+
+    let dayOptions = ["LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM"]
+
+    var body: some View {
+        ModernOnboardingQuestionView(
+            title: "Configuration d'entraînement",
+            subtitle: "Lieu et jours de pratique",
+            buttonTitle: "Continuer",
+            action: {
+                viewModel.data.trainingDays = Array(selectedDays)
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+                    selection += 1
+                }
+            }
+        ) {
+            VStack(spacing: 24) {
+                // Location selection
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("onboarding.training_location.title".localizedString)
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                        ForEach(locationOptions, id: \.0) { option in
+                            Button {
+                                viewModel.data.trainingLocation = option.0
+                            } label: {
+                                VStack(spacing: 8) {
+                                    Image(systemName: option.2)
+                                        .font(.title2)
+                                    Text(option.1)
+                                        .font(.caption)
+                                }
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 16)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(viewModel.data.trainingLocation == option.0 ? Color.white.opacity(0.25) : Color.white.opacity(0.1))
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(viewModel.data.trainingLocation == option.0 ? Color.white : Color.clear, lineWidth: 2)
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+
+                // Days selection
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("nutrition.onboarding.training_days".localizedString)
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    HStack(spacing: 8) {
+                        ForEach(dayOptions, id: \.self) { day in
+                            Button {
+                                if selectedDays.contains(day) {
+                                    selectedDays.remove(day)
+                                } else {
+                                    selectedDays.insert(day)
+                                }
+                            } label: {
+                                Text(day)
+                                    .font(.caption.bold())
+                                    .foregroundColor(.white)
+                                    .frame(width: 40, height: 40)
+                                    .background(
+                                        Circle()
+                                            .fill(selectedDays.contains(day) ? Color.white.opacity(0.3) : Color.white.opacity(0.1))
+                                    )
+                                    .overlay(
+                                        Circle()
+                                            .stroke(selectedDays.contains(day) ? Color.white : Color.clear, lineWidth: 2)
+                                    )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+            }
+        }
+        .onAppear {
+            if let days = viewModel.data.trainingDays {
+                selectedDays = Set(days)
+            }
+        }
+    }
+}
+
+// MARK: - Combined Diet Preferences View
+struct DietPreferencesView: View {
+    @ObservedObject var viewModel: OnboardingViewModel
+    @Binding var selection: Int
+    @State private var selectedMeals: Set<String> = []
+
+    let mealOptions = [
+        ("MORNING", "Petit-déjeuner", "sunrise.fill"),
+        ("NOON", "Déjeuner", "sun.max.fill"),
+        ("EVENING", "Dîner", "moon.stars.fill")
+    ]
+
+    var body: some View {
+        ModernOnboardingQuestionView(
+            title: "Préférences alimentaires",
+            subtitle: "Régime et habitudes de repas",
+            buttonTitle: "Continuer",
+            action: {
+                viewModel.data.mealsPerDay = Array(selectedMeals).joined(separator: ",")
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+                    selection += 1
+                }
+            }
+        ) {
+            VStack(spacing: 24) {
+                // Vegetarian toggle
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("nutrition.onboarding.diet_type".localizedString)
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    HStack(spacing: 12) {
+                        Button {
+                            viewModel.data.isVegetarian = false
+                        } label: {
+                            HStack {
+                                Image(systemName: "fork.knife")
+                                Text("nutrition.onboarding.omnivore".localizedString)
+                            }
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(viewModel.data.isVegetarian == false ? Color.white.opacity(0.25) : Color.white.opacity(0.1))
+                            )
+                        }
+                        .buttonStyle(.plain)
+
+                        Button {
+                            viewModel.data.isVegetarian = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "leaf.fill")
+                                Text("nutrition.onboarding.vegetarian".localizedString)
+                            }
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(viewModel.data.isVegetarian == true ? Color.white.opacity(0.25) : Color.white.opacity(0.1))
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+
+                // Meals per day
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("nutrition.onboarding.daily_meals".localizedString)
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    ForEach(mealOptions, id: \.0) { meal in
+                        Button {
+                            if selectedMeals.contains(meal.0) {
+                                selectedMeals.remove(meal.0)
+                            } else {
+                                selectedMeals.insert(meal.0)
+                            }
+                        } label: {
+                            HStack {
+                                Image(systemName: meal.2)
+                                    .font(.title3)
+                                Text(meal.1)
+                                Spacer()
+                                Image(systemName: selectedMeals.contains(meal.0) ? "checkmark.circle.fill" : "circle")
+                            }
+                            .foregroundColor(.white)
+                            .padding(14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(selectedMeals.contains(meal.0) ? Color.white.opacity(0.2) : Color.white.opacity(0.1))
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+        }
+        .onAppear {
+            if let meals = viewModel.data.mealsPerDay?.components(separatedBy: ",") {
+                selectedMeals = Set(meals)
+            }
+        }
+    }
+}
+
+// MARK: - Combined Eating Habits View
+struct EatingHabitsView: View {
+    @ObservedObject var viewModel: OnboardingViewModel
+    @Binding var selection: Int
+    @State private var selectedHabits: Set<String> = []
+
+    let habitOptions = [
+        ("LATE_EATING", "Je mange tard le soir", "moon.zzz.fill"),
+        ("INSUFFICIENT_SLEEP", "Je ne dors pas assez", "bed.double.fill"),
+        ("SWEETS_LOVER", "J'aime trop les sucreries", "birthday.cake.fill"),
+        ("TOO_MUCH_SALT", "Je consomme beaucoup de sel", "shippingbox.fill"),
+        ("DRINK_SODAS", "Je bois des sodas", "cup.and.saucer.fill"),
+        ("SNACKING", "Je grignote souvent", "popcorn.fill")
+    ]
+
+    var body: some View {
+        ModernOnboardingQuestionView(
+            title: "Habitudes alimentaires",
+            subtitle: "Sélectionnez celles qui s'appliquent",
+            buttonTitle: "Continuer",
+            action: {
+                viewModel.data.badHabits = Array(selectedHabits)
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+                    selection += 1
+                }
+            }
+        ) {
+            ScrollView {
+                VStack(spacing: 12) {
+                    ForEach(habitOptions, id: \.0) { habit in
+                        Button {
+                            if selectedHabits.contains(habit.0) {
+                                selectedHabits.remove(habit.0)
+                            } else {
+                                selectedHabits.insert(habit.0)
+                            }
+                        } label: {
+                            HStack {
+                                Image(systemName: habit.2)
+                                    .font(.title3)
+                                    .frame(width: 30)
+                                Text(habit.1)
+                                    .font(.body)
+                                Spacer()
+                                Image(systemName: selectedHabits.contains(habit.0) ? "checkmark.circle.fill" : "circle")
+                            }
+                            .foregroundColor(.white)
+                            .padding(14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(selectedHabits.contains(habit.0) ? Color.white.opacity(0.2) : Color.white.opacity(0.1))
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    Text("nutrition.onboarding.no_habits".localizedString)
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.6))
+                        .padding(.top, 8)
+                }
+            }
+            .frame(maxHeight: 400)
+        }
+        .onAppear {
+            if let habits = viewModel.data.badHabits {
+                selectedHabits = Set(habits)
+            }
+        }
+    }
+}
+
+// MARK: - Combined Food Consumption Grid View
+struct FoodConsumptionGridView: View {
+    @ObservedObject var viewModel: OnboardingViewModel
+    @Binding var selection: Int
+
+    let foodCategories: [(key: String, emoji: String, name: String, binding: WritableKeyPath<OnboardingData, String?>)] = [
+        ("vegetables", "🥦", "Légumes", \.vegetableConsumption),
+        ("fruits", "🍎", "Fruits", \.fruitConsumption),
+        ("meat", "🥩", "Viande", \.meatConsumption),
+        ("fish", "🐟", "Poisson", \.fishConsumption),
+        ("dairy", "🥛", "Laitiers", \.dairyConsumption),
+        ("eggs", "🥚", "Œufs", \.eggConsumption),
+        ("cereals", "🌾", "Céréales", \.cerealConsumption),
+        ("starchy", "🍝", "Féculents", \.starchyFoodConsumption),
+        ("sugary", "🍭", "Sucreries", \.sugaryFoodConsumption)
+    ]
+
+    let frequencyOptions = [
+        ("EVERYDAY", "Quotidien", Color.green),
+        ("1-2_WEEK", "1-2x/sem", Color.orange),
+        ("NEVER", "Jamais", Color.red.opacity(0.7))
+    ]
+
+    var body: some View {
+        ModernOnboardingQuestionView(
+            title: "Consommation alimentaire",
+            subtitle: "Sélectionnez votre fréquence pour chaque aliment",
+            buttonTitle: "Continuer",
+            action: {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+                    selection += 1
+                }
+            }
+        ) {
+            ScrollView {
+                VStack(spacing: 16) {
+                    ForEach(foodCategories, id: \.key) { category in
+                        FoodCategoryRow(
+                            emoji: category.emoji,
+                            name: category.name,
+                            selectedValue: Binding(
+                                get: { viewModel.data[keyPath: category.binding] },
+                                set: { viewModel.data[keyPath: category.binding] = $0 }
+                            ),
+                            options: frequencyOptions
+                        )
+                    }
+                }
+            }
+            .frame(maxHeight: 450)
+        }
+    }
+}
+
+struct FoodCategoryRow: View {
+    let emoji: String
+    let name: String
+    @Binding var selectedValue: String?
+    let options: [(String, String, Color)]
+
+    var body: some View {
+        HStack(spacing: 12) {
+            HStack(spacing: 8) {
+                Text(emoji)
+                    .font(.title3)
+                Text(name)
+                    .font(.subheadline)
+                    .foregroundColor(.white)
+            }
+            .frame(width: 100, alignment: .leading)
+
+            HStack(spacing: 6) {
+                ForEach(options, id: \.0) { option in
+                    Button {
+                        selectedValue = option.0
+                    } label: {
+                        Text(option.1)
+                            .font(.caption2)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 6)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(selectedValue == option.0 ? option.2 : Color.white.opacity(0.1))
+                            )
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.white.opacity(0.05))
+        )
+    }
+}
+
+// MARK: - Combined Health Info View
+struct HealthInfoView: View {
+    @ObservedObject var viewModel: OnboardingViewModel
+    @Binding var selection: Int
+
+    var body: some View {
+        ModernOnboardingQuestionView(
+            title: "Informations de santé",
+            subtitle: "Ces informations nous aident à personnaliser vos recommandations",
+            buttonTitle: "Continuer",
+            action: {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+                    selection += 1
+                }
+            }
+        ) {
+            VStack(spacing: 20) {
+                // Medication
+                HealthToggleRow(
+                    icon: "💊",
+                    title: "Prenez-vous des médicaments régulièrement ?",
+                    isSelected: Binding(
+                        get: { viewModel.data.takesMedication ?? false },
+                        set: { viewModel.data.takesMedication = $0 }
+                    )
+                )
+
+                // Diabetes
+                HealthToggleRow(
+                    icon: "🩸",
+                    title: "Avez-vous du diabète ?",
+                    isSelected: Binding(
+                        get: { viewModel.data.hasDiabetes ?? false },
+                        set: { viewModel.data.hasDiabetes = $0 }
+                    )
+                )
+
+                // Hormonal issues
+                HealthToggleRow(
+                    icon: "⚡️",
+                    title: "Problèmes hormonaux ?",
+                    isSelected: Binding(
+                        get: { viewModel.data.hasHormonalIssues ?? false },
+                        set: { viewModel.data.hasHormonalIssues = $0 }
+                    )
+                )
+            }
+        }
+    }
+}
+
+struct HealthToggleRow: View {
+    let icon: String
+    let title: String
+    @Binding var isSelected: Bool
+
+    var body: some View {
+        HStack {
+            Text(icon)
+                .font(.title2)
+
+            Text(title)
+                .font(.subheadline)
+                .foregroundColor(.white)
+
+            Spacer()
+
+            HStack(spacing: 8) {
+                Button {
+                    isSelected = true
+                } label: {
+                    Text("nutrition.onboarding.yes".localizedString)
+                        .font(.caption.bold())
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(isSelected ? Color.green : Color.white.opacity(0.1))
+                        )
+                }
+                .buttonStyle(.plain)
+
+                Button {
+                    isSelected = false
+                } label: {
+                    Text("nutrition.onboarding.no".localizedString)
+                        .font(.caption.bold())
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(!isSelected ? Color.red.opacity(0.7) : Color.white.opacity(0.1))
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(14)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.white.opacity(0.1))
+        )
+    }
+}
+
+// MARK: - Combined Medical History View
+struct CombinedMedicalHistoryView: View {
+    @ObservedObject var viewModel: OnboardingViewModel
+    @Binding var selection: Int
+    @State private var selectedConditions: Set<String> = []
+
+    let conditions = [
+        ("ALLERGIES", "Allergies", "allergens"),
+        ("LACTOSE_INTOLERANCE", "Intolérance lactose", "drop.fill"),
+        ("ASTHMA", "Asthme", "lungs.fill"),
+        ("DIGESTIVE_TROUBLES", "Troubles digestifs", "stomach"),
+        ("FATIGUE", "Fatigue chronique", "bed.double.fill"),
+        ("SKIN_TROUBLES", "Troubles cutanés", "hand.raised.fill"),
+        ("JOINT_PAIN", "Douleurs articulaires", "figure.flexibility"),
+        ("MIGRAINES", "Migraines", "bolt.heart.fill"),
+        ("HYPERTENSION", "Hypertension", "heart.fill"),
+        ("CHOLESTEROL", "Cholestérol élevé", "waveform.path.ecg"),
+        ("SLEEP_DISORDERS", "Troubles du sommeil", "moon.zzz.fill")
+    ]
+
+    var body: some View {
+        ModernOnboardingQuestionView(
+            title: "Antécédents médicaux",
+            subtitle: "Cochez les troubles actuels ou passés (optionnel)",
+            buttonTitle: "Terminer",
+            action: {
+                viewModel.data.medicalHistory = Array(selectedConditions)
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+                    selection += 1
+                }
+            }
+        ) {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+                    ForEach(conditions, id: \.0) { condition in
+                        Button {
+                            if selectedConditions.contains(condition.0) {
+                                selectedConditions.remove(condition.0)
+                            } else {
+                                selectedConditions.insert(condition.0)
+                            }
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: condition.2)
+                                    .font(.caption)
+                                Text(condition.1)
+                                    .font(.caption2)
+                                    .lineLimit(1)
+                            }
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(selectedConditions.contains(condition.0) ? Color.white.opacity(0.25) : Color.white.opacity(0.1))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(selectedConditions.contains(condition.0) ? Color.white.opacity(0.5) : Color.clear, lineWidth: 1)
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+            .frame(maxHeight: 350)
+        }
+        .onAppear {
+            if let history = viewModel.data.medicalHistory {
+                selectedConditions = Set(history)
+            }
+        }
+    }
+}
+
 // MARK: - Preview
 #Preview {
     ZStack {
-        OnboardingBackground(currentStep: 15, totalSteps: 35)
+        OnboardingBackground(currentStep: 10, totalSteps: 15)
             .ignoresSafeArea()
-        
-        MealsPerDayView(
+
+        FoodConsumptionGridView(
             viewModel: OnboardingViewModel(),
-            selection: .constant(17)
+            selection: .constant(11)
         )
     }
 }

@@ -155,12 +155,14 @@ struct StatusHeaderCard: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
-                    // Debug: Show token preview
-                    if let token = APITokenManager.shared.currentToken {
-                        Text("Token: \(token.prefix(15))...")
+                    #if DEBUG
+                    // Debug: Show token is present
+                    if APITokenManager.shared.currentToken != nil {
+                        Text("Token: ••••••••••••••••")
                             .font(.system(size: 9, design: .monospaced))
                             .foregroundColor(.secondary.opacity(0.7))
                     }
+                    #endif
                 }
                 
                 Spacer()
@@ -179,6 +181,25 @@ struct StatusHeaderCard: View {
                 
                 // Copy Logs Button
                 if totalTests > 0 {
+                    // Log All JSON to Console Button
+                    Button(action: {
+                        tester.logAllJSONToConsole()
+                        let generator = UINotificationFeedbackGenerator()
+                        generator.notificationOccurred(.success)
+                    }) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "terminal.fill")
+                                .font(.caption)
+                            Text("Console")
+                                .font(.caption.weight(.semibold))
+                        }
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Color.green)
+                        .clipShape(Capsule())
+                    }
+
                     // Share/Export Button
                     Button(action: {
                         shareContent = generateLogText()
@@ -196,7 +217,7 @@ struct StatusHeaderCard: View {
                         .background(Color.orange)
                         .clipShape(Capsule())
                     }
-                    
+
                     // Copy Full Logs Button
                     Button(action: copyTestLogs) {
                         HStack(spacing: 4) {
@@ -211,7 +232,7 @@ struct StatusHeaderCard: View {
                         .background(showCopyConfirmation ? Color.green : Color.purple)
                         .clipShape(Capsule())
                     }
-                    
+
                     // Copy Summary Button
                     Button(action: copySummary) {
                         HStack(spacing: 4) {
@@ -319,7 +340,6 @@ struct StatusHeaderCard: View {
         AUTHENTICATION
         ==========================================
         Token Status: \(tester.hasToken ? "✅ Available" : "❌ Missing")
-        Token Value: \(APITokenManager.shared.currentToken?.prefix(20) ?? "None")...
         
         
         """
@@ -847,8 +867,8 @@ struct QuickLoginView: View {
     let onLoginSuccess: () -> Void
     @Environment(\.dismiss) private var dismiss
     
-    @State private var email = "test@example.com"
-    @State private var password = "Password123"
+    @State private var email = ""
+    @State private var password = ""
     @State private var isLoggingIn = false
     @State private var isRegistering = false
     @State private var isSettingUpProfile = false
@@ -986,14 +1006,11 @@ struct QuickLoginView: View {
                     // Store the token
                     APITokenManager.shared.currentToken = response.token
                     
-                    // Debug: Verify token was stored
-                    let storedToken = APITokenManager.shared.currentToken
-                    print("🔐 DEBUG - Token after login:")
-                    print("   Response token: \(response.token.prefix(20))...")
-                    print("   Stored token: \(storedToken?.prefix(20) ?? "NIL")...")
-                    print("   Token matches: \(response.token == storedToken)")
-                    
-                    successMessage = "✅ Login successful!\n\nToken: \(response.token.prefix(20))..."
+                    #if DEBUG
+                    print("🔐 Token stored successfully after login")
+                    #endif
+
+                    successMessage = "✅ Login successful!"
                     isLoggingIn = false
                     showSetupOption = true  // Show option to complete profile
                     
@@ -1036,14 +1053,11 @@ struct QuickLoginView: View {
                     // Store the token
                     APITokenManager.shared.currentToken = response.token
                     
-                    // Debug: Verify token was stored
-                    let storedToken = APITokenManager.shared.currentToken
-                    print("🔐 DEBUG - Token after registration:")
-                    print("   Response token: \(response.token.prefix(20))...")
-                    print("   Stored token: \(storedToken?.prefix(20) ?? "NIL")...")
-                    print("   Token matches: \(response.token == storedToken)")
-                    
-                    successMessage = "✅ Account created!\n\nToken: \(response.token.prefix(20))...\n\nNow tap 'Complete Test Profile' below."
+                    #if DEBUG
+                    print("🔐 Token stored successfully after registration")
+                    #endif
+
+                    successMessage = "✅ Account created!\n\nNow tap 'Complete Test Profile' below."
                     isRegistering = false
                     showSetupOption = true  // Show the setup button
                 }

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AuthView: View {
     @State private var isRegistering = false
-    
+
     var body: some View {
         NavigationStack {
             LoginView(isRegistering: $isRegistering)
@@ -10,6 +10,7 @@ struct AuthView: View {
                     RegisterView(isRegistering: $isRegistering)
                 }
         }
+        .animation(.easeInOut(duration: 0.35), value: isRegistering)
     }
 }
 

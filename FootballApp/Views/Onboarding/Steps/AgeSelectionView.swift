@@ -28,7 +28,7 @@ struct AgeSelectionView: View {
                 selection += 1
             }
         } content: {
-            Picker("Age", selection: ageBinding) {
+            Picker("onboarding.age.picker".localized, selection: ageBinding) {
                 ForEach(16...100, id: \.self) { age in
                     Text("\(age)").tag(age)
                 }

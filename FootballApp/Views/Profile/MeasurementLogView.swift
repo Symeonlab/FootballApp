@@ -21,33 +21,33 @@ struct MeasurementLogView: View {
     @State private var notes = ""
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
-                Section(header: Text("Date")) {
-                    DatePicker("Date", selection: $date, displayedComponents: .date)
+                Section(header: Text("measurement.date".localizedString)) {
+                    DatePicker("measurement.date".localizedString, selection: $date, displayedComponents: .date)
                 }
-                
-                Section(header: Text("Measurements")) {
+
+                Section(header: Text("measurement.measurements".localizedString)) {
                     HStack {
-                        TextField("Weight", text: $weight).keyboardType(.decimalPad)
+                        TextField("measurement.weight".localizedString, text: $weight).keyboardType(.decimalPad)
                         Text("kg").foregroundColor(.secondary)
                     }
                     HStack {
-                        TextField("Waist", text: $waist).keyboardType(.decimalPad)
+                        TextField("measurement.waist".localizedString, text: $waist).keyboardType(.decimalPad)
                         Text("cm").foregroundColor(.secondary)
                     }
                     HStack {
-                        TextField("Chest", text: $chest).keyboardType(.decimalPad)
+                        TextField("measurement.chest".localizedString, text: $chest).keyboardType(.decimalPad)
                         Text("cm").foregroundColor(.secondary)
                     }
                     HStack {
-                        TextField("Hips", text: $hips).keyboardType(.decimalPad)
+                        TextField("measurement.hips".localizedString, text: $hips).keyboardType(.decimalPad)
                         Text("cm").foregroundColor(.secondary)
                     }
                 }
-                
-                Section(header: Text("Notes")) {
-                    TextField("Mood (e.g., Energized, Tired)", text: $mood)
+
+                Section(header: Text("measurement.notes".localizedString)) {
+                    TextField("measurement.mood".localizedString, text: $mood)
                     TextEditor(text: $notes)
                         .frame(height: 100)
                 }
@@ -58,14 +58,14 @@ struct MeasurementLogView: View {
                     }
                 }
             }
-            .navigationTitle("Log Progress")
+            .navigationTitle("measurement.log_progress".localizedString)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    Button("common.cancel".localizedString) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button("common.save".localizedString) {
                         saveProgress()
                     }
                     .disabled(viewModel.isLoading)

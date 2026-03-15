@@ -2,7 +2,9 @@
 //  ColorExtensions.swift
 //  FootballApp
 //
-//  Centralized Color extensions to avoid duplicate declarations
+//  Centralized Color extensions for the app
+//  - Hex initialization
+//  - Named purple colors for animated backgrounds
 //
 
 import SwiftUI
@@ -35,37 +37,12 @@ extension Color {
             opacity: Double(a) / 255
         )
     }
+
+    // MARK: - Named Purple Colors (for DarkPurpleAnimatedBackground)
+    static let deepPurple = Color(red: 0.23, green: 0.07, blue: 0.36)
+    static let darkPurple = Color(red: 0.15, green: 0.05, blue: 0.25)
+    static let lightPurple = Color(red: 0.62, green: 0.40, blue: 0.82)
 }
 
-// MARK: - App Theme Colors
-// Centralized color definitions for the app
-extension Color {
-    struct AppTheme {
-        // Primary Colors
-        static let primary = Color(hex: "4338CA") // Indigo
-        static let accent = Color(hex: "7C3AED") // Purple
-        
-        // Background Colors
-        static let backgroundDark = Color(hex: "0A0A12")
-        static let backgroundMedium = Color(hex: "12121F")
-        static let backgroundLight = Color(hex: "0F0F1A")
-        
-        // Text Colors
-        static let textPrimary = Color.white
-        static let textSecondary = Color(hex: "9CA3AF")
-        
-        // Additional Colors
-        static let success = Color(hex: "10B981")
-        static let warning = Color(hex: "F59E0B")
-        static let error = Color(hex: "EF4444")
-    }
-    
-    // Convenience static properties for easier access
-    static let appPrimary = AppTheme.primary
-    static let appAccent = AppTheme.accent
-    static let appBackgroundDark = AppTheme.backgroundDark
-    static let appBackgroundMedium = AppTheme.backgroundMedium
-    static let appBackgroundLight = AppTheme.backgroundLight
-    static let appTextPrimary = AppTheme.textPrimary
-    static let appTextSecondary = AppTheme.textSecondary
-}
+// NOTE: Main color theme is defined in Color+Theme.swift as Color.theme
+// Use Color.theme.primary, Color.theme.accent, etc. for app-wide colors

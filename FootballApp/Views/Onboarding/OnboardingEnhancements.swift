@@ -137,7 +137,7 @@ struct ModernOnboardingProgressHeader: View {
                 
                 // Skip button
                 Button(action: onSkip) {
-                    Text("Skip")
+                    Text("common.skip".localizedString)
                         .font(.subheadline.weight(.semibold))
                         .foregroundColor(.white.opacity(0.8))
                         .padding(.horizontal, 16)
@@ -253,11 +253,11 @@ struct ModernOnboardingLoadingView: View {
             }
             
             VStack(spacing: 12) {
-                Text("Preparing Your Journey")
+                Text("common.preparing_journey".localizedString)
                     .font(.title2.bold())
                     .foregroundColor(.white)
-                
-                Text("Setting up your personalized experience...")
+
+                Text("loading.processing".localizedString)
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.8))
                     .multilineTextAlignment(.center)
@@ -302,7 +302,7 @@ struct ModernOnboardingErrorView: View {
             .modifier(OnboardingShakeEffect(shakes: shake ? 2 : 0))
             
             VStack(spacing: 12) {
-                Text("Connection Error")
+                Text("error.connection".localizedString)
                     .font(.title.bold())
                     .foregroundColor(.white)
                 
@@ -319,7 +319,7 @@ struct ModernOnboardingErrorView: View {
             }) {
                 HStack(spacing: 12) {
                     Image(systemName: "arrow.clockwise")
-                    Text("Try Again")
+                    Text("common.retry".localizedString)
                 }
                 .font(.headline)
                 .foregroundColor(.white)

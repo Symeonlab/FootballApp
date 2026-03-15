@@ -16,11 +16,12 @@ enum AppState {
     case loading
     case authentication
     case onboarding
+    case updateWorkoutType  // Re-do onboarding (skip personal info) to update workout preferences
     case mainApp
 }
 
 class AuthViewModel: ObservableObject {
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Dipodi", category: "AuthViewModel")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "DiPODDI", category: "AuthViewModel")
     
     // @Published properties will update your UI
     @Published var appState: AppState = .authentication
@@ -83,7 +84,7 @@ class AuthViewModel: ObservableObject {
                 await MainActor.run {
                     self.isLoading = false
                     self.logger.error("Registration failed: \(error.localizedDescription)")
-                    self.errorMessage = (error as? APIError)?.message ?? "Registration failed."
+                    self.errorMessage = (error as? APIError)?.message ?? "auth.error.registration_failed".localizedString
                 }
             }
         }
@@ -112,7 +113,7 @@ class AuthViewModel: ObservableObject {
                 await MainActor.run {
                     self.isLoading = false
                     self.logger.error("Login failed: \(error.localizedDescription)")
-                    self.errorMessage = (error as? APIError)?.message ?? "Invalid email or password."
+                    self.errorMessage = (error as? APIError)?.message ?? "auth.error.invalid_credentials".localizedString
                 }
             }
         }
@@ -141,7 +142,7 @@ class AuthViewModel: ObservableObject {
                 await MainActor.run {
                     self.isLoading = false
                     self.logger.error("Social login failed: \(error.localizedDescription)")
-                    self.errorMessage = "Social login failed. Please try again."
+                    self.errorMessage = "auth.error.social_login_failed".localizedString
                 }
             }
         }

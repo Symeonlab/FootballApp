@@ -72,7 +72,7 @@ fileprivate struct HeightSelectionView: View {
             VStack {
                 Text(String(format: "%.0f cm", heightBinding.wrappedValue))
                     .font(.system(size: 48, weight: .bold))
-                Picker("Height", selection: heightBinding) {
+                Picker("onboarding.height.picker".localized, selection: heightBinding) {
                     ForEach(100...250, id: \.self) { h in
                         Text("\(h) cm").tag(Double(h))
                     }

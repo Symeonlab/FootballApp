@@ -13,7 +13,7 @@ import OSLog
 final class ErrorLogger {
     static let shared = ErrorLogger()
     
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.dipodi.app", category: "ErrorLogger")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.dipoddi.app", category: "ErrorLogger")
     private let fileManager = FileManager.default
     private var logFileURL: URL?
     
@@ -39,7 +39,7 @@ final class ErrorLogger {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: Date())
-        logFileURL = logsDirectory.appendingPathComponent("dipodi-\(dateString).log")
+        logFileURL = logsDirectory.appendingPathComponent("dipoddi-\(dateString).log")
     }
     
     // MARK: - Public Logging Methods

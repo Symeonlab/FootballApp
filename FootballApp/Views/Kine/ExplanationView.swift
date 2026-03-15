@@ -43,7 +43,7 @@ struct ExplanationSheet: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     // Hero Icon
@@ -73,7 +73,7 @@ struct ExplanationSheet: View {
                     
                     // Description
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("info.about_this_feature".localized)
+                        Text("info.about_this_feature".localizedString)
                             .font(.headline)
                             .foregroundColor(Color.theme.textPrimary)
                         
@@ -87,7 +87,7 @@ struct ExplanationSheet: View {
                     // Tips
                     if !tipKeys.isEmpty {
                         VStack(alignment: .leading, spacing: 16) {
-                            Label("info.tips".localized, systemImage: "star.fill")
+                            Label("info.tips".localizedString, systemImage: "star.fill")
                                 .font(.headline)
                                 .foregroundColor(Color.theme.primary)
                                 .padding(.horizontal, 24)
@@ -184,7 +184,7 @@ struct FeatureTooltip: View {
                 }
                 
                 Button(action: action) {
-                    Text("common.learn_more".localized) // 10. Use a key
+                    Text("common.learn_more".localizedString) // 10. Use a key
                         .font(.subheadline.weight(.semibold))
                         .foregroundColor(Color.theme.primary)
                         .frame(maxWidth: .infinity)

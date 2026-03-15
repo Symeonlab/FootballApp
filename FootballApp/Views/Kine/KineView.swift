@@ -13,16 +13,19 @@ struct KineView: View {
     // 1. Use the new API-driven ViewModel
     @EnvironmentObject var viewModel: KineViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
-    
+
     // Logger for KineView
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.app", category: "KineView")
-    
+
     @State private var selectedCategory: KineCategoryType = .mobility
     @State private var searchText: String = ""
     @State private var showOnlyFavorites: Bool = false
     @State private var sortMode: SortMode = .recommended
     @State private var showReels: Bool = false
     @State private var showQuickTips: Bool = false
+    @State private var selectedStoryExercise: KineExercise?
+    @State private var showStoryDetail: Bool = false
+    @State private var cachedRecommendedExercises: [KineExercise] = []
 
     private enum SortMode: String, CaseIterable, Identifiable {
         case recommended, name
@@ -87,101 +90,133 @@ struct KineView: View {
     private var totalExercisesCount: Int {
         exerciseGroups.flatMap { $0.exercises }.count
     }
+
+    // Recommended exercises - favorites + random selection for variety
+    // Cached to avoid re-randomizing on every state update
+    private func updateRecommendedExercises() {
+        let allExercises = viewModel.allExercises
+        guard !allExercises.isEmpty else {
+            cachedRecommendedExercises = []
+            return
+        }
+
+        // Get favorites first
+        let favorites = allExercises.filter { viewModel.isFavorite($0.id) }
+
+        // Get some random exercises for variety (excluding favorites)
+        let nonFavorites = allExercises.filter { !viewModel.isFavorite($0.id) }
+        let randomPicks = nonFavorites.shuffled().prefix(max(0, 8 - favorites.count))
+
+        // Combine and limit to 8 items
+        cachedRecommendedExercises = Array((favorites + randomPicks).prefix(8))
+    }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 // Dark purple animated background
                 DarkPurpleAnimatedBackground()
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                    // Compact search bar at top - push content higher
-                    CompactSearchBar(
-                        searchText: $searchText,
-                        showOnlyFavorites: $showOnlyFavorites
-                    )
+                    // Compact search bar with sort integrated
+                    HStack(spacing: 12) {
+                        CompactSearchBar(
+                            searchText: $searchText,
+                            showOnlyFavorites: $showOnlyFavorites
+                        )
+
+                        // Sort button integrated next to search
+                        Button(action: {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                sortMode = sortMode == .recommended ? .name : .recommended
+                            }
+                            let generator = UIImpactFeedbackGenerator(style: .light)
+                            generator.impactOccurred()
+                        }) {
+                            Image(systemName: sortMode == .recommended ? "arrow.up.arrow.down" : "textformat.abc")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundStyle(sortMode == .name ? Color.appTheme.primary : .secondary)
+                                .frame(width: 50, height: 50)
+                                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                                .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
+                        }
+                    }
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
-                    .padding(.bottom, 12)
-                    
+                    .padding(.bottom, 4)
+
+                    // Category picker directly below search
+                    ModernCategoryPicker(selectedCategory: $selectedCategory)
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 12)
+
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 16) {
-                            // Minimal spacing at top
-                            Color.clear.frame(height: 1)
-                            
-                            // Compact header
-                            CompactRecoveryHeader(
-                                favoriteCount: viewModel.favoriteIDs.count,
-                                totalExercises: totalExercisesCount,
-                                onQuickTipsPressed: {
-                                    withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                                        showQuickTips = true
-                                    }
-                                }
-                            )
-                            .padding(.horizontal)
-                            
-                            // Action buttons row
-                            HStack(spacing: 10) {
-                                if !filteredExercises.isEmpty {
-                                    RecoveryActionButton(
-                                        icon: "play.fill",
-                                        title: "Reels",
-                                        startColor: .blue,
-                                        endColor: .cyan,
-                                        action: {
-                                            withAnimation {
-                                                showReels = true
-                                            }
-                                        }
-                                    )
-                                }
-                                
-                                RecoveryActionButton(
-                                    icon: "arrow.up.arrow.down",
-                                    title: "Sort",
-                                    startColor: .purple,
-                                    endColor: .pink,
-                                    action: {}
-                                )
-                                
-                                RecoveryActionButton(
-                                    icon: "lightbulb.fill",
-                                    title: "Tips",
-                                    startColor: .orange,
-                                    endColor: .yellow,
-                                    action: {
-                                        withAnimation {
-                                            showQuickTips = true
-                                        }
+                            // Recommended Exercises Stories Row
+                            if !cachedRecommendedExercises.isEmpty {
+                                RecommendedExercisesRow(
+                                    exercises: cachedRecommendedExercises,
+                                    favorites: viewModel.favoriteIDs,
+                                    onExerciseTap: { exercise in
+                                        selectedStoryExercise = exercise
+                                        showStoryDetail = true
+                                    },
+                                    onPlayAllTap: {
+                                        showReels = true
                                     }
                                 )
                             }
-                            .padding(.horizontal)
-                            
-                            // Category picker
-                            ModernCategoryPicker(selectedCategory: $selectedCategory)
-                                .padding(.horizontal)
-                            
-                            // Content
+
+                            // Content (exercise groups list)
                             contentSection
                                 .padding(.horizontal)
-                            
-                            // Bottom padding for tab bar
-                            Color.clear.frame(height: 140)
+
+                            // Bottom padding for tab bar + FAB
+                            Color.clear.frame(height: 160)
                         }
                     }
                     .scrollIndicators(.hidden)
                 }
+
+                // Floating Action Button for Reels - bottom right
+                if !filteredExercises.isEmpty {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            GradientFloatingActionButton(
+                                icon: "play.rectangle.on.rectangle.fill",
+                                label: "kine.reels".localizedString,
+                                gradientColors: [.blue, .cyan],
+                                action: {
+                                    showReels = true
+                                }
+                            )
+                        }
+                        .padding(.trailing, 20)
+                        .padding(.bottom, 100)
+                    }
+                }
             }
-            .navigationTitle("Recovery - Dipodi")
+            .navigationTitle("kine.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Recovery")
+                    Text("kine.title".localizedString)
                         .font(.headline.bold())
                         .foregroundColor(.primary)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        withAnimation {
+                            showQuickTips = true
+                        }
+                    } label: {
+                        Image(systemName: "lightbulb.fill")
+                            .font(.system(size: 16))
+                            .foregroundColor(.orange)
+                    }
                 }
             }
             .fullScreenCover(isPresented: $showReels) {
@@ -191,9 +226,23 @@ struct KineView: View {
             .sheet(isPresented: $showQuickTips) {
                 EnhancedRecoveryTipsView()
             }
-            .onAppear {
-                logger.info("👁️ KineView: View appeared")
-                
+            .fullScreenCover(item: $selectedStoryExercise) { exercise in
+                KineExerciseVideoView(exercise: exercise)
+            }
+            .task {
+                logger.info("👁️ KineView: Task triggered")
+
+                // Only fetch if no data
+                if viewModel.allExercises.isEmpty {
+                    logger.info("📥 KineView: Fetching kine data...")
+                    await viewModel.fetchKineDataAsync()
+                }
+
+                // Cache recommended exercises once on appear
+                if cachedRecommendedExercises.isEmpty {
+                    updateRecommendedExercises()
+                }
+
                 // Log current state
                 logger.info("📊 KineView: Current data state:")
                 logger.info("   - Categories: \(viewModel.categories.count)")
@@ -201,37 +250,34 @@ struct KineView: View {
                 logger.info("   - Exercise groups: \(viewModel.exerciseGroups.count)")
                 logger.info("   - Favorites: \(viewModel.favoriteIDs.count)")
                 logger.info("   - Selected category: \(String(describing: selectedCategory))")
-                logger.info("   - Is loading: \(viewModel.isLoading)")
-                
-                // Log filtered state
-                logger.info("🔍 KineView: Filtered state:")
-                logger.info("   - Filtered groups: \(filteredGroups.count)")
-                logger.info("   - Filtered exercises: \(filteredExercises.count)")
-                logger.info("   - Search text: '\(searchText)'")
-                logger.info("   - Show only favorites: \(showOnlyFavorites)")
-                
+
                 // Log if data is shown correctly
                 if !viewModel.allExercises.isEmpty {
                     logger.info("✅ KineView: Exercises loaded and displayed successfully")
-                    
+
                     // Log category breakdown
                     for group in exerciseGroups {
                         logger.debug("   - \(group.groupName): \(group.exercises.count) exercises")
                     }
                 } else if let error = viewModel.errorMessage {
                     logger.error("❌ KineView: Error state - \(error)")
-                } else if viewModel.isLoading {
-                    logger.debug("⏳ KineView: Still loading...")
                 } else {
-                    logger.warning("⚠️ KineView: No exercises loaded (no error)")
+                    logger.warning("⚠️ KineView: No exercises loaded")
                 }
+            }
+            .refreshable {
+                logger.info("🔄 KineView: Pull-to-refresh triggered")
+                await viewModel.fetchKineDataAsync()
             }
             .onChange(of: viewModel.allExercises) { oldValue, newValue in
                 logger.info("🔄 KineView: Exercises changed - \(oldValue.count) -> \(newValue.count)")
-                
+
                 if !newValue.isEmpty {
                     logger.info("✅ KineView: Successfully displaying \(newValue.count) exercises across \(viewModel.categories.count) categories")
                 }
+
+                // Refresh cached recommended exercises when data changes
+                updateRecommendedExercises()
             }
             .onChange(of: viewModel.isLoading) { oldValue, newValue in
                 logger.info("⏳ KineView: Loading state changed - \(oldValue) -> \(newValue)")
@@ -242,7 +288,7 @@ struct KineView: View {
                 }
             }
         }
-        .navigationViewStyle(.stack)
+
     }
     
     // MARK: - Body Components
@@ -315,7 +361,7 @@ struct KineView: View {
             HStack(spacing: 6) {
                 Image(systemName: "arrow.up.arrow.down")
                     .font(.body.weight(.semibold))
-                Text("Sort")
+                Text("kine.sort".localizedString)
                     .font(.subheadline.weight(.semibold))
             }
             .foregroundStyle(.primary)
@@ -357,9 +403,9 @@ struct KineView: View {
                     .foregroundStyle(.secondary)
                     .font(.body)
                 
-                TextField("Search exercises", text: $searchText)
+                TextField("kine.search_exercises".localizedString, text: $searchText)
                     .textFieldStyle(.plain)
-                
+
                 if !searchText.isEmpty {
                     Button(action: { searchText = "" }) {
                         Image(systemName: "xmark.circle.fill")
@@ -404,35 +450,33 @@ struct KineView: View {
     }
     
     private var exerciseListView: some View {
-        ScrollView {
-            LazyVStack(spacing: 16) {
-                ForEach(Array(filteredGroups.enumerated()), id: \.element.id) { index, group in
-                    VStack(alignment: .leading, spacing: 12) {
-                        // Group Header
-                        Text(group.groupName)
-                            .font(.title3.bold())
-                            .foregroundColor(Color.theme.textPrimary)
-                            .padding(.horizontal)
-                            .padding(.top, 8)
-                        
-                        // Exercises
-                        ForEach(Array(group.exercises.enumerated()), id: \.element.id) { exerciseIndex, exercise in
-                            EnhancedExerciseCard(
-                                exercise: exercise,
-                                isFavorite: viewModel.isFavorite(exerciseID: exercise.id),
-                                onFavoriteTap: {
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                        viewModel.toggleFavorite(exerciseID: exercise.id)
-                                    }
+        LazyVStack(spacing: 16) {
+            ForEach(Array(filteredGroups.enumerated()), id: \.element.id) { index, group in
+                VStack(alignment: .leading, spacing: 12) {
+                    // Group Header
+                    Text(group.groupName)
+                        .font(.title3.bold())
+                        .foregroundColor(Color.theme.textPrimary)
+                        .padding(.top, 8)
+
+                    // Exercises
+                    ForEach(Array(group.exercises.enumerated()), id: \.element.id) { exerciseIndex, exercise in
+                        EnhancedExerciseCard(
+                            exercise: exercise,
+                            isFavorite: viewModel.isFavorite(exerciseID: exercise.id),
+                            onFavoriteTap: {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    viewModel.toggleFavorite(exerciseID: exercise.id)
+                                    let generator = UIImpactFeedbackGenerator(style: .light)
+                                    generator.impactOccurred()
                                 }
-                            )
-                            .padding(.horizontal)
-                        }
+                            }
+                        )
                     }
                 }
             }
-            .padding(.vertical)
         }
+        .padding(.vertical)
     }
 }
 
@@ -696,7 +740,7 @@ struct RecoveryTipsView: View {
     ]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     // Header Card
@@ -729,11 +773,11 @@ struct RecoveryTipsView: View {
                                 .foregroundColor(.white)
                         }
                         
-                        Text("Recovery Tips")
+                        Text("kine.recovery_tips".localizedString)
                             .font(.system(size: 28, weight: .bold, design: .rounded))
                             .foregroundColor(Color.theme.textPrimary)
-                        
-                        Text("Optimize your recovery process")
+
+                        Text("kine.optimize_recovery".localizedString)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
@@ -1318,7 +1362,7 @@ struct EnhancedKineCategoryPicker: View {
                         Image(systemName: category == .mobility ? "figure.flexibility" : "dumbbell.fill")
                             .font(.subheadline.weight(.semibold))
                         
-                        Text(category == .mobility ? "Mobility" : "Strengthening")
+                        Text(category == .mobility ? "kine.mobility".localizedString : "kine.strengthening".localizedString)
                             .font(.subheadline.weight(.semibold))
                     }
                     .foregroundColor(selectedCategory == category ? .white : Color.theme.textSecondary)
@@ -1461,11 +1505,11 @@ struct EnhancedKineLoadingView: View {
             }
             
             VStack(spacing: 8) {
-                Text("Loading Exercises")
+                Text("kine.loading_exercises".localizedString)
                     .font(.title3.weight(.semibold))
                     .foregroundColor(Color.theme.textPrimary)
-                
-                Text("Preparing your recovery routines...")
+
+                Text("kine.preparing_routines".localizedString)
                     .font(.subheadline)
                     .foregroundColor(Color.theme.textSecondary)
             }
@@ -1516,13 +1560,13 @@ private struct EnhancedEmptyRecoveryState: View {
             }
             
             VStack(spacing: 12) {
-                Text(isFiltered ? "No Results" : "No Exercises")
+                Text(isFiltered ? "kine.no_results".localizedString : "kine.no_exercises".localizedString)
                     .font(.title2.bold())
                     .foregroundColor(Color.theme.textPrimary)
-                
-                Text(isFiltered ? 
-                    "Try adjusting your filters or search" :
-                    "Exercises for \(category == .mobility ? "Mobility" : "Strengthening") will appear here"
+
+                Text(isFiltered ?
+                    "kine.try_adjusting_filters".localizedString :
+                    String(format: "kine.exercises_will_appear".localizedString, category == .mobility ? "kine.mobility".localizedString : "kine.strengthening".localizedString)
                 )
                 .font(.body)
                 .foregroundColor(Color.theme.textSecondary)
@@ -1540,111 +1584,209 @@ private struct EnhancedEmptyRecoveryState: View {
 
 // Enhanced Exercise List (inlined in main view)
 
-// Enhanced Exercise Card
+// Enhanced Exercise Card with Video Thumbnail
 struct EnhancedExerciseCard: View {
     let exercise: KineExercise
     let isFavorite: Bool
     let onFavoriteTap: () -> Void
-    
+
     @State private var isPressed = false
     @State private var showVideo = false
-    
+
+    // Extract YouTube video ID for thumbnail
+    private var youtubeVideoID: String? {
+        guard let urlString = exercise.video_url, !urlString.isEmpty else { return nil }
+
+        // Handle youtu.be/VIDEO_ID format
+        if urlString.contains("youtu.be/") {
+            if let url = URL(string: urlString) {
+                return url.lastPathComponent
+            }
+        }
+
+        // Handle youtube.com/shorts/VIDEO_ID format
+        if urlString.contains("/shorts/") {
+            if let url = URL(string: urlString) {
+                return url.lastPathComponent
+            }
+        }
+
+        // Handle youtube.com/watch?v=VIDEO_ID format
+        if let url = URL(string: urlString),
+           let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+           let queryItems = components.queryItems,
+           let videoID = queryItems.first(where: { $0.name == "v" })?.value {
+            return videoID
+        }
+
+        // Handle youtube.com/embed/VIDEO_ID format
+        if urlString.contains("/embed/") {
+            if let url = URL(string: urlString) {
+                return url.lastPathComponent
+            }
+        }
+
+        return nil
+    }
+
+    // YouTube thumbnail URL
+    private var thumbnailURL: URL? {
+        guard let videoID = youtubeVideoID else { return nil }
+        // Use maxresdefault for high quality, fallback to hqdefault
+        return URL(string: "https://img.youtube.com/vi/\(videoID)/mqdefault.jpg")
+    }
+
     var body: some View {
         Button(action: {
             showVideo = true
             let generator = UIImpactFeedbackGenerator(style: .medium)
             generator.impactOccurred()
         }) {
-            HStack(spacing: 16) {
-                // Video Thumbnail/Icon
+            HStack(spacing: 14) {
+                // Video Thumbnail with Play Overlay
                 ZStack {
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(
-                            LinearGradient(
-                                colors: [Color.theme.primary.opacity(0.2), Color.theme.accent.opacity(0.15)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
+                    if let thumbnailURL = thumbnailURL {
+                        // YouTube thumbnail
+                        AsyncImage(url: thumbnailURL) { phase in
+                            switch phase {
+                            case .empty:
+                                thumbnailPlaceholder
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 90, height: 70)
+                                    .clipped()
+                            case .failure:
+                                thumbnailPlaceholder
+                            @unknown default:
+                                thumbnailPlaceholder
+                            }
+                        }
+                        .frame(width: 90, height: 70)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    } else {
+                        thumbnailPlaceholder
+                    }
+
+                    // Play button overlay
+                    Circle()
+                        .fill(.black.opacity(0.4))
+                        .frame(width: 36, height: 36)
+                        .overlay(
+                            Image(systemName: "play.fill")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(.white)
+                                .offset(x: 1)
                         )
-                        .frame(width: 70, height: 70)
-                    
-                    Image(systemName: "play.circle.fill")
-                        .font(.system(size: 32))
-                        .foregroundColor(.white)
                         .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
+
+                    // Has video indicator
+                    if youtubeVideoID != nil {
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Image(systemName: "video.fill")
+                                    .font(.system(size: 8, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(4)
+                                    .background(Color.red)
+                                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                            }
+                        }
+                        .frame(width: 90, height: 70)
+                        .padding(4)
+                    }
                 }
-                
+                .frame(width: 90, height: 70)
+
                 // Exercise Info
                 VStack(alignment: .leading, spacing: 6) {
                     Text(exercise.name)
-                        .font(.headline)
+                        .font(.subheadline.weight(.semibold))
                         .foregroundColor(Color.theme.textPrimary)
                         .lineLimit(2)
-                    
-                    HStack(spacing: 8) {
-                        Label(exercise.category, systemImage: "tag.fill")
-                            .font(.caption)
-                            .foregroundColor(Color.theme.textSecondary)
-                        
+                        .multilineTextAlignment(.leading)
+
+                    HStack(spacing: 6) {
+                        // Sub-category pill
                         if !exercise.sub_category.isEmpty {
-                            Text("•")
-                                .foregroundColor(Color.theme.textSecondary)
                             Text(exercise.sub_category)
-                                .font(.caption)
-                                .foregroundColor(Color.theme.textSecondary)
+                                .font(.system(size: 10, weight: .medium))
+                                .foregroundColor(.white.opacity(0.9))
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.theme.primary.opacity(0.8))
+                                )
                         }
+
+                        Spacer()
                     }
                 }
-                
-                Spacer()
-                
+
                 // Favorite Button
                 Button(action: {
                     onFavoriteTap()
+                    let generator = UIImpactFeedbackGenerator(style: .light)
+                    generator.impactOccurred()
                 }) {
-                    Image(systemName: isFavorite ? "star.fill" : "star")
-                        .font(.title3)
-                        .foregroundColor(isFavorite ? .yellow : Color.theme.textSecondary)
-                        .frame(width: 44, height: 44)
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(isFavorite ? .red : Color.theme.textSecondary.opacity(0.6))
+                        .frame(width: 40, height: 40)
                         .background(
                             Circle()
-                                .fill(isFavorite ? Color.yellow.opacity(0.15) : Color.theme.background)
+                                .fill(isFavorite ? Color.red.opacity(0.15) : Color.theme.background.opacity(0.5))
                         )
                 }
                 .buttonStyle(.plain)
             }
-            .padding(16)
+            .padding(12)
             .background(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(Color.theme.surface)
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(.ultraThinMaterial)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
                             .strokeBorder(
                                 LinearGradient(
-                                    colors: [Color.theme.primary.opacity(0.1), Color.theme.accent.opacity(0.1)],
+                                    colors: [Color.white.opacity(0.2), Color.white.opacity(0.05)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
                                 lineWidth: 1
                             )
                     )
-                    .shadow(color: .black.opacity(0.06), radius: 12, x: 0, y: 6)
+                    .shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 5)
             )
-            .scaleEffect(isPressed ? 0.98 : 1.0)
+            .scaleEffect(isPressed ? 0.97 : 1.0)
         }
         .buttonStyle(.plain)
         .pressEvents(onPress: {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+            withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
                 isPressed = true
             }
         }, onRelease: {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+            withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
                 isPressed = false
             }
         })
         .fullScreenCover(isPresented: $showVideo) {
             KineExerciseVideoView(exercise: exercise)
         }
+    }
+
+    // Placeholder when no thumbnail — uses skeleton shimmer while loading
+    private var thumbnailPlaceholder: some View {
+        SkeletonView(height: 70, cornerRadius: 12)
+            .frame(width: 90, height: 70)
+            .overlay(
+                Image(systemName: "figure.strengthtraining.traditional")
+                    .font(.title2)
+                    .foregroundColor(.white.opacity(0.4))
+            )
     }
 }
 
@@ -1686,9 +1828,9 @@ struct CompactSearchBar: View {
                     .foregroundStyle(.secondary)
                     .font(.body)
                 
-                TextField("Search exercises", text: $searchText)
+                TextField("kine.search_exercises".localizedString, text: $searchText)
                     .textFieldStyle(.plain)
-                
+
                 if !searchText.isEmpty {
                     Button(action: { searchText = "" }) {
                         Image(systemName: "xmark.circle.fill")
@@ -1736,7 +1878,7 @@ struct CompactRecoveryHeader: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("\(favoriteCount)")
                             .font(.title2.bold())
-                        Text("Favorites")
+                        Text("kine.favorites".localizedString)
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -1745,17 +1887,17 @@ struct CompactRecoveryHeader: View {
                 .padding(16)
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
                 .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
-                
+
                 // Total exercises
                 HStack(spacing: 8) {
                     Image(systemName: "figure.strengthtraining.functional")
                         .foregroundColor(.blue)
                         .font(.title3)
-                    
+
                     VStack(alignment: .leading, spacing: 2) {
                         Text("\(totalExercises)")
                             .font(.title2.bold())
-                        Text("Exercises")
+                        Text("kine.exercises".localizedString)
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -1819,7 +1961,7 @@ struct ModernCategoryPicker: View {
                         Image(systemName: category == .mobility ? "figure.flexibility" : "figure.strengthtraining.functional")
                             .font(.system(size: 24, weight: selectedCategory == category ? .semibold : .regular))
                         
-                        Text(category == .mobility ? "Mobility" : "Strengthening")
+                        Text(category == .mobility ? "kine.mobility".localizedString : "kine.strengthening".localizedString)
                             .font(.system(size: 13, weight: selectedCategory == category ? .semibold : .regular))
                     }
                     .foregroundColor(selectedCategory == category ? .white : .secondary)
@@ -1855,17 +1997,19 @@ struct ModernCategoryPicker: View {
 struct EnhancedRecoveryTipsView: View {
     @Environment(\.dismiss) private var dismiss
     
-    let tips = [
-        ("figure.walk", "Stay Active", "Light movement aids recovery"),
-        ("drop.fill", "Hydrate", "Drink water before, during, and after"),
-        ("bed.double.fill", "Rest Well", "Quality sleep accelerates healing"),
-        ("fork.knife", "Eat Protein", "Support muscle repair with nutrition"),
-        ("figure.cooldown", "Stretch Daily", "Maintain flexibility and prevent injury"),
-        ("heart.fill", "Listen to Your Body", "Rest when you need it")
-    ]
+    var tips: [(String, String, String)] {
+        [
+            ("figure.walk", "kine.stay_active".localizedString, "kine.light_movement".localizedString),
+            ("drop.fill", "kine.hydrate".localizedString, "kine.drink_water".localizedString),
+            ("bed.double.fill", "kine.rest_well".localizedString, "kine.quality_sleep".localizedString),
+            ("fork.knife", "kine.eat_protein".localizedString, "kine.support_muscle".localizedString),
+            ("figure.cooldown", "kine.stretch_daily".localizedString, "kine.maintain_flexibility".localizedString),
+            ("heart.fill", "kine.listen_body".localizedString, "kine.rest_when_needed".localizedString)
+        ]
+    }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     // Close Button
@@ -1926,12 +2070,243 @@ struct EnhancedRecoveryTipsView: View {
                 .padding()
             }
             .background(Color.theme.background.ignoresSafeArea())
-            .navigationTitle("Recovery Tips")
+            .navigationTitle("kine.recovery_tips".localized)
             .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
 
+// MARK: - Recommended Exercises Story Row
+struct RecommendedExercisesRow: View {
+    let exercises: [KineExercise]
+    let favorites: Set<Int>
+    let onExerciseTap: (KineExercise) -> Void
+    let onPlayAllTap: () -> Void
 
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Header
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("kine.recommended".localizedString)
+                        .font(.headline.bold())
+                        .foregroundColor(.white)
 
+                    Text("kine.based_on_favorites".localizedString)
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.6))
+                }
 
+                Spacer()
+
+                Button(action: onPlayAllTap) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "play.fill")
+                            .font(.caption.bold())
+                        Text("kine.play_all".localizedString)
+                            .font(.caption.bold())
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color.theme.primary, Color.theme.accent],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                    )
+                }
+            }
+            .padding(.horizontal, 16)
+
+            // Stories ScrollView
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 14) {
+                    ForEach(exercises) { exercise in
+                        ExerciseStoryBubble(
+                            exercise: exercise,
+                            isFavorite: favorites.contains(exercise.id),
+                            onTap: { onExerciseTap(exercise) }
+                        )
+                    }
+                }
+                .padding(.horizontal, 16)
+            }
+        }
+        .padding(.vertical, 12)
+    }
+}
+
+// MARK: - Exercise Story Bubble with Video Thumbnail
+struct ExerciseStoryBubble: View {
+    let exercise: KineExercise
+    let isFavorite: Bool
+    let onTap: () -> Void
+
+    @State private var isPressed = false
+
+    // Extract YouTube video ID for thumbnail
+    private var youtubeVideoID: String? {
+        guard let urlString = exercise.video_url, !urlString.isEmpty else { return nil }
+
+        if urlString.contains("youtu.be/") {
+            if let url = URL(string: urlString) { return url.lastPathComponent }
+        }
+        if urlString.contains("/shorts/") {
+            if let url = URL(string: urlString) { return url.lastPathComponent }
+        }
+        if let url = URL(string: urlString),
+           let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+           let queryItems = components.queryItems,
+           let videoID = queryItems.first(where: { $0.name == "v" })?.value {
+            return videoID
+        }
+        if urlString.contains("/embed/") {
+            if let url = URL(string: urlString) { return url.lastPathComponent }
+        }
+        return nil
+    }
+
+    private var thumbnailURL: URL? {
+        guard let videoID = youtubeVideoID else { return nil }
+        return URL(string: "https://img.youtube.com/vi/\(videoID)/mqdefault.jpg")
+    }
+
+    var body: some View {
+        Button(action: onTap) {
+            VStack(spacing: 8) {
+                // Circle with gradient border and thumbnail
+                ZStack {
+                    // Gradient ring
+                    Circle()
+                        .stroke(
+                            LinearGradient(
+                                colors: isFavorite
+                                    ? [.yellow, .orange]
+                                    : [Color.theme.primary, Color.theme.accent],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 3
+                        )
+                        .frame(width: 72, height: 72)
+
+                    // Inner circle with thumbnail or icon
+                    if let thumbnailURL = thumbnailURL {
+                        AsyncImage(url: thumbnailURL) { phase in
+                            switch phase {
+                            case .empty:
+                                placeholderCircle
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 64, height: 64)
+                                    .clipShape(Circle())
+                            case .failure:
+                                placeholderCircle
+                            @unknown default:
+                                placeholderCircle
+                            }
+                        }
+                        .frame(width: 64, height: 64)
+                    } else {
+                        placeholderCircle
+                    }
+
+                    // Play indicator
+                    if youtubeVideoID != nil {
+                        Circle()
+                            .fill(.black.opacity(0.3))
+                            .frame(width: 28, height: 28)
+                            .overlay(
+                                Image(systemName: "play.fill")
+                                    .font(.system(size: 10, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .offset(x: 1)
+                            )
+                    }
+
+                    // Favorite indicator
+                    if isFavorite {
+                        Circle()
+                            .fill(.red)
+                            .frame(width: 18, height: 18)
+                            .overlay(
+                                Image(systemName: "heart.fill")
+                                    .font(.system(size: 9, weight: .bold))
+                                    .foregroundColor(.white)
+                            )
+                            .offset(x: 24, y: -24)
+                    }
+                }
+
+                // Exercise name (truncated)
+                Text(exercise.name)
+                    .font(.caption2)
+                    .fontWeight(.medium)
+                    .foregroundColor(.white.opacity(0.9))
+                    .lineLimit(1)
+                    .frame(width: 72)
+            }
+            .scaleEffect(isPressed ? 0.92 : 1.0)
+            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isPressed)
+        }
+        .buttonStyle(.plain)
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in isPressed = true }
+                .onEnded { _ in isPressed = false }
+        )
+    }
+
+    private var placeholderCircle: some View {
+        Circle()
+            .fill(
+                LinearGradient(
+                    colors: [
+                        Color.theme.primary.opacity(0.3),
+                        Color.theme.accent.opacity(0.2)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .frame(width: 64, height: 64)
+            .overlay(
+                Image(systemName: exerciseIcon)
+                    .font(.title2.bold())
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.white, .white.opacity(0.8)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+            )
+    }
+
+    private var exerciseIcon: String {
+        let name = exercise.name.lowercased()
+        if name.contains("stretch") || name.contains("etirement") {
+            return "figure.flexibility"
+        } else if name.contains("squat") || name.contains("leg") {
+            return "figure.strengthtraining.traditional"
+        } else if name.contains("core") || name.contains("plank") || name.contains("gainage") {
+            return "figure.core.training"
+        } else if name.contains("arm") || name.contains("push") {
+            return "figure.arms.open"
+        } else {
+            return "figure.cooldown"
+        }
+    }
+}
+
+// Make KineExercise work with fullScreenCover item binding
+extension KineExercise {
+    // Already conforms to Identifiable via id property
+}

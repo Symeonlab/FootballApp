@@ -11,30 +11,31 @@ struct OnboardingIntroView: View {
     @Binding var selection: Int
     @State private var animateContent = false
     @State private var currentFeature = 0
-    
+    @State private var timer: Timer?
+
     let features = [
         OnboardingFeature(
             icon: "figure.run",
-            title: "Programme d'Entraînement",
-            description: "Créez votre plan personnalisé basé sur votre discipline, niveau et objectifs",
+            title: "onboarding.intro.feature1.title".localizedString,
+            description: "onboarding.intro.feature1.description".localizedString,
             color: Color(hex: "4338CA")
         ),
         OnboardingFeature(
             icon: "leaf.fill",
-            title: "Nutrition Prophétique",
-            description: "Recevez des conseils nutritionnels basés sur la médecine prophétique adaptés à votre métabolisme",
+            title: "onboarding.intro.feature2.title".localizedString,
+            description: "onboarding.intro.feature2.description".localizedString,
             color: Color(hex: "7C3AED")
         ),
         OnboardingFeature(
             icon: "heart.text.square.fill",
-            title: "Suivi Personnalisé",
-            description: "Vos antécédents médicaux et familiaux pour des recommandations sur-mesure",
+            title: "onboarding.intro.feature3.title".localizedString,
+            description: "onboarding.intro.feature3.description".localizedString,
             color: Color(hex: "DB2777")
         ),
         OnboardingFeature(
             icon: "sparkles",
-            title: "Objectifs Réalisables",
-            description: "Définissez et atteignez vos objectifs avec un plan adapté à votre morphologie",
+            title: "onboarding.intro.feature4.title".localizedString,
+            description: "onboarding.intro.feature4.description".localizedString,
             color: Color(hex: "BE185D")
         )
     ]
@@ -46,14 +47,14 @@ struct OnboardingIntroView: View {
                 
                 // App Logo/Icon
                 ZStack {
-                    // Animated rings
+                    // Animated rings using brand colors
                     ForEach(0..<3, id: \.self) { index in
                         Circle()
                             .stroke(
                                 LinearGradient(
                                     colors: [
-                                        features[currentFeature].color.opacity(0.6),
-                                        features[currentFeature].color.opacity(0.2),
+                                        Color(hex: "7B61FF").opacity(0.5),
+                                        Color(hex: "82EEF8").opacity(0.3),
                                         Color.clear
                                     ],
                                     startPoint: .topLeading,
@@ -71,48 +72,35 @@ struct OnboardingIntroView: View {
                                 value: animateContent
                             )
                     }
-                    
-                    // Center icon
-                    ZStack {
-                        Circle()
-                            .fill(.ultraThinMaterial)
-                            .frame(width: 100, height: 100)
-                            .overlay {
-                                Circle()
-                                    .stroke(.white.opacity(0.3), lineWidth: 2)
-                            }
-                        
-                        Image(systemName: features[currentFeature].icon)
-                            .font(.system(size: 40, weight: .semibold))
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [.white, features[currentFeature].color],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .symbolEffect(.bounce, value: currentFeature)
-                    }
+
+                    // App icon (consistent branding)
+                    AppIconView(size: 100)
+                        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                        .shadow(color: Color(hex: "7B61FF").opacity(0.5), radius: 20, x: 0, y: 10)
                 }
                 .scaleEffect(animateContent ? 1 : 0.5)
                 .opacity(animateContent ? 1 : 0)
-                .padding(.bottom, 60)
-                
+                .padding(.bottom, 40)
+
                 // Title
-                VStack(spacing: 16) {
-                    Text("Bienvenue dans")
-                        .font(.title3)
+                VStack(spacing: 12) {
+                    Text("DiPODDI")
+                        .font(.system(size: 34, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+
+                    Text("onboarding.welcome_to".localizedString)
+                        .font(.system(size: 17, weight: .medium))
                         .foregroundColor(.white.opacity(0.8))
-                    
-                    Text("Votre Parcours Santé")
-                        .font(.system(size: 36, weight: .bold, design: .rounded))
+
+                    Text("onboarding.your_health_journey".localizedString)
+                        .font(.system(size: 28, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                 }
                 .opacity(animateContent ? 1 : 0)
                 .offset(y: animateContent ? 0 : 20)
                 .padding(.horizontal, 40)
-                .padding(.bottom, 40)
+                .padding(.bottom, 32)
                 
                 // Feature cards carousel
                 TabView(selection: $currentFeature) {
@@ -141,7 +129,7 @@ struct OnboardingIntroView: View {
                     HStack(spacing: 8) {
                         Image(systemName: "clock.fill")
                             .font(.caption)
-                        Text("5-7 minutes")
+                        Text("onboarding.duration".localizedString)
                             .font(.caption.weight(.semibold))
                     }
                     .foregroundColor(.white.opacity(0.7))
@@ -152,7 +140,7 @@ struct OnboardingIntroView: View {
                             .fill(.ultraThinMaterial)
                     }
                     
-                    Text("Nous allons vous poser quelques questions pour personnaliser votre expérience")
+                    Text("onboarding.will_ask_questions".localizedString)
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.8))
                         .multilineTextAlignment(.center)
@@ -162,40 +150,42 @@ struct OnboardingIntroView: View {
                 
                 Spacer()
                 
-                // Start button
+                // Get Started button
                 Button(action: {
+                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                    generator.impactOccurred()
                     withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
                         selection += 1
                     }
                 }) {
                     HStack(spacing: 12) {
-                        Text("Commencer")
-                            .font(.headline.bold())
-                        
+                        Text("onboarding.get_started".localizedString)
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
+
                         Image(systemName: "arrow.right")
-                            .font(.headline)
+                            .font(.system(size: 16, weight: .bold))
                     }
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
+                    .frame(minHeight: 56)
                     .background {
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
                             .fill(
                                 LinearGradient(
                                     colors: [
-                                        features[currentFeature].color.opacity(0.8),
-                                        features[currentFeature].color.opacity(0.6)
+                                        Color(hex: "7B61FF"),
+                                        Color(hex: "7B61FF").opacity(0.8)
                                     ],
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
                             )
                             .overlay {
-                                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                    .stroke(.white.opacity(0.3), lineWidth: 1)
+                                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                    .stroke(.white.opacity(0.25), lineWidth: 1)
                             }
                     }
-                    .shadow(color: features[currentFeature].color.opacity(0.5), radius: 20, x: 0, y: 10)
+                    .shadow(color: Color(hex: "7B61FF").opacity(0.5), radius: 20, x: 0, y: 10)
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 40)
@@ -207,13 +197,17 @@ struct OnboardingIntroView: View {
             withAnimation(.spring(response: 0.8, dampingFraction: 0.75).delay(0.2)) {
                 animateContent = true
             }
-            
+
             // Auto-rotate features
-            Timer.scheduledTimer(withTimeInterval: 3.5, repeats: true) { _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 3.5, repeats: true) { _ in
                 withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
                     currentFeature = (currentFeature + 1) % features.count
                 }
             }
+        }
+        .onDisappear {
+            timer?.invalidate()
+            timer = nil
         }
     }
 }

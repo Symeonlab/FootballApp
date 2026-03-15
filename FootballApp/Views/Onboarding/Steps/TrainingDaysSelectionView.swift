@@ -8,6 +8,19 @@ struct TrainingDaysSelectionView: View {
     @State private var matchDay: String = "AUCUN"
     
     private var allDays: [String] = ["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI", "DIMANCHE"]
+
+    private func localizedDayName(for day: String) -> String {
+        switch day {
+        case "LUNDI":    return "common.days.monday".localizedString
+        case "MARDI":    return "common.days.tuesday".localizedString
+        case "MERCREDI": return "common.days.wednesday".localizedString
+        case "JEUDI":    return "common.days.thursday".localizedString
+        case "VENDREDI": return "common.days.friday".localizedString
+        case "SAMEDI":   return "common.days.saturday".localizedString
+        case "DIMANCHE": return "common.days.sunday".localizedString
+        default:         return day
+        }
+    }
     
     init(viewModel: OnboardingViewModel, selection: Binding<Int>) {
         self.viewModel = viewModel
@@ -36,7 +49,7 @@ struct TrainingDaysSelectionView: View {
                     
                     ForEach(allDays, id: \.self) { day in
                         MultiSelectionButton(
-                            title: String(localized: LocalizedStringResource(stringLiteral: day)),
+                            title: localizedDayName(for: day),
                             isSelected: days.contains(day),
                             action: {
                                 if days.contains(day) {
@@ -54,10 +67,10 @@ struct TrainingDaysSelectionView: View {
                         .font(.headline)
                         .foregroundColor(.secondary)
                     
-                    Picker("Match Day", selection: $matchDay) {
-                        Text("AUCUN").tag("AUCUN")
+                    Picker("onboarding.match_day".localized, selection: $matchDay) {
+                        Text("common.none".localizedString).tag("AUCUN")
                         ForEach(allDays, id: \.self) { day in
-                            Text(String(localized: LocalizedStringResource(stringLiteral: day))).tag(day)
+                            Text(localizedDayName(for: day)).tag(day)
                         }
                     }
                     .pickerStyle(.menu)

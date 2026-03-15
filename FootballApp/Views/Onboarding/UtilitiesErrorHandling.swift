@@ -90,7 +90,7 @@ struct ErrorAlertView: View {
             
             // Error Message
             VStack(spacing: 8) {
-                Text("Oops!")
+                Text("error.oops".localizedString)
                     .font(.title2)
                     .fontWeight(.bold)
                 
@@ -104,7 +104,7 @@ struct ErrorAlertView: View {
             VStack(spacing: 12) {
                 if let retryAction = retryAction {
                     Button(action: retryAction) {
-                        Text("Try Again")
+                        Text("common.retry".localizedString)
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -115,7 +115,7 @@ struct ErrorAlertView: View {
                 }
                 
                 Button(action: dismissAction) {
-                    Text("Dismiss")
+                    Text("common.dismiss".localizedString)
                         .fontWeight(.medium)
                         .frame(maxWidth: .infinity)
                         .padding()

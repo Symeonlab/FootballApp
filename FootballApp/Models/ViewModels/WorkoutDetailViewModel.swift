@@ -18,7 +18,7 @@ enum WorkoutState: Equatable {
 
 @MainActor
 class WorkoutDetailViewModel: ObservableObject {
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Dipodi", category: "WorkoutDetailVM")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "DiPODDI", category: "WorkoutDetailVM")
 
     // --- Published State ---
     @Published var session: WorkoutSession
@@ -28,8 +28,11 @@ class WorkoutDetailViewModel: ObservableObject {
     @Published var currentRep: Int = 1
     @Published var timerValue: Int = 0
     @Published var totalTime: Int = 0
-    
+    @Published var elapsedTime: TimeInterval = 0
+
     private var timer: AnyCancellable?
+    private var elapsedTimer: AnyCancellable?
+    private var workoutStartTime: Date?
 
     // --- Computed Properties ---
     var totalSets: Int {
@@ -134,6 +137,25 @@ class WorkoutDetailViewModel: ObservableObject {
             currentState = .finished
         } else {
             self.next()
+        }
+    }
+
+    // MARK: - Elapsed Time Tracking
+
+    func startElapsedTimer() {
+        guard workoutStartTime == nil else { return }
+        workoutStartTime = Date()
+        elapsedTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
+            guard let self = self, let start = self.workoutStartTime else { return }
+            self.elapsedTime = Date().timeIntervalSince(start)
+        }
+    }
+
+    func stopElapsedTimer() {
+        elapsedTimer?.cancel()
+        elapsedTimer = nil
+        if let start = workoutStartTime {
+            elapsedTime = Date().timeIntervalSince(start)
         }
     }
 

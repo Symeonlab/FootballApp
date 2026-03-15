@@ -1,6 +1,6 @@
 //
 //  ProfileView.swift
-//  FootballApp - Dipodi
+//  FootballApp - DiPODDI
 //
 //  Dark blue themed profile with improved UI
 //
@@ -22,9 +22,17 @@ struct ProfileView: View {
     @State private var showingBlog = false
     @State private var showingEditProfile = false
     @State private var showingAchievements = false
+    @State private var showingGoals = false
+    @State private var showingAPITest = false
+    @State private var showingFeedback = false
+    @State private var showingSleep = false
+    @State private var showingPropheticMedicine = false
+    @State private var showingPrivacyPolicy = false
+    @State private var showingDeleteAccount = false
+    @State private var showingExportConfirmation = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 // Dark purple animated background
                 DarkPurpleAnimatedBackground()
@@ -40,6 +48,10 @@ struct ProfileView: View {
                         )
                         .padding(.horizontal)
                         
+                        // Active Goal Section
+                        ActiveGoalCard(onViewAll: { showingGoals = true })
+                            .padding(.horizontal)
+
                         // Achievements Section
                         AchievementsCard(
                             viewModel: profileViewModel,
@@ -55,7 +67,8 @@ struct ProfileView: View {
                         QuickActionsCard(
                             onLogMeasurement: { showingLogMeasurement = true },
                             onSetReminder: { showingReminders = true },
-                            onOpenBlog: { showingBlog = true }
+                            onOpenBlog: { showingBlog = true },
+                            onOpenFeedback: { showingFeedback = true }
                         )
                         .padding(.horizontal)
                         
@@ -71,33 +84,43 @@ struct ProfileView: View {
                         PlanManagementCard(authViewModel: authViewModel)
                             .padding(.horizontal)
                         
+                        // Recovery & Wellness Section
+                        RecoveryWellnessCard(
+                            onOpenSleep: { showingSleep = true },
+                            onOpenPropheticMedicine: { showingPropheticMedicine = true }
+                        )
+                        .padding(.horizontal)
+
                         // Settings Section
                         SettingsCard(
                             languageManager: languageManager,
                             themeManager: themeManager
                         )
                         .padding(.horizontal)
-                        
-                        // Sign Out Button
-                        Button(role: .destructive, action: {
-                            authViewModel.signOut()
-                        }) {
-                            Label("profile.sign_out", systemImage: "rectangle.portrait.and.arrow.right")
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .fill(Color.red.opacity(0.15))
-                                )
-                                .foregroundColor(.red)
-                        }
+
+                        // Debug Section (for development)
+                        #if DEBUG
+                        DebugCard(onAPITest: { showingAPITest = true })
+                            .padding(.horizontal)
+                        #endif
+
+                        // Privacy & Data Section (GDPR)
+                        PrivacyDataCard(
+                            onPrivacyPolicy: { showingPrivacyPolicy = true },
+                            onExportData: { showingExportConfirmation = true },
+                            onDeleteAccount: { showingDeleteAccount = true }
+                        )
                         .padding(.horizontal)
-                        .padding(.bottom, 30)
+
+                        // Sign Out Button
+                        SignOutButton(authViewModel: authViewModel)
+                        .padding(.horizontal)
+                        .padding(.bottom, 100)
                     }
                     .padding(.top, 10)
                 }
             }
-            .navigationTitle("Profile - Dipodi")
+            .navigationTitle("profile.dipodi".localized)
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $showingLogMeasurement) {
                 MeasurementLogView(viewModel: profileViewModel)
@@ -116,9 +139,39 @@ struct ProfileView: View {
             .sheet(isPresented: $showingAchievements) {
                 AchievementsView(viewModel: profileViewModel)
             }
-            .onAppear {
-                logger.info("👁️ ProfileView: View appeared")
-                
+            .sheet(isPresented: $showingGoals) {
+                GoalsView()
+            }
+            .sheet(isPresented: $showingFeedback) {
+                FeedbackView()
+                    .environmentObject(authViewModel)
+            }
+            .sheet(isPresented: $showingSleep) {
+                SleepView()
+            }
+            .sheet(isPresented: $showingPropheticMedicine) {
+                PropheticMedicineView()
+            }
+            .sheet(isPresented: $showingPrivacyPolicy) {
+                PrivacyPolicyView()
+            }
+            .sheet(isPresented: $showingDeleteAccount) {
+                DeleteAccountView()
+                    .environmentObject(authViewModel)
+            }
+            .alert("profile.export_data".localizedString, isPresented: $showingExportConfirmation) {
+                Button("common.ok".localizedString, role: .cancel) {}
+            } message: {
+                Text("profile.export_data_message".localizedString)
+            }
+            #if DEBUG
+            .sheet(isPresented: $showingAPITest) {
+                APIDataTestView()
+            }
+            #endif
+            .task {
+                logger.info("👁️ ProfileView: Task triggered")
+
                 // Log current user info
                 if let user = authViewModel.currentUser {
                     logger.info("👤 ProfileView: User loaded")
@@ -135,34 +188,27 @@ struct ProfileView: View {
                 } else {
                     logger.warning("⚠️ ProfileView: No user data available")
                 }
-                
-                // Fetch data
+
+                // Fetch data using async
                 logger.info("📥 ProfileView: Fetching profile data...")
-                profileViewModel.fetchProgressLogs()
-                profileViewModel.fetchHealthData()
-                
-                // Log after a short delay to see if data loaded
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    logger.info("📊 ProfileView: Profile data state:")
-                    logger.info("   - Progress logs: \(profileViewModel.progressLogs.count)")
-                    logger.info("   - Steps today: \(profileViewModel.stepsToday ?? 0)")
-                    logger.info("   - Calories today: \(profileViewModel.caloriesToday ?? 0)")
-                    logger.info("   - Latest weight: \(profileViewModel.latestWeight ?? 0.0)")
-                    logger.info("   - Is loading: \(profileViewModel.isLoading)")
-                    
-                    if let error = profileViewModel.errorMessage {
-                        logger.error("❌ ProfileView: Error - \(error)")
-                    } else if !profileViewModel.progressLogs.isEmpty || profileViewModel.stepsToday != nil {
-                        logger.info("✅ ProfileView: Data loaded and displayed successfully")
-                    } else {
-                        logger.warning("⚠️ ProfileView: No data loaded yet")
-                    }
+                await profileViewModel.fetchAllDataAsync()
+
+                // Log after fetch
+                logger.info("📊 ProfileView: Profile data state:")
+                logger.info("   - Progress logs: \(profileViewModel.progressLogs.count)")
+                logger.info("   - Steps today: \(profileViewModel.stepsToday ?? 0)")
+                logger.info("   - Calories today: \(profileViewModel.caloriesToday ?? 0)")
+                logger.info("   - Latest weight: \(profileViewModel.latestWeight ?? 0.0)")
+
+                if let error = profileViewModel.errorMessage {
+                    logger.error("❌ ProfileView: Error - \(error)")
+                } else {
+                    logger.info("✅ ProfileView: Data loaded successfully")
                 }
             }
             .refreshable {
                 logger.info("🔄 ProfileView: Pull-to-refresh triggered")
-                profileViewModel.fetchProgressLogs()
-                profileViewModel.fetchHealthData()
+                await profileViewModel.fetchAllDataAsync()
             }
         }
     }
@@ -244,11 +290,11 @@ struct EnhancedProfileHeaderCard: View {
                 
                 // User Info
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(user?.name ?? "Guest")
+                    Text(user?.name ?? "profile.guest".localizedString)
                         .font(.title2.bold())
                         .foregroundColor(.white)
-                    
-                    Text(user?.email ?? "No email")
+
+                    Text(user?.email ?? "profile.no_email".localizedString)
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.7))
                         .lineLimit(1)
@@ -277,7 +323,7 @@ struct EnhancedProfileHeaderCard: View {
             Button(action: onEditProfile) {
                 HStack {
                     Image(systemName: "pencil")
-                    Text("Edit Profile")
+                    Text("profile.edit_profile".localizedString)
                         .font(.subheadline.weight(.semibold))
                 }
                 .foregroundColor(.white)
@@ -300,60 +346,229 @@ struct EnhancedProfileHeaderCard: View {
     }
 }
 
+// MARK: - Active Goal Card (Profile)
+struct ActiveGoalCard: View {
+    let onViewAll: () -> Void
+    @StateObject private var goalsVM = GoalsViewModel()
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Image(systemName: "target")
+                    .font(.title3)
+                    .foregroundColor(Color(hex: "4ECB71"))
+                Text("goals.current".localizedString)
+                    .font(.headline.bold())
+                    .foregroundColor(.white)
+                Spacer()
+                Button(action: onViewAll) {
+                    Text("common.view_all".localizedString)
+                        .font(.subheadline.weight(.medium))
+                        .foregroundColor(Color(hex: "4A90E2"))
+                }
+            }
+
+            if let goal = goalsVM.activeGoal {
+                VStack(alignment: .leading, spacing: 12) {
+                    // Goal type and status
+                    HStack {
+                        Text(goal.goalType.displayName)
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundColor(.white)
+
+                        Spacer()
+
+                        // On track indicator
+                        HStack(spacing: 4) {
+                            Circle()
+                                .fill(goal.isOnTrack == true ? Color.green : Color.orange)
+                                .frame(width: 6, height: 6)
+                            Text(goal.isOnTrack == true ? "goals.on_track".localizedString : "goals.behind".localizedString)
+                                .font(.caption2.weight(.medium))
+                                .foregroundColor(goal.isOnTrack == true ? .green : .orange)
+                        }
+                    }
+
+                    // Progress bar
+                    GeometryReader { geometry in
+                        ZStack(alignment: .leading) {
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(Color.white.opacity(0.1))
+                                .frame(height: 8)
+
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(
+                                    LinearGradient(
+                                        colors: [Color(hex: "4A90E2"), Color(hex: "4ECB71")],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .frame(width: geometry.size.width * CGFloat(goal.progress / 100), height: 8)
+                        }
+                    }
+                    .frame(height: 8)
+
+                    // Stats
+                    HStack {
+                        Text("\(Int(goal.progress))% " + "goals.complete_short".localizedString)
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.7))
+
+                        Spacer()
+
+                        if let weeks = goal.weeksCompleted, let total = goal.totalWeeks {
+                            Text("\(weeks)/\(total) " + "goals.weeks".localizedString)
+                                .font(.caption)
+                                .foregroundColor(.white.opacity(0.7))
+                        }
+                    }
+                }
+            } else {
+                // No active goal
+                VStack(spacing: 12) {
+                    Image(systemName: "target")
+                        .font(.system(size: 32))
+                        .foregroundColor(.white.opacity(0.3))
+
+                    Text("goals.no_active".localizedString)
+                        .font(.subheadline)
+                        .foregroundColor(.white.opacity(0.6))
+
+                    Button(action: onViewAll) {
+                        Text("goals.set_goal".localizedString)
+                            .font(.caption.weight(.semibold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color(hex: "4A90E2"))
+                            )
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
+            }
+        }
+        .padding()
+        .darkBlueCard()
+        .task {
+            await goalsVM.fetchActiveGoal()
+        }
+    }
+}
+
 // MARK: - Achievements Card
 struct AchievementsCard: View {
     @ObservedObject var viewModel: ProfileViewModel
     let onViewAll: () -> Void
-    
-    let achievements = [
-        ("flame.fill", "7 Day Streak", Color.orange),
-        ("trophy.fill", "10 Workouts", Color.yellow),
-        ("star.fill", "Goal Master", Color.purple)
-    ]
-    
+    @StateObject private var achievementsVM = AchievementsViewModel()
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Image(systemName: "star.circle.fill")
                     .font(.title3)
                     .foregroundColor(.yellow)
-                Text("Achievements")
+                Text("achievements.title".localizedString)
                     .font(.headline.bold())
                     .foregroundColor(.white)
                 Spacer()
+
+                // Points badge
+                if achievementsVM.totalPoints > 0 {
+                    HStack(spacing: 4) {
+                        Image(systemName: "star.fill")
+                            .font(.caption2)
+                            .foregroundColor(.yellow)
+                        Text("\(achievementsVM.totalPoints)")
+                            .font(.caption.bold())
+                            .foregroundColor(.white)
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Capsule().fill(Color.yellow.opacity(0.2)))
+                }
+
                 Button(action: onViewAll) {
-                    Text("View All")
+                    Text("common.view_all".localizedString)
                         .font(.subheadline.weight(.medium))
                         .foregroundColor(Color(hex: "4A90E2"))
                 }
             }
-            
-            HStack(spacing: 12) {
-                ForEach(achievements, id: \.1) { achievement in
-                    VStack(spacing: 8) {
-                        ZStack {
-                            Circle()
-                                .fill(achievement.2.opacity(0.2))
-                                .frame(width: 60, height: 60)
-                            
-                            Image(systemName: achievement.0)
-                                .font(.title2)
-                                .foregroundColor(achievement.2)
+
+            if achievementsVM.recentlyEarned.isEmpty {
+                // Placeholder achievements when none earned yet
+                HStack(spacing: 12) {
+                    ForEach(0..<3, id: \.self) { _ in
+                        VStack(spacing: 8) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.white.opacity(0.1))
+                                    .frame(width: 60, height: 60)
+
+                                Image(systemName: "lock.fill")
+                                    .font(.title3)
+                                    .foregroundColor(.white.opacity(0.3))
+                            }
+
+                            Text("achievements.locked".localizedString)
+                                .font(.caption2.weight(.medium))
+                                .foregroundColor(.white.opacity(0.5))
+                                .multilineTextAlignment(.center)
                         }
-                        
-                        Text(achievement.1)
-                            .font(.caption2.weight(.medium))
-                            .foregroundColor(.white.opacity(0.8))
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                            .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
+                }
+            } else {
+                // Show recently earned achievements
+                HStack(spacing: 12) {
+                    ForEach(achievementsVM.recentlyEarned.prefix(3)) { achievement in
+                        VStack(spacing: 8) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color(hex: achievementsVM.categoryColor(achievement.category)).opacity(0.2))
+                                    .frame(width: 60, height: 60)
+
+                                if let icon = achievement.icon {
+                                    Text(icon)
+                                        .font(.title2)
+                                } else {
+                                    Image(systemName: achievementsVM.categoryIcon(achievement.category))
+                                        .font(.title2)
+                                        .foregroundColor(Color(hex: achievementsVM.categoryColor(achievement.category)))
+                                }
+                            }
+
+                            Text(achievement.name)
+                                .font(.caption2.weight(.medium))
+                                .foregroundColor(.white.opacity(0.8))
+                                .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                }
+            }
+
+            // Progress indicator
+            if achievementsVM.totalAvailable > 0 {
+                HStack {
+                    Text("\(achievementsVM.totalEarned)/\(achievementsVM.totalAvailable) " + "achievements.unlocked".localizedString)
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.6))
+                    Spacer()
                 }
             }
         }
         .padding()
         .darkBlueCard()
+        .task {
+            await achievementsVM.fetchAllAchievements()
+            await achievementsVM.fetchEarnedAchievements()
+        }
     }
 }
 
@@ -367,7 +582,7 @@ struct ActivityStatsCard: View {
                 Image(systemName: "heart.circle.fill")
                     .font(.title3)
                     .foregroundColor(.red)
-                Text("Today's Activity")
+                Text("profile.todays_activity".localizedString)
                     .font(.headline.bold())
                     .foregroundColor(.white)
                 Spacer()
@@ -380,14 +595,14 @@ struct ActivityStatsCard: View {
                 ActivityStatItem(
                     icon: "figure.walk",
                     value: viewModel.stepsToday != nil ? "\(viewModel.stepsToday!)" : "–",
-                    label: "Steps",
+                    label: "profile.steps".localizedString,
                     color: Color(hex: "4A90E2")
                 )
-                
+
                 ActivityStatItem(
                     icon: "flame.fill",
                     value: viewModel.caloriesToday != nil ? "\(viewModel.caloriesToday!)" : "–",
-                    label: "kcal",
+                    label: "profile.kcal".localizedString,
                     color: .orange
                 )
             }
@@ -439,34 +654,46 @@ struct QuickActionsCard: View {
     let onLogMeasurement: () -> Void
     let onSetReminder: () -> Void
     let onOpenBlog: () -> Void
-    
+    let onOpenFeedback: () -> Void
+
     var body: some View {
         VStack(spacing: 12) {
-            Text("Quick Actions")
+            Text("profile.quick_actions".localizedString)
                 .font(.headline.bold())
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
+
+            // First row
             HStack(spacing: 12) {
                 QuickActionButton(
                     icon: "square.and.pencil",
-                    title: "Log",
+                    title: "profile.log".localizedString,
                     color: Color(hex: "4A90E2"),
                     action: onLogMeasurement
                 )
-                
+
                 QuickActionButton(
                     icon: "bell.fill",
-                    title: "Reminders",
+                    title: "profile.reminders".localizedString,
                     color: Color(hex: "9D4EDD"),
                     action: onSetReminder
                 )
-                
+            }
+
+            // Second row
+            HStack(spacing: 12) {
                 QuickActionButton(
                     icon: "book.fill",
-                    title: "Blog",
+                    title: "tab.blog".localizedString,
                     color: Color(hex: "7EC8E3"),
                     action: onOpenBlog
+                )
+
+                QuickActionButton(
+                    icon: "text.bubble.fill",
+                    title: "feedback.title".localizedString,
+                    color: Color(hex: "4ECB71"),
+                    action: onOpenFeedback
                 )
             }
         }
@@ -517,12 +744,12 @@ struct ProgressChartCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Weight Progress (7 Days)")
+            Text("profile.weight_progress".localizedString)
                 .font(.headline.bold())
                 .foregroundColor(.white)
-            
+
             if recentLogs.isEmpty {
-                Text("No progress data yet")
+                Text("profile.no_progress_data".localizedString)
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.6))
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -604,12 +831,12 @@ struct RecentProgressCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Recent Measurements")
+            Text("profile.recent_measurements".localizedString)
                 .font(.headline.bold())
                 .foregroundColor(.white)
-            
+
             if viewModel.progressLogs.isEmpty {
-                Text("No measurements yet")
+                Text("profile.no_measurements".localizedString)
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.6))
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -671,37 +898,35 @@ struct PlanManagementCard: View {
     @ObservedObject var authViewModel: AuthViewModel
     @State private var showingConfirmation = false
     @State private var selectedAction: PlanAction?
-    
+
     enum PlanAction {
-        case workout, nutrition, onboarding
-        
+        case updateWorkoutType, nutrition
+
         var title: String {
             switch self {
-            case .workout: return "Regenerate Workout Plan"
-            case .nutrition: return "Regenerate Nutrition Plan"
-            case .onboarding: return "Restart Onboarding"
+            case .updateWorkoutType: return "profile.update_workout_type".localizedString
+            case .nutrition: return "profile.regenerate_nutrition".localizedString
             }
         }
-        
+
         var message: String {
             switch self {
-            case .workout: return "This will create a new personalized workout plan based on your current profile."
-            case .nutrition: return "This will create a new personalized nutrition plan based on your current goals."
-            case .onboarding: return "This will reset your profile and take you through the setup process again."
+            case .updateWorkoutType: return "profile.update_workout_type_confirm".localizedString
+            case .nutrition: return "profile.regenerate_nutrition_confirm".localizedString
             }
         }
     }
-    
+
     var body: some View {
         VStack(spacing: 12) {
-            Text("Plan Management")
+            Text("profile.plan_management".localizedString)
                 .font(.headline.bold())
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
-            // Regenerate Workout Plan
+
+            // Update Workout Type (re-do onboarding without personal info)
             Button(action: {
-                selectedAction = .workout
+                selectedAction = .updateWorkoutType
                 showingConfirmation = true
             }) {
                 HStack(spacing: 12) {
@@ -709,25 +934,25 @@ struct PlanManagementCard: View {
                         Circle()
                             .fill(Color.orange.opacity(0.2))
                             .frame(width: 44, height: 44)
-                        
-                        Image(systemName: "figure.strengthtraining.traditional")
+
+                        Image(systemName: "arrow.triangle.2.circlepath")
                             .font(.system(size: 20))
                             .foregroundColor(.orange)
                     }
-                    
+
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Regenerate Workout Plan")
+                        Text("profile.update_workout_type".localizedString)
                             .font(.subheadline.weight(.semibold))
                             .foregroundColor(.white)
-                        
-                        Text("Get a fresh workout routine")
+
+                        Text("profile.update_workout_type_desc".localizedString)
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.7))
                     }
-                    
+
                     Spacer()
-                    
-                    Image(systemName: "arrow.clockwise")
+
+                    Image(systemName: "chevron.right")
                         .foregroundColor(Color(hex: "4A90E2"))
                 }
                 .padding()
@@ -737,7 +962,7 @@ struct PlanManagementCard: View {
                 )
             }
             .buttonStyle(.plain)
-            
+
             // Regenerate Nutrition Plan
             Button(action: {
                 selectedAction = .nutrition
@@ -748,24 +973,24 @@ struct PlanManagementCard: View {
                         Circle()
                             .fill(Color.green.opacity(0.2))
                             .frame(width: 44, height: 44)
-                        
+
                         Image(systemName: "leaf.fill")
                             .font(.system(size: 20))
                             .foregroundColor(.green)
                     }
-                    
+
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Regenerate Nutrition Plan")
+                        Text("profile.regenerate_nutrition".localizedString)
                             .font(.subheadline.weight(.semibold))
                             .foregroundColor(.white)
-                        
-                        Text("Get personalized meal recommendations")
+
+                        Text("profile.regenerate_nutrition_desc".localizedString)
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.7))
                     }
-                    
+
                     Spacer()
-                    
+
                     Image(systemName: "arrow.clockwise")
                         .foregroundColor(Color(hex: "4A90E2"))
                 }
@@ -776,35 +1001,274 @@ struct PlanManagementCard: View {
                 )
             }
             .buttonStyle(.plain)
-            
-            // Restart Onboarding
-            Button(action: {
-                selectedAction = .onboarding
-                showingConfirmation = true
-            }) {
+        }
+        .padding()
+        .darkBlueCard()
+        .alert("profile.confirm_action".localizedString, isPresented: $showingConfirmation, presenting: selectedAction) { action in
+            Button("common.cancel".localizedString, role: .cancel) { }
+            Button("common.confirm".localizedString, role: .destructive) {
+                performAction(action)
+            }
+        } message: { action in
+            Text(action.message)
+        }
+    }
+
+    private func performAction(_ action: PlanAction) {
+        switch action {
+        case .updateWorkoutType:
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.85)) {
+                authViewModel.appState = .updateWorkoutType
+            }
+
+        case .nutrition:
+            print("Regenerating nutrition plan...")
+        }
+    }
+}
+
+// MARK: - Recovery & Wellness Card
+struct RecoveryWellnessCard: View {
+    let onOpenSleep: () -> Void
+    let onOpenPropheticMedicine: () -> Void
+
+    var body: some View {
+        VStack(spacing: 12) {
+            Text("profile.recovery_wellness".localizedString)
+                .font(.headline.bold())
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            Text("tooltip.recovery_wellness".localizedString)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            HStack(spacing: 12) {
+                QuickActionButton(
+                    icon: "moon.zzz.fill",
+                    title: "sleep.title".localizedString,
+                    color: Color(hex: "6C5CE7"),
+                    action: onOpenSleep
+                )
+
+                QuickActionButton(
+                    icon: "leaf.fill",
+                    title: "prophetic.title".localizedString,
+                    color: Color(hex: "00B894"),
+                    action: onOpenPropheticMedicine
+                )
+            }
+        }
+        .padding()
+        .darkBlueCard()
+    }
+}
+
+// MARK: - Settings Card
+struct SettingsCard: View {
+    @ObservedObject var languageManager: LanguageManager
+    @ObservedObject var themeManager: ThemeManager
+    @State private var showLanguageSheet = false
+
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: "gearshape.fill")
+                    .font(.title3)
+                    .foregroundColor(Color(hex: "4A90E2"))
+                Text("settings.title".localizedString)
+                    .font(.headline.bold())
+                    .foregroundColor(.white)
+                Spacer()
+            }
+
+            // Language Picker - Tap to show sheet
+            Button(action: { showLanguageSheet = true }) {
+                HStack {
+                    Image(systemName: "globe")
+                        .foregroundColor(Color(hex: "4A90E2"))
+                        .frame(width: 30)
+                    Text("settings.language".localizedString)
+                        .foregroundColor(.white)
+                    Spacer()
+                    Text(languageManager.selected.localizedDisplayNameWithFlag)
+                        .font(.subheadline)
+                        .foregroundColor(.white.opacity(0.7))
+                    Image(systemName: "chevron.right")
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.5))
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color(hex: "0F1B3D").opacity(0.6))
+                )
+            }
+            .buttonStyle(.plain)
+
+            // Theme Picker
+            HStack {
+                Image(systemName: "paintbrush.fill")
+                    .foregroundColor(Color(hex: "9D4EDD"))
+                    .frame(width: 30)
+                Text("settings.appearance".localizedString)
+                    .foregroundColor(.white)
+                Spacer()
+                Text("profile.dark".localizedString)
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.7))
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(Color(hex: "0F1B3D").opacity(0.6))
+            )
+        }
+        .padding()
+        .darkBlueCard()
+        .sheet(isPresented: $showLanguageSheet) {
+            LanguageSelectionSheet(languageManager: languageManager)
+        }
+    }
+}
+
+// MARK: - Language Selection Sheet
+struct LanguageSelectionSheet: View {
+    @ObservedObject var languageManager: LanguageManager
+    @Environment(\.dismiss) private var dismiss
+    @State private var selectedLanguage: AppLanguage?
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                Color(hex: "0A1628").ignoresSafeArea()
+
+                VStack(spacing: 16) {
+                    Text("settings.select_language".localizedString)
+                        .font(.title2.bold())
+                        .foregroundColor(.white)
+                        .padding(.top, 20)
+
+                    ForEach(AppLanguage.allCases) { language in
+                        Button(action: {
+                            // Visual feedback
+                            selectedLanguage = language
+
+                            // Apply language change with animation
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                languageManager.selected = language
+                            }
+
+                            // Dismiss after brief delay to show selection feedback
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                                dismiss()
+                            }
+                        }) {
+                            HStack {
+                                Text(language.localizedDisplayNameWithFlag)
+                                    .font(.body.weight(.medium))
+                                    .foregroundColor(.white)
+
+                                Spacer()
+
+                                if languageManager.selected == language || selectedLanguage == language {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(Color(hex: "4A90E2"))
+                                        .font(.title2)
+                                }
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .fill(
+                                        (languageManager.selected == language || selectedLanguage == language) ?
+                                        Color(hex: "4A90E2").opacity(0.2) :
+                                        Color(hex: "1C2951").opacity(0.6)
+                                    )
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .stroke(
+                                        (languageManager.selected == language || selectedLanguage == language) ?
+                                        Color(hex: "4A90E2") : Color.clear,
+                                        lineWidth: 2
+                                    )
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    Spacer()
+
+                    Text("settings.language_note".localizedString)
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.6))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                        .padding(.bottom, 20)
+                }
+                .padding(.horizontal)
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.white.opacity(0.7))
+                            .font(.title2)
+                    }
+                }
+            }
+        }
+        .presentationDetents([.medium])
+        .onAppear {
+            selectedLanguage = languageManager.selected
+        }
+    }
+}
+
+// MARK: - Debug Card (Development Only)
+#if DEBUG
+struct DebugCard: View {
+    let onAPITest: () -> Void
+
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: "ladybug.fill")
+                    .font(.title3)
+                    .foregroundColor(.orange)
+                Text("profile.developer_tools".localizedString)
+                    .font(.headline.bold())
+                    .foregroundColor(.white)
+                Spacer()
+            }
+
+            Button(action: onAPITest) {
                 HStack(spacing: 12) {
                     ZStack {
                         Circle()
-                            .fill(Color(hex: "4A90E2").opacity(0.2))
+                            .fill(Color.purple.opacity(0.2))
                             .frame(width: 44, height: 44)
-                        
-                        Image(systemName: "arrow.counterclockwise")
+
+                        Image(systemName: "antenna.radiowaves.left.and.right")
                             .font(.system(size: 20))
-                            .foregroundColor(Color(hex: "4A90E2"))
+                            .foregroundColor(.purple)
                     }
-                    
+
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Restart Onboarding")
+                        Text("API Data Test")
                             .font(.subheadline.weight(.semibold))
                             .foregroundColor(.white)
-                        
-                        Text("Update your profile & preferences")
+
+                        Text("profile.view_raw_api".localizedString)
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.7))
                     }
-                    
+
                     Spacer()
-                    
+
                     Image(systemName: "chevron.right")
                         .foregroundColor(Color(hex: "4A90E2"))
                 }
@@ -818,112 +1282,225 @@ struct PlanManagementCard: View {
         }
         .padding()
         .darkBlueCard()
-        .alert("Confirm Action", isPresented: $showingConfirmation, presenting: selectedAction) { action in
-            Button("Cancel", role: .cancel) { }
-            Button("Confirm", role: .destructive) {
-                performAction(action)
-            }
-        } message: { action in
-            Text(action.message)
-        }
-    }
-    
-    private func performAction(_ action: PlanAction) {
-        switch action {
-        case .workout:
-            Task {
-                do {
-                    let _: APIResponseMessage = try await APIService.shared.generateWorkoutPlan()
-                } catch {
-                    print("Error generating workout plan: \(error)")
-                }
-            }
-            
-        case .nutrition:
-            print("Regenerating nutrition plan...")
-            
-        case .onboarding:
-            Task {
-                if let _ = authViewModel.currentUser?.id {
-                    authViewModel.appState = .onboarding
-                }
-            }
-        }
     }
 }
-
-// MARK: - Settings Card
-struct SettingsCard: View {
-    @ObservedObject var languageManager: LanguageManager
-    @ObservedObject var themeManager: ThemeManager
-    
-    var body: some View {
-        VStack(spacing: 12) {
-            Text("Settings")
-                .font(.headline.bold())
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            // Language Picker
-            HStack {
-                Image(systemName: "globe")
-                    .foregroundColor(Color(hex: "4A90E2"))
-                    .frame(width: 30)
-                Text("Language")
-                    .foregroundColor(.white)
-                Spacer()
-                Picker("", selection: $languageManager.selected) {
-                    ForEach(AppLanguage.allCases) { language in
-                        Text(language.localizedDisplayNameWithFlag).tag(language)
-                    }
-                }
-                .pickerStyle(.menu)
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(Color(hex: "0F1B3D").opacity(0.6))
-            )
-            
-            // Theme Picker
-            HStack {
-                Image(systemName: "paintbrush.fill")
-                    .foregroundColor(Color(hex: "4A90E2"))
-                    .frame(width: 30)
-                Text("Appearance")
-                    .foregroundColor(.white)
-                Spacer()
-                Text("Dark")
-                    .font(.subheadline)
-                    .foregroundColor(.white.opacity(0.7))
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(Color(hex: "0F1B3D").opacity(0.6))
-            )
-        }
-        .padding()
-        .darkBlueCard()
-    }
-}
+#endif
 
 // MARK: - Supporting Views (simplified)
 struct EditProfileView: View {
     @ObservedObject var viewModel: ProfileViewModel
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
-        Text("Edit Profile Coming Soon")
+        ZStack {
+            DarkPurpleAnimatedBackground()
+                .ignoresSafeArea()
+
+            VStack(spacing: 24) {
+                Spacer()
+
+                Image(systemName: "person.crop.circle.badge.clock")
+                    .font(.system(size: 60))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Color.theme.primary, Color.theme.accent],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+
+                Text("profile.edit_coming_soon".localizedString)
+                    .font(.title2.bold())
+                    .foregroundColor(.white)
+
+                Text("profile.edit_coming_soon_desc".localizedString)
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.7))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
+
+                Spacer()
+            }
+        }
+        .navigationTitle("profile.edit".localizedString)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct AchievementsView: View {
     @ObservedObject var viewModel: ProfileViewModel
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
-        Text("All Achievements Coming Soon")
+        AchievementsFullView()
+    }
+}
+
+// MARK: - Privacy & Data Card (GDPR)
+struct PrivacyDataCard: View {
+    let onPrivacyPolicy: () -> Void
+    let onExportData: () -> Void
+    let onDeleteAccount: () -> Void
+
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: "lock.shield.fill")
+                    .font(.title3)
+                    .foregroundColor(Color(hex: "4A90E2").opacity(0.7))
+                Text("profile.privacy_data".localizedString)
+                    .font(.subheadline.bold())
+                    .foregroundColor(.white.opacity(0.8))
+                Spacer()
+            }
+
+            Text("tooltip.privacy_data".localizedString)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            // Privacy Policy
+            Button(action: onPrivacyPolicy) {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Image(systemName: "hand.raised.fill")
+                            .foregroundColor(Color(hex: "4A90E2"))
+                            .frame(width: 30)
+                        Text("profile.privacy_policy".localizedString)
+                            .foregroundColor(.white)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                    Text("tooltip.privacy_policy".localizedString)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .padding(.leading, 34)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color(hex: "0F1B3D").opacity(0.6))
+                )
+            }
+            .buttonStyle(.plain)
+
+            // Export My Data
+            Button(action: onExportData) {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Image(systemName: "square.and.arrow.up")
+                            .foregroundColor(Color(hex: "4ECB71"))
+                            .frame(width: 30)
+                        Text("profile.export_data".localizedString)
+                            .foregroundColor(.white)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                    Text("tooltip.export_data".localizedString)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .padding(.leading, 34)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color(hex: "0F1B3D").opacity(0.6))
+                )
+            }
+            .buttonStyle(.plain)
+
+            // Delete Account
+            Button(action: onDeleteAccount) {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Image(systemName: "trash.fill")
+                            .foregroundColor(.red)
+                            .frame(width: 30)
+                        Text("profile.delete_account".localizedString)
+                            .foregroundColor(.red)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                    Text("tooltip.delete_account".localizedString)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .padding(.leading, 34)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color.red.opacity(0.08))
+                )
+            }
+            .buttonStyle(.plain)
+        }
+        .padding()
+        .darkBlueCard()
+    }
+}
+
+// MARK: - Sign Out Button
+struct SignOutButton: View {
+    @ObservedObject var authViewModel: AuthViewModel
+    @EnvironmentObject var languageManager: LanguageManager
+    @State private var showingConfirmation = false
+    @State private var isSigningOut = false
+
+    var body: some View {
+        Button(role: .destructive, action: {
+            showingConfirmation = true
+        }) {
+            HStack(spacing: 10) {
+                if isSigningOut {
+                    ProgressView()
+                        .tint(.red)
+                        .scaleEffect(0.8)
+                } else {
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                    Text("profile.sign_out".localizedString)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color.red.opacity(0.15))
+            )
+            .foregroundColor(.red)
+        }
+        .disabled(isSigningOut)
+        .alert(
+            "profile.sign_out_confirm_title".localizedString,
+            isPresented: $showingConfirmation
+        ) {
+            Button("common.cancel".localizedString, role: .cancel) { }
+            Button("profile.sign_out".localizedString, role: .destructive) {
+                performSignOut()
+            }
+        } message: {
+            Text("profile.sign_out_confirm_message".localizedString)
+        }
+    }
+
+    private func performSignOut() {
+        isSigningOut = true
+
+        // Clear language settings first to avoid race conditions
+        languageManager.clearLanguageSettings()
+
+        // Perform sign out directly on main thread
+        authViewModel.signOut()
+
+        // Reset state after transition completes
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            isSigningOut = false
+        }
     }
 }
 
