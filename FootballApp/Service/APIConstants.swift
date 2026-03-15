@@ -16,7 +16,7 @@ enum APIConstants {
     /// Production URL uses HTTPS. Local dev uses HTTP for simulator/device testing.
     static var baseURL: String {
         if isProduction {
-            return "https://api.dipoddi.com/api"  // HTTPS production server
+            return "https://dipodi-api.sliplane.app/api"  // Sliplane production server
         }
         #if targetEnvironment(simulator)
         return "http://127.0.0.1:8000/api"       // Docker on simulator

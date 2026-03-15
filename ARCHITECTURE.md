@@ -96,11 +96,47 @@
 | iOS App       | `/private/var/www/xcode app/FootballApp/`     |
 | Docker mount  | `/var/www/` (inside container)                |
 
-### Production Target
+### Production (Sliplane)
 
-- Domain: `api.dipoddi.com`
-- HTTPS with SSL certificate pinning
-- Nginx reverse proxy to PHP-FPM
+| Setting          | Value                                       |
+|------------------|---------------------------------------------|
+| Platform         | Sliplane (Docker-based PaaS)                |
+| Domain           | `https://dipodi-api.sliplane.app`           |
+| Custom domain    | `https://api.dipoddi.com` (when configured) |
+| Dockerfile       | Single-container: PHP-FPM + Nginx + Supervisord |
+| Health check     | `/health` → `{"status":"ok"}`               |
+| Startup script   | `docker/start.sh` (generates .env, migrates, caches, starts) |
+| SSL              | Automatic via Sliplane                      |
+| Env vars         | Set in Sliplane service settings            |
+| Database         | Sliplane MySQL addon or external            |
+
+### Production Deployment Flow
+
+```
+git push origin main
+    │
+    v
+Sliplane auto-deploys (webhook on main branch)
+    │
+    v
+Docker build (Dockerfile)
+    ├── Install system deps + PHP extensions
+    ├── composer install --no-dev --no-scripts
+    ├── Copy app code + run package:discover
+    └── Set permissions
+    │
+    v
+Container starts (docker/start.sh)
+    ├── [1/6] Generate .env from Docker env vars
+    ├── [2/6] Generate APP_KEY if missing
+    ├── [3/6] Set storage permissions
+    ├── [4/6] Run migrations (non-destructive)
+    ├── [5/6] Cache config/routes/views
+    └── [6/6] Start Supervisord → Nginx + PHP-FPM
+    │
+    v
+Health check passes → Service live
+```
 
 ---
 
@@ -1624,27 +1660,52 @@ After making changes:
 
 ## 19. Production Deployment Checklist
 
-### Backend
+### Sliplane Environment Variables (set in dashboard)
 
-- [ ] Set `APP_ENV=production` and `APP_DEBUG=false`
-- [ ] Configure production MySQL credentials
-- [ ] Set `DIPODI_APP_KEY_HASH` environment variable
-- [ ] Enable Redis for cache and sessions
-- [ ] Configure queue worker (database or Redis driver)
-- [ ] Set up SSL certificate on Nginx
-- [ ] Run `php artisan optimize` (config/route/view cache)
-- [ ] Run `php artisan migrate --force`
-- [ ] Run `php artisan db:seed --force`
-- [ ] Configure CORS allowed origins
-- [ ] Set up log rotation
-- [ ] Configure mail driver (SMTP/SES)
-- [ ] Set up scheduled tasks (cron)
-- [ ] Enable ForceHttps middleware
+| Variable | Required | Notes |
+|----------|----------|-------|
+| `APP_KEY` | ✅ | `base64:...` — generate with `php artisan key:generate --show` |
+| `APP_ENV` | ✅ | `production` |
+| `APP_DEBUG` | ✅ | `false` |
+| `APP_URL` | ✅ | `https://dipodi-api.sliplane.app` |
+| `DB_HOST` | ✅ | Sliplane MySQL addon host |
+| `DB_DATABASE` | ✅ | `dipodi_api` |
+| `DB_USERNAME` | ✅ | MySQL user |
+| `DB_PASSWORD` | ✅ | Strong random password (32+ chars) |
+| `DIPODI_APP_KEY_HASH` | ✅ | SHA-256 hash of iOS X-App-Key |
+| `CACHE_DRIVER` | ⬚ | `file` (default) or `redis` |
+| `SESSION_DRIVER` | ⬚ | `file` (default) or `redis` |
+| `QUEUE_CONNECTION` | ⬚ | `sync` (default) or `redis` |
+| `SANCTUM_TOKEN_EXPIRATION` | ⬚ | `10080` (7 days in minutes) |
+| `MAIL_MAILER` | ⬚ | `log` (default) or `smtp` |
+| `CORS_ALLOWED_ORIGINS` | ⬚ | `*` or specific domains |
+
+### Sliplane Service Settings
+
+- [ ] Health check path: `/health`
+- [ ] Port: `80`
+- [ ] Auto-deploy: enabled on `main` branch
+- [ ] Repository: `Symeonlab/dipodi-api`
+- [ ] Dockerfile path: `Dockerfile`
+
+### Backend (automated by docker/start.sh)
+
+- [x] `APP_ENV=production` and `APP_DEBUG=false` — set via env vars
+- [x] `php artisan migrate --force` — runs on every container start
+- [x] `php artisan optimize` (config/route/view cache) — runs on start
+- [x] ForceHttps middleware — enabled in bootstrap/app.php
+- [x] SSL — automatic via Sliplane
+- [ ] Configure production MySQL credentials in Sliplane env vars
+- [ ] Set `DIPODI_APP_KEY_HASH` in Sliplane env vars
+- [ ] Run initial `php artisan db:seed --force` (one-time, via exec)
+- [ ] Configure mail driver (SMTP/SES) when ready
+- [ ] Add Redis addon when scaling (optional)
+- [ ] Set up custom domain `api.dipoddi.com` → CNAME to Sliplane
 
 ### iOS
 
-- [ ] Set production API URL: `https://api.dipoddi.com/api`
-- [ ] Add SSL certificate pins to `SSLPins.pins`
+- [ ] Set production API URL: `https://dipodi-api.sliplane.app/api`
+- [ ] Set iOS X-App-Key to match `DIPODI_APP_KEY_HASH`
 - [ ] Set build configuration to Release
 - [ ] Update bundle identifier and version
 - [ ] Configure App Store Connect metadata
